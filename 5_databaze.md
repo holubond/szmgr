@@ -1,0 +1,1 @@
+TODO: vysvetli acid, base
