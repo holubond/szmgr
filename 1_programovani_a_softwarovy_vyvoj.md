@@ -22,17 +22,21 @@
 
 - Při vývoji se často používá kontinuální integrace a nasazení (CI/CD), čímž se mohou vynucovat standardy (dobré pro udržitelnost kódu) a spouštět se automatizované testy. Bývá součástí verzování kódu.
 
+- klíčovou součástí analýzy a návrhu bývá dekompozice (a abstrakce) na komponenty, při které dělíme komplexní systém na jednodušší nezávislé části, abychom nemuseli neustále držet v hlavě kontext celého systému. Cílem je minimalizovat závislost mezi komponenty a dodržovat SOLID principy. [Více v Kvalita kódu](./2_kvalita_kodu.md).
+
+- komponenty systému mají dobře definovaný kontrakt, nezávisí na konkrétních implementacích, ale na abstrakcích (e.g. parametr metody je typu interface, ne konkrétní struktura)
+
 ## Specifika implementace webových informačních systémů
 
 - Webové informační systémy se obvykle skládají z několika částí:
     
-    - **Uživatelské rozhraní/frotnend/klient** je zpřístupněno uživateli skrz prohlížeč. Základními stavebními kameny jsou HTML, CSS a JavaScript/Web Assembly. Tradičně šlo o **multipage aplikace** renderované na serveru (šablonovací systémy jako python\jinja, rust\askama, php má šablonování přímo v sobě), po každém požadavku proběhlo překreslení. Nedávno byl trend **singlepage** aplikací renderovaných na klientovi (založeny na JS frameworcích jako React, Vue, Svelte, Solid...), kde po iniciálním načtení aplikace putovaly mezi klientem a serverem jen data. Aktuální trend je používat fullstack frameworky (NextJS, SvelteKit...), kde prvotní vykreslení je na serveru a následně se web chová jako SPA (ale umožňuje vícero modů fungování, třeba plně static-site generation). Toto platí zvlášť pro menší projekty, protože fullstack framework umožňuje vývoj frontendu i backendu na jednom místě.
+    - **Uživatelské rozhraní/frotnend/klient** je zpřístupněno uživateli skrz prohlížeč. Základními stavebními kameny jsou HTML, CSS a JavaScript/Web Assembly. Tradičně šlo o **multipage aplikace** renderované na serveru (šablonovací systémy jako python\jinja, rust\askama, php má šablonování přímo v sobě), po každém požadavku proběhlo překreslení. Nedávno byl trend **singlepage** aplikací renderovaných na klientovi (založeny na JS frameworcích jako React, Vue, Svelte, Solid, nebo WASM (aktuálně defaultně) rust\yew), kde po iniciálním načtení aplikace putovaly mezi klientem a serverem jen data. Aktuální trend je používat fullstack frameworky (NextJS, SvelteKit, rust\leptos...), kde prvotní vykreslení je na serveru a následně se web chová jako SPA (ale umožňuje vícero modů fungování, třeba plně static-site generation). Toto platí zvlášť pro menší projekty, protože fullstack framework umožňuje vývoj frontendu i backendu na jednom místě.
     - **Aplikační server/backed** slouží k vykonávání aplikační logiky, zpracovává požadavky klienta a odpovídá na ně, zajišťuje autentizaci a autorizaci. Stav systému propisuje do databáze, obvykle je server bezstavový. Použávají se general-purpose programovací jazyky (Rust, JS/TS, Go, C#, Python, Java).
     - **Databáze** uchovává stav systému. Tradičně se používá relační databáze (Postgres, MySql, Oracle), ale může být vhodnější použít dokumentovou (MongoDB) či grafovou (Neo4j).
 
 Webové informační systémy mají tyto specifika:
 - **snadnost aktualizací klienta**, na rozdíl od desktop aplikací není potřeba ze strany uživatele nic explicitně stahovat a instalovat
-- nutnost **responzivního a  uživatelského rozhraní**, ke kterému uživatelé mohou přistupovat i z mobilních zařízení
+- nutnost **responzivního a přístupného uživatelského rozhraní**, ke kterému uživatelé mohou přistupovat i z mobilních zařízení, prohlížeče usnadňují implementaci přístupnosti (vada zraku, přístup pouze pomocí klávesnice...)
 - většinou **tenký klient**, aplikační logika se provádí z pravidla na serveru.
 - webové systémy bývají (pokud není řešeno jinak) přístupné z celého internetu, proto je důležité vhodně řešit **autentizaci a autorizaci**, a jejich **zabezpečení proti útokům** (například SQL injection, XSS, CSFR, více v [Bezpečný kód](./dev_3_bezpecny_kod.md)).
 - mohou být používané větším množstvím uživatelů, proto je vhodně třeba řešit škálování (vertikální větším výkonem nemusí stačit, horizontální vícero stroji nemusí být vždy aplikovatelné). Aplikační servery je možné díky jejich bezstavovosti škálovat horizontálně, databáze se obvykle řeší vertikálně, či použitím distribuované databází (Cassandra). Základem zvyšování výkonu systému je kešování (Redis).
@@ -101,15 +105,21 @@ Pro vývoj rozsáhlých systémů se používají následující typy nástrojů
     - fajn když potřebujeme ACID
 
 - **Microservices**
-    - cílem je vysoká nezávislost jednotlivých služeb
+    - cílem je vysoká nezávislost jednotlivých služeb, mohou být implementovány v různých programovacích jazycích
     - každá služba se stará o nutné minimum, služby fungují nezávisle
     - nesdílí se DB
     - duplikace je akceptovatelná, když se sníží provázanost
 
 ## Persistence, ORM
 - zabývá se uchováním dat mezi jednotlivými běhy aplikace/restarty systému/požadavky klienta
-    - **Relační databáze** - nejběžnější způsob uchovávání data v sw systémech. Data jsou strukturována do tabulek obsahující sloupce, řádek tabulky = datový záznam. Vztahy mezi daty se řeší relacemi, odkazy na primární kíč jiné tabulky. Pro manipulaci nad daty se využívá SQL (structured query language). (Postgres, MySql, Sqlite). Jsou široce podporovány v programovacích jazycích, je potřeba dávat pozor na sql injection (rust/sqlx). Při použití SQL v aplikacích se doporučuje použít metody abstrahující sql dotazy (persistenční vrstva), případně použít CQRS pattern.
+    - **Relační databáze** - nejběžnější způsob uchovávání data v sw systémech. Data jsou strukturována do tabulek obsahující sloupce, řádek tabulky = datový záznam. Vztahy mezi daty se řeší relacemi, odkazy na primární kíč jiné tabulky. Pro manipulaci nad daty se využívá SQL (structured query language). (Postgres, MySql, Sqlite). Jsou široce podporovány v programovacích jazycích, je potřeba dávat pozor na sql injection (rust/sqlx). Při použití SQL v aplikacích se doporučuje použít Repository/DAO pattern, případně CQRS.
     - **Objektově relační mapování (ORM)** umožňuje mapování objektového modelu aplikace na relační databázi. Výhodou je, že není nutné psát přímé SQL dotazy a kód je (měl by být) agnostický k použité databázi, může však vzniknout problém s neodstatečnou kontrolou nad dotazem/nutností tvorby specializovaných struktur/tříd. Složitější dotazy mohou být ve výsledku podobně komplikované, jako vlastní sql dotaz (js\prisma, rust\diesel, java\hibernate)
     - **Souborový systém** - data je možné ukládat přímo do souborového systému. Toto je vhodné třeba pro obrázky/pdf, ale je potřeba ošetřit, abychom neposkytli přístup k jiným částem systému, než k jakým chceme.
     - **NoSQL** - alternativa k relačním db, umožňují ukládání a manipulaci s nestrukturovanými daty. Oproti relačním databázím poskytují lepší škálovatelnost a flexibilitu, problém může být konzistence (často se používá duplikaci pro vyšší rychlost) (mongodb, cassandra)
     - **Cachování** -dočasné ukládání často používaných dat/výsledků operací. Lze provádět na úrovni RAM, před databází, před serverem... (redis, nginx)
+
+## Dodatečné poznámky
+**DAO** - data access object, abstrahuje přístup k databázi/persistenčnímu mechanismu
+    - umožňuje výměnu persistenční technologie, aniž by bylo třeba zasahovat do jiných vrstev
+    - usnadňuje testování business logiky
+**DTO a.k.a. Value Object** - data transfer object, zapouzdřuje data pro komunikaci mezi vrstvami
