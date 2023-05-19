@@ -123,3 +123,6 @@ Pro vývoj rozsáhlých systémů se používají následující typy nástrojů
     - umožňuje výměnu persistenční technologie, aniž by bylo třeba zasahovat do jiných vrstev
     - usnadňuje testování business logiky
 **DTO a.k.a. Value Object** - data transfer object, zapouzdřuje data pro komunikaci mezi vrstvami
+**Inversion of Control** - struktura má pole (třeba connection pool), které používá pro své fungování (závisí na něm). Nemá si pole tvořit sama, naplnit ho z parametru konstruktoru/jiným způsobem.
+**Dependency Injection** - existují frameworky, které asistují s IoC pomocí injekce závislostí přímo do polí struktur "automaticky" (rust\di, java\spring)
+**Aspect Oriented Programming** - technika, kde se definuje aspekt, který je volán pokaždé definované akci. E.g. pro logování - aspekt je definován jednou a je řečeno, že se má provádět pro všechny metody. Není nutné upravit každou metodu, aby explicitně logovala.
