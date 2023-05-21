@@ -1,0 +1,1 @@
+TODO možná rozvést oauth, oidc, kerberos, saml, tls certifikáty
