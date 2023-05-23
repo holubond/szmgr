@@ -11,3 +11,4 @@ Sepsáno na základě přednášek, osobních zkušeností a samozřejmě ChatGP
 *Mohou nastat drobné změny, ale nic markantního*
 
 - [Programování a softwarový vývoj](./1_programovani_a_softwarovy_vyvoj.md)
+- [Kvalita kódu](./2_kvalita_kodu.md)
