@@ -10,7 +10,7 @@
 
 - za nejdůležitější atributy kvality kódu se považují
     - **Udržitelnost (maintainability)** = snadnost úprav bez technického dluhu
-    - **Výkonost** = reakční doba systému (a efektivita využití zdrojů)
+    - **výkonnost** = reakční doba systému (a efektivita využití zdrojů)
     - **Spolehlivost** = pravděpodobnost bezchybného fungování po určitou dobu
     - **Testovatelnost** = jak snadno (a co všechno) lze systém testovat
     - **Škálovatelnost** = schopnost systému zpracovat větší množství dat/uživatelů..
@@ -33,18 +33,94 @@
 - (automatizované) testování (rust\cargo test)
 - statická analýza (rust\cargo clippy, sonarqube)
 
-### Oprava problémů kvality
+### Oprava problémů kvality (pro každý atribut)
 - **Udržitelnost (maintainability)** - refaktoring
-- **Výkonost** - paralelismus, asynchronní zpracování, detekce a mitigace bottlenecků
+- **výkonnost** - paralelismus, asynchronní zpracování, detekce a mitigace bottlenecků
 - **Spolehlivost** - detekce a náprava zdrojů nespolehlivosti, kontrolní mechanismy pro zajištění spolehlivosti, vhodné ošetření chyb
 - **Testovatelnost** - refaktoring
 - **Škálovatelnost** - refaktoring, extrakce subsystému...
 - **Bezpečnost** - detekce a oprava chyb
 - **Použitelnost** - zlepšení UX, úprava systému
 
+### Špatný kód
+- pomíchané úrovně abstrakce
+- nízká koheze (megatřídy, dlouhé funkce..)
+- kruhové závislosti (je pak závislost na implementaci, blbě se sleduje flow a vztahy, blbě se to testuje, udržuje a škáluje)
+- duplikace kódu
+- spousta parametrů
+- blbé názvy
+- dělání věcí příliš "chytře", když to není nutné
+- nedodržování standardů/vhodných konstruktů jazyka
+- magické konstanty
+
+#### Code smells a taktiky pro zajištění kvality
+
+!Jednotlivé taktiky mohou být vzájemně v rozporu, je potřeba si určit, čeho chceme docílit! (e.g. udržitelnost vs výkon)
+
+- **Udržitelnost**
+    - příliš brzké optimalizace => nejdřív profiluj, pak případně optimalizuj
+    - přílišná flexibilita => snaž se o jednoduchost, pak případně rozšiřuj
+    - snaha o moc chytré řešení => stavební základy by měly být co nejjednodušší
+    - nepoužívání standardů, návrhových vzorů
+    - nízká modularizace
+- **Výkonnost**
+    - redundantní práce => kešování, memoizace, bottom-up approach dynamického programování
+    - sekvenční zpracování/hledání => binární hledání, chytřejší algoritmy, práce se seřazenými kolekcemi, paralelizace go brrrrrr
+    - dlouhé kritické sekce (ve vícevláknových programech) => minimalizujeme kritickou sekci, může být lepší použít vícero zámků
+    - aktivní čekání => async zpracování, necháme se notifikovat až operace skončí..
+- **Spolehlivost** 
+    - nevalidujeme vstupní data, slepá důvěra
+    - špatný error/exception handling
+    - nepředpokládáme, že by funkce mohl někdo zavolat v jiném pořadí
+    - přílišný hypetrain, používáme technologie, kterým úplně nerozumíme
+    - absence logování => loguj, je fajn vědět, co se v systému dělo před pádem
+    - snadný pád celého systému kvůli jedné části => nasaď více služeb, implementuj restart/recover, automatické přepnutí se na jinou, funkční službu 
+- **Testovatelnost**
+    - globální stav, proměnné
+    - schovávání závislostí; je lepší provést dependency injection, než sázet na předchozí volání `init()` funkce pracující s globálním stavem
+    - komunikace mezi jednotkami, které by neměly komunikovat => SOLID
+    - nutnost hacky solutions, abychom vůbec mohli testovat => SOLID
+    - nedeterminismus (závislost na čase, náhodnosti, globálním stavu, databázi... e.g. bacha na iteraci přes rust std::collections::HashMap, elementy jsou náhodně seřazené)
+    - neoddělujeme inicializační a aplikační logiku
+- **Škálovatelnost** 
+    - monolitická aplikace, distribuce může zvýšit výkon/kapacitu, ale bacha na nutný režijní overhead, těžší testování, nasazování, bezpečnost...
+
 ### Sledování problémů kvality
 - issue tracking
 - správa technického dluhu (tracking, vyhrazení času na jeho nápravu)
+
+## Softwarové metriky
+- měřitelné aspekty sw systému (počet řádků kódu, pokrytí testy, cyklomatická složitost...), které nám dávají informace o celkovém obrazu, ale může být netriviální je vhodně interpretovat
+- e.g. 100% pokrytí testy nemusí znamenat, že v systému nejsou chyby. Velký počet malých tříd zní dobře, ale třídy mohou být naprosto nelogicky strukturované a vzájemně silně závislé...
+- mohou být přímé (to co přímo změříme, e.g. počet defektů) nebo odvozené (vypočítané z přímých, e.g. hustota defektů; počet defektů na velikost produktu)
+
+- **Lines of code**
+- **(Non)Commented lines of code** - řádky (ne)obsahující komentář
+- **Počet tříd**
+- **Počet funkcí/metod**
+- **Počet packages**
+- **Počet souborů**
+- **Provázanost tříd** - kolik jiných tříd voláme
+- **Hloubka dědičnosti**
+- **Počet metod na třídu vážený složitostí**
+...
+- **Cyklomatická složitost** - počet nezávislých cest ve zkoumané jednotce (obvykle funkce), kterými se může běh vydat
+    `= <počet hran/větví> - <počet vrcholů/nevětvených bloků> + 2<počet vzájemně nepropojených grafů(pro funkci 1)>`
+    - nejnižší je 1 (bez větvení)
+
+často nás spíš zajímají poměry/odvozené metriky, e.g. procento komentů z celkového počtu řádků, průměrná velikost metody, odchylky v rámci projektu/mezi releases...
+
+- metriky je nebezpečné používat k ohodnocení výkonu vývojáře
+
+### Pokrytí testy
+- Můžeme sledovat různá kritéria, pokrytí znamená, že danou cestou kódu prošel aspoň jeden test, metrika je obvykle v procentech
+    - **line/statement coverage** - pokryté řádky/výrazy
+    - **function coverage** - pokryté funkce/metody, jde o to, zda byla aspoň jednou zavolána
+    - **branch coverage** - pokryté logické větve programu
+    - **condition coverage** - každá boolean podmínka byla vyhodnocena jako true i false
+- mnohdy není 100% pokrytí možné (pokud třeba někde něco reduntantně testujeme, better be safe than sorry) a zároveň 100% pokrytí neznamená bezchybnost
+- některé části kódu je mnohem těžší pokrýt, než jiné
+- může pomoct hledat části kódu, které jsou neotestované, ale o kvalitě testů se toho moc nedozvíme
 
 ## Testování
 = proces evaluace, zda systém splňuje specifikované požadavky... což se snadněji řekne, než dělá
@@ -60,15 +136,13 @@
 - regresní testování - sledujeme, zda změny v systému nepřinesly pády (automatizovaných) testů
 - smoke testy - sledujeme, zda vybrané kritické funkce fungují v novém prostředí. Pokud ne, nemá vůbec cenu nasazovat a testovat další věci
 - sanity testy - jako smoke, ale spouští se pro ověření nápravy chyb/přidání funkcionality
+- A/B testování - používáme dvě varianty a sledujeme, která je úspěšnější (obvykle při testování UI)
 - :hahaa: v praxi někteří experti praktikují melounové testování pro zvýšení test coverage, zvenku zelené, uvnitř červené :hahaa:
 
 - kvalita testů lze oveřit mutačním testováním. Do aplikace zavedeme defekty (mutací zdrojového kódu, lze automatizovat třeba negací operátoru, off-by-one, vynechání volání...) a sledujeme, kolik jich bylo odhaleno testy => pokud něco prošlo, může jít o kandidáta na další testy
 - některé situace jsou pro náš produkt rizikovější (lze odhadnout při analýze), než ostatní - na ty bychom se měli zaměřit při testování
-
-- branch coverage - snažíme se pokrýt všechny logické větve programu (program nimi musí v testech aspoň jednou projít)
-- line/statement coverage - -//- ale řádky/výrazy
-
 - vstupy testů vhodně rozdělujeme na kategorie (e.g. <0, 0, >0), z každé vybereme pár reprezentantů (abychom nemuseli testovat úplně každou hodnotu)
+- typy pokrytí testy jsme popsali v [pokrytí testy](#pokrytí-testy)
 
 - testování si můžeme usnadnit tím, že v systému modelujeme nevalidní stavy jako nereprezentovatelné (rust enum <3, builder pattern, stavový automat...)
 
@@ -159,16 +233,10 @@
 - e.g. vytáhneme sdílenou funkcionalitu do vlastní funkce
 - ... platí na vše, co může být v systému duplikováno (ale i v procesech, třeba opakované manuální spouštění testů => automatizovat)
 
-
-### Špatný kód
-- pomíchané úrovně abstrakce
-- nízká koheze (megatřídy, dlouhé funkce..)
-- kruhové závislosti (je pak závislost na implementaci, blbě se sleduje flow a vztahy, blbě se to testuje a udržuje)
-- duplikace kódu
-- spousta parametrů
-- blbé názvy
-- dělání věcí příliš "chytře", když to není nutné
-- nedodržování standardů
+### Keep it simple stupid (KISS) princip
+- jednoduchost před výkonem
+- nejlépe fungují systémy, které jsou co nejjednodušší
+- není důvod používat složité techniky na jednoduché problémy
 
 ### Refaktoring
 - úprava modulu takovým způsobem, aby se nezměnilo jeho externí chování, ale pouze došlo ke zlepšení jeho interního struktury/modifikovatelnosti...
@@ -180,8 +248,12 @@
     - **Nahrazení funkce metodou struktury** - fajn, když funkce používá ranec proměnných => stanou se fieldy struktury
     - **Move method/field** - z jedné do jiné struktury, pokud to dává smysl (třeba doménově)
     - **Extrakce/inline třídy** - z třídy obsahující množinu polí, která jsou related, vytáhneme nový objekt, který bude původní třída obsahovat/nebo naopak pro inline
+    - **Early return** - obecně chceme, aby funkce popisovala správný/bezchybný tok programu. Pokud při zpracování funkce objevíme chybu ve vstupních datech, hodíme tam return. V takových případech nepoužíváme `if-else`, ale `if return`
+    - **Rename** cokoliv
+    - **Seskupení mnoha parametrů do struktury**
+
+Kód, který se dobře čte a udržuje nemusí být ten nejrychlejší/nejefektivnější (abstrakce mohou něco stát). Obvykle nám mírné snížení výkonu za vyšší čitelnost nevadí, ale nemusí to být vždy pravda.
 
 
-TODO KISS
-refaktoring kódu (měj solidní test suite před refaktoringem).
-Testování kódu, jednotkové testy, integrační testy, uživatelské a akceptační testy. Ladění a testování výkonu. Proces řízení kvality ve vývoji softwarových systémů. Příklady z praxe pro vše výše uvedené. (PV260, PA017, PA103)
+TODO 
+Ladění a testování výkonu. Proces řízení kvality ve vývoji softwarových systémů. Příklady z praxe pro vše výše uvedené. (PV260, PA017, PA103)
