@@ -20,7 +20,7 @@
 
 ### Prevence problémů kvality
 - následování best practices a konvencí, obecných (SOLID, clean code) i pro danou technologii/jazyk (eslint, cargo fmt)
-- využití návrhových vzorů
+- využití principů návrhových vzorů
 - techniky jako TDD, párové programování, code reviews
 - použití procesních standardů (ITIL), agilních technik (scrum, kanban)
 - automatizované testování, CI
@@ -31,7 +31,7 @@
 ### Detekce problémů kvality
 - code reviews, inspections
 - (automatizované) testování (rust\cargo test)
-- statická analýza (rust\cargo clippy, sonarqube)
+- statická analýza (rust\cargo clippy, borrow checker, sonarqube) - nespouštíme kód
 
 ### Oprava problémů kvality (pro každý atribut)
 - **Udržitelnost (maintainability)** - refaktoring
@@ -61,7 +61,7 @@
     - příliš brzké optimalizace => nejdřív profiluj, pak případně optimalizuj
     - přílišná flexibilita => snaž se o jednoduchost, pak případně rozšiřuj
     - snaha o moc chytré řešení => stavební základy by měly být co nejjednodušší
-    - nepoužívání standardů, návrhových vzorů
+    - nepoužívání standardů, principů návrhových vzorů
     - nízká modularizace
 - **Výkonnost**
     - redundantní práce => kešování, memoizace, bottom-up approach dynamického programování
@@ -254,6 +254,24 @@
 
 Kód, který se dobře čte a udržuje nemusí být ten nejrychlejší/nejefektivnější (abstrakce mohou něco stát). Obvykle nám mírné snížení výkonu za vyšší čitelnost nevadí, ale nemusí to být vždy pravda.
 
+## Ladění a testování výkonu
 
-TODO 
-Ladění a testování výkonu. Proces řízení kvality ve vývoji softwarových systémů. Příklady z praxe pro vše výše uvedené. (PV260, PA017, PA103)
+Cílem je identifikace a řešení případných problémů týkajících se rychlosti, odezvy a propustnosti systému, nalezení hranic
+
+- **Load testing**
+    - zátěžové testy, sledujeme jak systém zvládá dlouhodobější zátěž
+- **Stress testing**
+    - sledujeme, jak se systém vypořádává s krátkodobými výkyvy v zátěži (když najednou přijde spousta požadavků)
+
+Běžící systém je také vhodné dlouhodobě monitorovat, abychom odhalili další slabá místa.
+
+e.g. Gatling, Siege, LoadRunner
+
+## Proces řízení kvality ve vývoji softwarových systémů
+
+skládá se z
+- definice požadavků na sw kvalitu a plánování - specifikace funkcionálních i nefunkcionálních požadavků, stanovení hodnotících kritérií, rizik, určení metrik, podrobný popis a rozvržení aktivit k zajištění kvality
+- zajištění (assurance) sw kvality - definice a kontrola procesů, které povedou k zajištění sw kvality a prevenci defektů (mimo jiné nastavení CI/CD)
+- kontrola sw kvality - kontrola, zda produkt/jeho části splňují požadavky (včetně požadavků na kvalitu) a jejich vývoj se řídí definovanými procesy, monitoring zda se držíme procesů a vytyčených cílů
+- zlepšení kvality - snaha zlepšit procesy, abychom docílili zlepšení kvality
+
