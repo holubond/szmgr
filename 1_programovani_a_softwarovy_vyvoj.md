@@ -160,6 +160,8 @@ Pro vývoj rozsáhlých systémů se používají následující typy nástrojů
     - **Cachování** -dočasné ukládání často používaných dat/výsledků operací. Lze provádět na úrovni RAM, před databází, před serverem... (redis, nginx)
 
 ## Dodatečné poznámky
+**Validace** - systém dělá to, co se od něj čeká (v rámci požadavků)
+**Verifikace** - systém dělá věci správně interně
 **DAO** - data access object, abstrahuje přístup k databázi/persistenčnímu mechanismu
     - umožňuje výměnu persistenční technologie, aniž by bylo třeba zasahovat do jiných vrstev
     - usnadňuje testování business logiky
