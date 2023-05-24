@@ -29,7 +29,7 @@
 - design by contract - naše metody (zvlášť při tvorbě) mohou vyžadovat splnění určitého kontraktu (lze vynutit asserty), aby mohly poskytnout garance o výstupech. Je možné použít podmíněnou kompilaci a mít kontrakty třeba jen ve vývojovém prostředí (tím se ale můžeme připravit o přesné určení místa problému na produkci) 
 
 ### Detekce problémů kvality
-- code reviews (vzájemné mezi vývojáři), inspections (formální, je fajn použít formulář; ukazuje to přípravu a zároveň se odfiltrují zbytečnosti, nelpíme na stylu, řešíme správnost, dodržování standardů...)
+- code reviews (vzájemné mezi vývojáři), inspections (formální, je fajn použít formulář; ukazuje to přípravu, na nic se nezapomene a zároveň se odfiltrují zbytečnosti, nelpíme na stylu, řešíme správnost, dodržování standardů...)
 - (automatizované) testování (rust\cargo test)
 - statická analýza (rust\cargo clippy, borrow checker, sonarqube) - nespouštíme kód
 
