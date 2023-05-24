@@ -275,3 +275,11 @@ skládá se z
 - kontrola sw kvality - kontrola, zda produkt/jeho části splňují požadavky (včetně požadavků na kvalitu) a jejich vývoj se řídí definovanými procesy, monitoring zda se držíme procesů a vytyčených cílů
 - zlepšení kvality - snaha zlepšit procesy, abychom docílili zlepšení kvality
 
+
+## Notes
+- **Capability Maturity Model** - definuje úrovně vyspělosti organizace v kontextu zajištění kvality
+    - Level 1 Výchozí - chaos, nepředvídatelná cena, plán
+    - Level 2 Opakovatelný - intuitivní, cena a kvalita jsou proměnlivé, plán je pod vědomou kontrolou, neformální metody & procedury
+    - Level 3 Definovaný - orientace na kvalitu, spolehlivé ceny a plány, stále nepředvídatelný výkon systému kvality
+    - Level 4 Řízený - měření, promyšlená a statisticky řízená kvalita produktu
+    - Level 5 Optimalizující - automatizace a zlepšení výrobního procesu, prevence chyb, inovace technologie
