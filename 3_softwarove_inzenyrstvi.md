@@ -59,6 +59,9 @@ Existuje několik základních modelů
     - navrhni systém a implementuj ho. Vyhovuje? Super. Nevyhovuje? Zpět k návrhu/implementaci
     - nelze pořádně řídit, neexistuje dokumentace, řešitelé jsou obtížně nahraditelní, jde o experimentování 
 
+- **V procesní model**
+    - alá vodopád, ale zobrazuje i různé testy k fázím (jednotkové, integrační, systémové, uživatelské, akceptační...)
+
 Nezávisle na modelu je důležité nastavit správnou komunikaci, definovat a používat jednotný jazyk. Pokud chceme cokoliv řídit, je potřeba mít informace o aktuálním stavu, dodržování plánu, očekávaných změnách, problémech...
 
 Hlavní metodiky řízení sw projektů jsou **prediktivní metodiky (e.g. RUP)** a **agilní (e.g. SCRUM)**.
@@ -75,7 +78,8 @@ Hlavní metodiky řízení sw projektů jsou **prediktivní metodiky (e.g. RUP)*
 - Výhody:
     - zákazník není při vývoji potřeba, definice produktu je zakotvena v kontraktu (přesně ví, co dostane)
 - Nevýhody
-    - fixní deadliny a rozpočet
+    - pracujeme s fixními deadliny, rozpočetem i funkcionalitou
+        - v reálu se deadline a rozpočet může lehce měnit v závislosti na vývoji
     - změnové pořadavky jsou problém
     - potřeba více času k plánování
     - složitý kontrakt, je třeba myslet na všechno (exhaustive kritéria přijetí, penále...)
@@ -111,9 +115,16 @@ RUP je konkrétní metodika stavějící na UP (přidává třeba jednotlivé ro
 
 ## Agilní metodiky a principy agilního vývoje SW
 - flexibilní, důraz na lidi
-- vhodná, pokud se požadavky mění, nebo není jasná kýžená výsledná podoba systému
+- vhodná, pokud se požadavky mění, není jasná kýžená výsledná podoba systému, nebo zákazník požaduje něco hmatatelného relativně brzo
     => není přesné datum dokončení
 - vyžaduje minimální plánování předem
+- klíčová je dobrá komunikace a spolupráce týmu
+- automatizované testování
+- variabilita funkcionality (vývoj postupuje tak, že když dojde čas/peníze, tak se ptáme zákazníka, zda něco přihodí, nebo zda vyškrtneme nějakou část systému)
+- e.g. 
+    - extreme programming - osvědčené postupy tahá do extrému (osvědčuní se reviews? => dělej reviews co to jde)
+        - párové programování, důraz na testy, refaktorizaci, kód je single source of truth (dokumentaci generujeme z kódu, používáme schéma pro generování ostatních věcí...)
+        - rychlá zpětná vazba, důraz na jednoduchost, malé inkrementy
 
 ### SCRUM
 - nejšastěji využívaná agilní metodika
@@ -171,39 +182,40 @@ RUP je konkrétní metodika stavějící na UP (přidává třeba jednotlivé ro
         - co nefungovalo, co můžeme zlepšit
         - ideálně se vymyslí jedno zlepšení procesů, které se v příštím sprintu bude používat
 
+- SCRUM může skončit, když
+    - product backlog je prázdný (vše hotovo)
+    - dojde čas/peníze
+    - udělali jsme poslední sprint a je sice co spravovat, ale defekty jsou přijatelné
+    - product owner/stakeholder se rozhodne ukončit projekt
 
+- návrh a architektura se mohou dělat průběžně pro jednotlivé user stories, nebo se do procesu zavádí jako standard (e.g. používáme vrstvenou architekturu, používáme tyto technologie...)
 
+- kontrakt se obvykle určuje podle toho, kolik (a jakých) lidí bude za dané období na projektu pracovat
+    - super na flexibilitu, ale těžko se určuje výsledná cena/deadline
+- zákazník je zatažen do postupu vývoje, může hned dávat zpětnou vazbu, ale tento overhead vyžaduje extra čas
 
-
-
-
-
+- balancuje se Čas, Cena a Rozsah funkcionalit
 
 ## Nasazení a provoz softwarových systémů
+- před nasazením je důležité systém otestovat v prostředí, které bude co nejbližší tomu produkčnímu
+- klíčové je v provozu logování událostí (abychom v případě chyby věděli, co se v systému dělo), monitoring, systém zpětné vazby
+- nasazení zahrnuje přípravu prostředí (instalace os, databází...), lze automatizovat/zjednodušit použitím Platform as a Service, případně kubernetes
+- před nasazením do provozu je fajn projít a zkontrolovat dokumentaci, která může být kvůli vývoji neaktuální
+- součástí nasazení je i školení uživatelů, abychom předešli neúspěchu z důvodu neochoty/neznalosti používání
+- součástí nasazení může být i customizace systému pro specifické potřeby zákazníka (pokud to náš systém umožňuje)
 
 ## Údržba softwarových systémů, znovupoužitelnost
-
-
-
-
-<!-- 
-
-Po dokončení návrhu přichází na řadu samotná implementace softwarového produktu. Programátoři používají různé programovací jazyky a technologie k vytvoření funkčního softwarového kódu. Během této fáze se také provádí testování, aby se ověřilo, zda software pracuje správně a splňuje stanovené požadavky.
-
-Dalším důležitým krokem je nasazení softwarového řešení, které zahrnuje instalaci a konfiguraci na cílovém prostředí. To může zahrnovat serverovou infrastrukturu, databáze nebo další technické prvky, které jsou nezbytné pro provoz softwarového produktu. Správné nasazení je klíčové pro zajištění správného a stabilního chodu softwaru.
-
-Po nasazení je důležité provádět údržbu a podporu softwarového řešení. To zahrnuje opravu chyb, aktualizace, optimalizaci výkonu a další úpravy, které jsou potřebné v průběhu životnosti softwaru. Údržba je nezbytná pro zajištění správného fungování a spokojenosti uživatelů.
-
-Celý proces vývoje softwarových řešení může být realizov
-
-...ován pomocí různých metodologií a přístupů, jako je například vodopádový model, iterativní vývoj, nebo agilní metodiky, jako je Scrum nebo Kanban. Každá z těchto metodologií má své výhody a vhodnost pro různé typy projektů a týmů.
-
-V průběhu vývoje softwarového řešení je také důležité zajistit správnou komunikaci a spolupráci mezi členy týmu. Projekt může zahrnovat programátory, designéry, analytiky a další odborníky, kteří musí spolupracovat a koordinovat svou práci. Komunikační nástroje, jako jsou pravidelné schůzky, nástěnky, nebo nástroje pro správu úkolů a verzování kódu, mohou pomoci udržet tým synchronizovaný a efektivní.
-
-V dnešní době je vývoj softwarových řešení často prováděn v prostředí, které podporuje automatizaci a kontinuální integraci a nasazení (CI/CD). To umožňuje rychlé a opakované testování, sestavování a nasazování softwaru, což vede k vyšší kvalitě a rychlosti dodávání.
-
-V neposlední řadě je důležité také sledovat trendy a novinky v oblasti vývoje softwarových řešení. Technologie se neustále vyvíjejí a nové přístupy a nástroje se objevují. Důkladné sledování a přizpůsobování se těmto trendům může pomoci vytvářet moderní a konkurenceschopné softwarové produkty.
-
-Celkově lze říci, že vývoj softwarových řešení je komplexní proces, který vyžaduje dobrou analýzu, návrh, implementaci, nasazení a údržbu. Efektivní spolupráce týmu, využívání moderních metodologií a technologií a sledování trendů jsou klíčové pro úspěšné vytváření softwarových produktů, které splňují požadavky a potřeby uživatelů.
-
--->
+- v závěru je fajn si udělat analýzu toho, co (ne)fungovalo, co zlepšit...
+    - dosažená produktivida a kvalita
+    - použitý proces, odchylky, důvody
+    - plán vs realita a důvody (čas, peníze, chyby, FP/LOC...)
+    - rizika (plán vs realita, jak jsme řešili rizika a problémy)
+    - pracnost (i dle etap)
+    - souhrn defektů
+    - kauzální analýza - analýza odchylek výkonu u použitého procesu (jak a proč)
+    - použité technologie a jejich hodnocení
+    - popsat v dokumentu tým a jednotlivce, na které je možné se případně obrátit (třeba když se řeší problém v dalším projektu)
+    - aktiva procesu - co vzniklo a může být použito i v jiných projektech (třeba knihovny, checklisty...)
+- údržba se může dělat jako samostatný projekt, mohou na to být specializované týmu
+- řeší se oprava (i bezpečnostních) chyb, aktualizace a vylepšení (ideálně nějakým způsobem automatizované, ale může být fajn potvrzení uživatele), správu změn (co se jak a proč změnilo)
+- znovupoužitelnost se obvykle řeší v rámci jednotlivých služeb/programů/komponent, ale ne znovupoužitím struktur mezi různými projekty (pokud nejde o specializovanou knihovnu) - mohli bychom mít problém v případě změny
