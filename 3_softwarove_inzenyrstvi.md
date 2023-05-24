@@ -112,22 +112,19 @@ RUP je konkrétní metodika stavějící na UP (přidává třeba jednotlivé ro
 ## Agilní metodiky a principy agilního vývoje SW
 - flexibilní, důraz na lidi
 - vhodná, pokud se požadavky mění, nebo není jasná kýžená výsledná podoba systému
+    => není přesné datum dokončení
 - vyžaduje minimální plánování předem
 
 ### SCRUM
 - nejšastěji využívaná agilní metodika
 - iterativní, inkrementální
-- jednoduchý
+- jednoduchý, očeává se použití i dalších nástrojů/procesů
 
-- události
-    - **sprint panning**
-        - probíhá na začátku sprintu, cca 8 hodin
-        - účastní se celý scrum tým
-        - vytyčuje se cíl nadcházejícího se sprintu (a.k.a. co chceme udělat), vybíráme věci z product backlogu a přiřazujeme jim tasky
-    - **sprint**
-    - **sprint review**
-    - **daily scrum**
-    - **retrospective**
+- role
+    - **product owner** - reprezentuje stakeholdery, má největší přehled o požadavcích na produkt, spravuje product backlog
+    - **scrum master** - zodpovědný za dodržování scrumu, řeší procesy
+    - **tým vývojářů** - 3-9 lidí, soběstačný (má lidi na všechno) a sebeorganizující se, spravují sprint backlog, zodpovědní za doručení produktu
+
 - artefakty
     - **product backlog** 
         - obsahuje veškerou zbývající požadovanou funkcionalitu ve formě **user stories** (jednotka funkcionality z pohledu uživatele)
@@ -149,10 +146,33 @@ RUP je konkrétní metodika stavějící na UP (přidává třeba jednotlivé ro
         - tvořen týmem vývojářů, testován zákazníkem, může být released product ownerem
         - je nutné, aby byl použitelný a byl splněn (dle definice scrum týmu)
 
-- role
-    - **product owner** - reprezentuje stakeholdery, má největší přehled o požadavcích na produkt, spravuje product backlog
-    - **scrum master** - zodpovědný za dodržování scrumu, řeší procesy
-    - **tým vývojářů** - 3-9 lidí, soběstačný (má lidi na všechno) a sebeorganizující se, spravují sprint backlog, zodpovědní za doručení produktu
+- události
+    - **sprint planning**
+        - probíhá na začátku sprintu, cca 8 hodin
+        - účastní se celý scrum tým
+        - vytyčuje se cíl nadcházejícího se sprintu (a.k.a. co chceme udělat), vybíráme věci z product backlogu a přiřazujeme jim tasky
+    - **sprint**
+        - iterace soustředěná na vývoj funkcionality v spring backlogu, cílem je vytvořit použitelný a potenciálně vydatelný product increment
+        - pracuje na něm celý scrum team
+        - product owner řešní komunikaci, vývojáři vývojaří, scrum master sleduje dodržování procesů
+        - analýza, návrh, implementace, testování
+        - max 1 měsíc, všechny sprinty trvají stejnou dobu 
+    - **daily scrum**
+        - 15 minut každý den, účastní se vývojáři a možná i scrum master
+        - co jsem dělal včera, co budu dělat dneska, narazil jsem na nějaké problémy?
+    - **sprint review**
+        - 4 hodiny, účastní se celý scrum team a klíčoví stakeholdeři (e.g. zákazník)
+        - proběhne předvedení inkrementu
+        - proberou se případné změny product backlogu
+        - případně se přepočítá předpokládané datum dokončení
+    - **retrospective**
+        - 3 hodiny, účastní se scrum team
+        - řeší se procesy, vztahy, nástroje, lidi
+        - co nefungovalo, co můžeme zlepšit
+        - ideálně se vymyslí jedno zlepšení procesů, které se v příštím sprintu bude používat
+
+
+
 
 
 
