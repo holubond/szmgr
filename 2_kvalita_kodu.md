@@ -126,6 +126,7 @@
 = proces evaluace, zda systém splňuje specifikované požadavky... což se snadněji řekne, než dělá
 - v praxi je testování z pravidla nekompletní. Testováním odhalujeme chyby, ale nedokazujeme bezchybnost.
 - každý test by měl testovat pouze jednu věc/vlastnost/feature, ideální je spousta malých testů, díky čemuž můžeme snadno identifikovat zdroj problému.
+- ideálně by měl testování provádět někdo jiný, než autor testovaného kódu
 
 - **whitebox (strukturální)** - vidíme zdrojový kód a můžeme vstupy testů cílit na spouštění kritických míst (off-by-one error, zero division...)
     - e.g. unit, integration, performance tests
