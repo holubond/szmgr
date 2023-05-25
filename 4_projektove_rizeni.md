@@ -10,6 +10,7 @@ Je třeba rozlišovat mezi
     - unikátní - každý má svá specifika (požadavky, zákazníky, tým...), nejedná se o každodenní rutinnou práci firmy
     - plánované
     - opakovatelné prvky projektu (či celé projekty) jsou **procesy** - řízené událostmi, bývají dobře definované (jak postupovat), vizualizované flow chartem
+        > proces je opakovatelná série aktivit s definovanými vstupy, výstupy, nástroji, technikami...
     - bývají spojené s rizikem - spojené s unikátností (nikdy jsme to nedělali), deadliny, děláme nějakou změnu
     - **řízení**
         - balanc mezi časem, cenou a rozsahem/kvalitou
@@ -42,8 +43,23 @@ Je třeba rozlišovat mezi
 
 ## Mezinárodní standardy a metodiky projektového řízení 
 ### PMI Project Management Body of Knowledge (PMBOK)
+- procesně orientovaná metodika, podrobně popsaná sada good practices
+- 49 procesů (série aktivit s definovanými vstupy, výstupy, nástroji a technikami) dělených do
+    - 5 procesních skupin, logické dělení procesů podle fází (inicializace, plánování, provedení, monitoring a řízení, uzavírání)
+    - 10 vědomostních oblastí/disciplín projektového managementu, každá má vlastní procesy
+        - Integrace - tvorba Project Charteru (základní info o projektu), vývoj plánu řízení projektu, nastavení řízení změn (review, schválení, dodání, komunikace), obsahuje i procesy pro uzavírání fáze/projektu
+        - Rozsah (scope) - sesbírání požadavků, definice, validace a řízení rozsahu funkcionalit systému, tvorba Work Breakdown Structure
+        - Plán - definice a určení pořadí aktivit, odhady časů aktivit, tvorba a řízení plánu
+        - Cena - odhad cen a rozpočtu aktivit nebo jednotek práce pomocí Work Breakdown Structure, řízení ceny a rozpočtu
+        - Kvalita - plánování, řízení a kontrola kvality
+        - Zdroje - odhad nepeněžních a lidských zdrojů, jejich získávání a řízení, tvorba a správa týmů
+        - Komunikace - plán, správa a kontrola komunikace a informací o projektu
+        - Riziko - identifikace, kvalitativní (míra doparu) a kvantitativní (pravděpodobnost) analýza rizik, jejich monitoring, plán a procesy reagující na rizika
+        - Dodavatelé - produkty a služby pocházející mimo náš tým, kontrakty, objednávky, SLAčka, výběr dodavatelů, monitoring výkonu dodavatelů
+        - Stakeholdeři - zúčastněné osoby; jejich identifikace, plánování a správa zapojení stakeholderů do projektu
+
 ### PRINCE 2
-- metoda pro řízení obecného projektu
+- metodika pro řízení obecného projektu
 - předepsaný postup, krok za krokem (spousta formulářů na vyplňování, checklisty)
 - součástí není správa požadavků, rozpočtování
 - vhodná metodika pro
