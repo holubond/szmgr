@@ -161,6 +161,10 @@ RUP je konkrétní metodika stavějící na UP (přidává třeba jednotlivé ro
         - je nutné, aby byl použitelný a byl splněn (dle definice scrum týmu)
 
 - události
+    - **project planning**
+        - tvorba [project charteru](./4_projektove_rizeni.md#pmi-project-management-body-of-knowledge-pmbok)
+        - tvorba product backlogu
+        - výběr klíčových strategií (komunikace, rizika, řízení změn, kvalita...)
     - **sprint planning**
         - probíhá na začátku sprintu, cca 8 hodin
         - účastní se celý scrum tým
