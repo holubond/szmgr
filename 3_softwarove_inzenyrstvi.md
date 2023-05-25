@@ -75,6 +75,7 @@ Hlavní metodiky řízení sw projektů jsou **prediktivní metodiky (e.g. RUP)*
 - argitektura je středobodem
 - umožňuje pevnou kontrolu nad procesy a týmem
 - vhodná, pokud potřebujeme pořádnou dokumentaci (UML diagramy)
+- hodí se pro velké a heterogenní produkty, velké týmy...
 - Výhody:
     - zákazník není při vývoji potřeba, definice produktu je zakotvena v kontraktu (přesně ví, co dostane)
 - Nevýhody
@@ -130,6 +131,8 @@ RUP je konkrétní metodika stavějící na UP (přidává třeba jednotlivé ro
 - nejšastěji využívaná agilní metodika
 - iterativní, inkrementální
 - jednoduchý, očeává se použití i dalších nástrojů/procesů
+- vhodný pro menší týmy (<=15 lidí)
+- hodí se, když máme tým schopný samostatnější práce, potřebujeme rychle vytvořit aspoň nějaký produkt
 
 - role
     - **product owner** - reprezentuje stakeholdery, má největší přehled o požadavcích na produkt, spravuje product backlog
