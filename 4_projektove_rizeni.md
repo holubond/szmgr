@@ -1,7 +1,7 @@
 # Projektové řízení. 
 > Plánování, řízení rizik, role modelů v projektovém řízení. Ganttovy diagramy, síťová analýza, metoda kritické cesty (CPM), Program Evaluation and Review Technique (PERT). Mezinárodní standardy a metodiky projektového řízení (PMI Project Management Body of Knowledge, PRINCE 2). Příklady z praxe pro vše výše uvedené. [PA179](https://is.muni.cz/auth/el/fi/jaro2022/PA179/um/)
 
-## Plánování, řízení rizik
+## Plánování
 
 Je třeba rozlišovat mezi
 - **Projekty**
@@ -26,27 +26,44 @@ Je třeba rozlišovat mezi
         - monitoringem výkonu firmy
         - výběrem a prioritizací programů a projektů
 
-Specifika IT projektů v porovnání s většinou průmyslových odvětví
-- nepřesné/neznámé, časté a měnící se požadavky
-- větší nutnost přizpůsobení produktu
-- velká složitost
-- náročné testování
-- neustálý a rapidní vývoj technologií
-- možnost globální spolupráce
-- projekty mohou v rámci portfolia ovlivnit ostatní projekty (zvlášť při selhání)
-- nutnost řízení rizik
-- dokončené projekty je často třeba servisovat/poskytovat podporu 
-
 Pro konkrétní projekt je potřeba si zvolit vhodný přístup **prediktivní** nebo **agilní** [viz otázka 3](./3_softwarove_inzenyrstvi.md).
 
-### IT Infrastructure Library (ITIL)
-- best practices pro **řízení IT služeb**
-- fáze
-    - **Service strategy** - požadavky, strategie pro zajištění kýženého, finance, co vlastně budeme dělat
-    - **Service design** - Service Level Agreement, řešení rizik, security & business compliance
-    - **Service transition** - jak měníme stávající služby, řešení deploymentu, uložení získaných znalostí pro budoucí projekty 
-    - **Service operation** - dokumentace pro uživatele/helpdesk, řešení incidentů/změnových požadavků/problémů, řešení identit a přístupu k systému
-    - **Continual service improvement** - monitoring, logování, aktualizace běžící služby
+### Agilní plánování
+Dále je potřeba u plánování projektů sepsat [Project Charter](./4_projektove_rizeni.md#pmi-project-management-body-of-knowledge-pmbok) popisující základní informace o projektu (proč, co, kdo, kdy, jak, za kolik...), sepsat podrobnosti klíčových strategií (komunikace, rizika, kvalita, změny) a nějakým způsobem začít plánovat práci (product backlog, řešení architektury...).
+
+## Řízení rizik
+Postup:
+1. Identifikace rizik
+    - čerpáme z předchozích zkušeností, lesons learned... co a proč se stalo?
+2. Ohodnocení rizik
+    - každé riziko způsobí náklady, můžeme pro něj odhadnout cenu
+    - každému přiřadíme pravděpodobnost a kritičnost dopadu, určíme následky
+    ![](img/20230525214112.png)
+3. Určení odezev na rizika, možnosti:
+    - akceptuj - no tak se to stane, no, nevadí, náklady na prevenci by byly vyšší než samotné riziko
+    - vyhni se - nastavení plánu, aby problém nemohl nastat (e.g. použití jiné technologie, která tento problém nemá)
+    - přesuň (třeba na někoho jiného) - e.g. tento komponent outsourcujeme se solidním SLA, nebo se pojistíme
+    - zmenši - sniž pravděpodobnost/míru dopadu rizika, třeba důkladnějším systémem reviews
+4. Stanovení monitoringu rizik
+    - stanovení odpovědnosti za monitoring rizik
+    - určení, kde budou rizika definována, kdy budou revidována a upravována
+5. Vytvoření registru rizik
+
+Možné zdroje rizik (nejčastější tučně):
+- uživatel - **nemožnost/neochota zapojit se**, odpor ke změnám
+- požadavky - změní se, **špatně pochopené**, blbě definované, nejasné či neadekvátní, **přijdou pozdě změny**
+- složitost projektu - komplexní doména, použití nové/nezavedené technologie
+- management - **neefektivní řízení**, špatně zvolená/použitá metodika/standard, **špatný odhad nákladů/zdrojů/času**, špatně určená komunikace, **nezkušený manažer**
+- tým - nezkušenost, **málo lidí**, osobní konflikty
+- firemní prostředí - nestabilní, změna vedení...
+- **subdodavatelé** - opoždění, nedostatečná kvalita, komunikace...
+
+### Agilní řízení rizik
+Prevence:
+    - **Transparence a zpětná vazba**, abychom předešli nedorozumnění v týmu
+    - **Používání user stories** - jsou snadno pochopitelné pro zákazníka, dají se dobře ověřovat
+    - **Jasná definice, co znamená "hotovo"**
+    - **Krátké iterace** - brzo zjistíme, co je případně blbě
 
 ## Role modelů v projektovém řízení
 TODO
@@ -164,3 +181,25 @@ TODO
 
 ### Metodiky
 - popsány v [otázce 3](./3_softwarove_inzenyrstvi.md)
+
+## Notes
+
+Specifika IT projektů v porovnání s většinou průmyslových odvětví
+- nepřesné/neznámé, časté a měnící se požadavky
+- větší nutnost přizpůsobení produktu
+- velká složitost
+- náročné testování
+- neustálý a rapidní vývoj technologií
+- možnost globální spolupráce
+- projekty mohou v rámci portfolia ovlivnit ostatní projekty (zvlášť při selhání)
+- nutnost řízení rizik
+- dokončené projekty je často třeba servisovat/poskytovat podporu 
+
+IT Infrastructure Library (ITIL)
+- best practices pro **řízení IT služeb**
+- fáze
+    - **Service strategy** - požadavky, strategie pro zajištění kýženého, finance, co vlastně budeme dělat
+    - **Service design** - Service Level Agreement, řešení rizik, security & business compliance
+    - **Service transition** - jak měníme stávající služby, řešení deploymentu, uložení získaných znalostí pro budoucí projekty 
+    - **Service operation** - dokumentace pro uživatele/helpdesk, řešení incidentů/změnových požadavků/problémů, řešení identit a přístupu k systému
+    - **Continual service improvement** - monitoring, logování, aktualizace běžící služby

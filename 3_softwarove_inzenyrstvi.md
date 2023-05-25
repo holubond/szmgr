@@ -116,6 +116,7 @@ RUP je konkrétní metodika stavějící na UP (přidává třeba jednotlivé ro
 
 ## Agilní metodiky a principy agilního vývoje SW
 - flexibilní, důraz na lidi
+- radši budeme reagovat na změnu, než se pevně držet plánu
 - vhodná, pokud se požadavky mění, není jasná kýžená výsledná podoba systému, nebo zákazník požaduje něco hmatatelného relativně brzo
     => není přesné datum dokončení
 - vyžaduje minimální plánování předem
@@ -144,9 +145,19 @@ RUP je konkrétní metodika stavějící na UP (přidává třeba jednotlivé ro
 
 - artefakty
     - **product backlog** 
-        - obsahuje veškerou zbývající požadovanou funkcionalitu ve formě **user stories** (jednotka funkcionality z pohledu uživatele)
-        - každé story má **story points** reprezentující časovou náročnost odhadnutou pomocí planning poker
-            - planning poker - pro každé story každý z týmu provede odhad, odhady se zveřejní najednou. následuje diskuze, dokud se na bodech za dané story všichni neshodnou
+        - obsahuje veškerou zbývající požadovanou funkcionalitu ve formě **user stories**
+            - jednotka funkcionality, testovatelná, logický celek
+            - každé story má:
+                - **story points** reprezentující časovou náročnost odhadnutou pomocí [planning pokeru](./3_softwarove_inzenyrstvi.md#planning-poker)
+                - akceptační kritéria (testovatelná, formulovaná jako Given ... When ... Then ...)
+                - může mít seznam rizik
+                - stories mají prioritu (MoSCoW) dle hodnoty, náročnosti, rizika, přínosu...
+                    - Must - nezbytné
+                    - Should - mělo by být
+                    - Could - bylo by fajn
+                    - Won't/Wish - zapomeň na to, možná jindy
+            - pro testování je možné použít Gherkin/Cucumber (As a ... I can ... So that ...)
+            
         - tvořen celým scrum týmem, spravuje ho product owner
         - v praxi jde o tabuli (reálnou/virtuální) se sticky notes
     
@@ -177,23 +188,34 @@ RUP je konkrétní metodika stavějící na UP (přidává třeba jednotlivé ro
         - pracuje na něm celý scrum team
         - product owner řešní komunikaci, vývojáři vývojaří, scrum master sleduje dodržování procesů
         - analýza, návrh, implementace, testování
-        - max 1 měsíc, všechny sprinty trvají stejnou dobu 
-    - **daily scrum**
+        - max 1 měsíc, všechny sprinty trvají stejnou dobu
+        - po sprintu sledujeme [team velocity](./3_softwarove_inzenyrstvi.md#team-velocity), podle ní máme lepší odhad pro budoucí plány, lze podle ní upravit rozsah sprint backlogu
+    - **daily scrum (standup)**
         - 15 minut každý den, účastní se vývojáři a možná i scrum master
         - co jsem dělal včera, co budu dělat dneska, narazil jsem na nějaké problémy?
     - **sprint review**
-        - 4 hodiny, účastní se celý scrum team a klíčoví stakeholdeři (e.g. zákazník)
+        - 4 hodiny, účastní se celý scrum team a klíčoví stakeholdeři (e.g. zákazník, uživatel)
         - proběhne předvedení inkrementu
+        - proberou se případné problémy, změny, odpovídá se na případné otázky stakeholderů
         - proberou se případné změny product backlogu
         - případně se přepočítá předpokládané datum dokončení
-    - **retrospective**
+        - probere se, co by se mělo dělat dál, upraví se priorita/pořadí v product backlogu
+    - **sprint retrospective**
         - 3 hodiny, účastní se scrum team
-        - řeší se procesy, vztahy, nástroje, lidi
+        - řeší se procesy - rozložení práce, splnil se cíl, je třeba něco upravit?
+        - řeší se vztahy - klapalo to? potřebuje někdo užší spolupráci?
+        - řeší se nástroje - dobrá komunikace? dostatečná transparentnost? 
+        - řeší se lidi - měl někdo trable? někoho pochválíme?
         - co nefungovalo, co můžeme zlepšit
         - ideálně se vymyslí jedno zlepšení procesů, které se v příštím sprintu bude používat
+        - případně se upraví klíčové strategie, rizika
+    - **project retrospective**
+        - uzavření projektu s týmem
+        - řešíme lessons learned, co se povedlo, nepovedlo...
+        - poděkujeme všem
 
 - SCRUM může skončit, když
-    - product backlog je prázdný (vše hotovo)
+    - product backlog je prázdný (vše hotovo), nebo nepovažujeme (společně se stakeholdery) jeho obsah za důležitý
     - dojde čas/peníze
     - udělali jsme poslední sprint a je sice co spravovat, ale defekty jsou přijatelné
     - product owner/stakeholder se rozhodne ukončit projekt
@@ -205,6 +227,24 @@ RUP je konkrétní metodika stavějící na UP (přidává třeba jednotlivé ro
 - zákazník je zatažen do postupu vývoje, může hned dávat zpětnou vazbu, ale tento overhead vyžaduje extra čas
 
 - balancuje se Čas, Cena a Rozsah funkcionalit
+
+#### Burndown chart
+- Ukazuje kolik práce zbývá a jak si vedeme oproti plánu
+![](img/20230525221317.png)
+
+#### Team velocity
+- dokončené story pointy za sprint, je vidět v Burndown Chartu v dy/dx, nebo jako samostatná křivka
+![](img/20230525221638.png)
+
+#### Planning poker
+
+Pro každé story každý z týmu provede odhad, odhady se zveřejní najednou. následuje diskuze, dokud se na bodech za dané story všichni neshodnou (doporučené použité body jsou podle fibbonacciho posloupnosti)
+
+#### SCRUM Board
+
+Viditelný celému týmu, na jednotlivých lístcích tasků je vidět i zpracovávající člověk
+
+![](img/20230525224009.png)
 
 ## Nasazení a provoz softwarových systémů
 - před nasazením je důležité systém otestovat v prostředí, které bude co nejbližší tomu produkčnímu
