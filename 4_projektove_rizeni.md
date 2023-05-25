@@ -44,7 +44,14 @@ Je třeba rozlišovat mezi
 ### PMI Project Management Body of Knowledge (PMBOK)
 ### PRINCE 2
 - metoda pro řízení obecného projektu
-- předepsaný postup, krok za krokem (spousta formulářů na vyplňování)
+- předepsaný postup, krok za krokem (spousta formulářů na vyplňování, checklisty)
+- součástí není správa požadavků, rozpočtování
+- vhodná metodika pro
+    - nutnost velkého reportování
+    - nutnost kompletní projektové dokumentace
+    - tým vyžaduje řád a kontrolu
+    - manažery s málo zkušenostmi
+
 - 7 principů (vše máme nějak zdokumentované)
     - **Kontinuální odůvodnění projektu** - proč to děláme? dokumentujeme v Business Case 
     - **Učení se ze zkušeností** -  co (ne)fungovalo
@@ -53,6 +60,7 @@ Je třeba rozlišovat mezi
     - **Manage by exception** - řízení soustřeďujeme na části, které se nějak (negativně) vymykají. Nezasahujeme do toho, co funguje. Vytyčíme cíle a tolerovatelné odchylky v kvalitě, času, ceně a rozsahu, určíme zodpovědnosti za nepřekračování
     - **Důraz na produkt** - primární cíl je produkt, ne práce
     - **Přizpůsobení metodiky projektu** - není nutné PRINCE používat úplně doslovně, řádek po řádku. Ne všechny formuláře jsou vždy zcela relevantní
+
 - 7 témat
     - **Business case** - obsahuje očekávané přínosy, rizika, časový a cenový rozsah, důvody projektu... Měl by být neustále aktualizován a držen validní po celou dobu projektu
     - **Organizace** - definice rolí a odpovědností, typy stakeholderů (dodavatel, business/zákazník, uživatel), 3 úrovně managementu (project board pro směrování projektu, project manager pro řízení projektu, team manager pro dodávání produktu), manage by exception
@@ -61,6 +69,7 @@ Je třeba rozlišovat mezi
     - **Rizika** - identifikace možných rizik, určujeme způsob reakce na dané riziko na základě ceny prevence, pravděpodobnosti a dopadu, uchováváme registr rizik
     - **Změny** - u požadavků na změnu řešíme prioritu, dopad, kritičnost, zkoumáme možnosti řešení, dle změny upravujeme záznamy a plán
     - **Postup projektu** - porovnáváme realitu s plány (čas, cena, kvalita, rozsah, rizika...), sledujeme zda stále projekt splňuje business case
+
 - 7 procesů
     ![](img/20230525115631.png)
     - **Úplný začátek projektu** - nastínění business case, přiřazení klíčových vedoucích osob, studování "lessons learned" předchozích podobných projektů, získání autorizace product boardu
