@@ -44,6 +44,7 @@ Je třeba rozlišovat mezi
 ## Mezinárodní standardy a metodiky projektového řízení 
 ### PMI Project Management Body of Knowledge (PMBOK)
 - procesně orientovaná metodika, podrobně popsaná sada good practices
+- snadno se používá jako handbook pro vhodné znalostní oblasti a nástroje/techniky při životním cyklu projektu
 - 49 procesů (série aktivit s definovanými vstupy, výstupy, nástroji a technikami) dělených do
     - 5 procesních skupin, logické dělení procesů podle fází (inicializace, plánování, provedení, monitoring a řízení, uzavírání)
     - 10 vědomostních oblastí/disciplín projektového managementu, každá má vlastní procesy
@@ -95,3 +96,15 @@ Je třeba rozlišovat mezi
     - **Směrování projektu** - vysokoúrovňová rozhodnutí, funguje po celou dobu projektu, plán nadcházející fáze, na konci projektu autorizujeme uzavření
     - **Řízení mezi fázemi (managing a stage boundary)** - plán nadcházející fáze, řeší produktový manažer, aktualizace business case a projektového plánu, report předchozí fáze
     - **Uzavření projektu** - řeší projektový manažer, evaluace, předání produktu, návrh board na ukončení
+
+### IPMA ICB
+*V otázce není, ale není na škodu znát*
+- obecný standard pro vedení projektu
+- narozdíl od většiny ostatních obsahuje podrobnou sekci o soft skills
+- vhodné pro zkušené manažery
+- vhodné pro použití jako handbook pro různé manažerské kompetence
+- kompetenční přístup, pro každou ICB popisuje požadované dovednosti a schopnosti, popis a metriky indikátorů kompetence
+    > kompetence je aplikace znalostí (knowledge, informace & zkušenosti), dovedností (skill, schopnost aplikovat znalosti) a schopností (ability, použití dovedností efektivně, ve správný čas a na správném místě) k dosažení kýženého výsledku
+    - kompetence perspektivy - metody a techniky pro interakci jedinců s prostředím
+    - lidské kompetence - techniky pro jednání s jedinci/skupinami
+    - praktické kompetence - metody a techniky pro úspěch projektu
