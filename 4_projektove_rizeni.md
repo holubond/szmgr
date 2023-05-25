@@ -26,6 +26,29 @@ Je třeba rozlišovat mezi
         - monitoringem výkonu firmy
         - výběrem a prioritizací programů a projektů
 
+Specifika IT projektů v porovnání s většinou průmyslových odvětví
+- nepřesné/neznámé, časté a měnící se požadavky
+- větší nutnost přizpůsobení produktu
+- velká složitost
+- náročné testování
+- neustálý a rapidní vývoj technologií
+- možnost globální spolupráce
+- projekty mohou v rámci portfolia ovlivnit ostatní projekty (zvlášť při selhání)
+- nutnost řízení rizik
+- dokončené projekty je často třeba servisovat/poskytovat podporu 
+
+Pro konkrétní projekt je potřeba si zvolit vhodný přístup **prediktivní** nebo **agilní** [viz otázka 3](./3_softwarove_inzenyrstvi.md).
+
+### IT Infrastructure Library (ITIL)
+- best practices pro **řízení IT služeb**
+- fáze
+    - **Service strategy** - požadavky, strategie pro zajištění kýženého, finance, co vlastně budeme dělat
+    - **Service design** - Service Level Agreement, řešení rizik, security & business compliance
+    - **Service transition** - jak měníme stávající služby, řešení deploymentu, uložení získaných znalostí pro budoucí projekty 
+    - **Service operation** - dokumentace pro uživatele/helpdesk, řešení incidentů/změnových požadavků/problémů, řešení identit a přístupu k systému
+    - **Continual service improvement** - monitoring, logování, aktualizace běžící služby
+
+
 
 
 
@@ -42,9 +65,17 @@ Je třeba rozlišovat mezi
 ## Program Evaluation and Review Technique (PERT)
 
 ## Mezinárodní standardy a metodiky projektového řízení 
+- standardy projektového řízení PRINCE2, PMBOK, IPMA ICB popisují obecnější způsob řízení
+- metodiky sw vývoje (RUP, SCRUM) řeší řízení v rámci vývojového týmu, jsou specifické pro vývoj SW
+
+![](img/20230525184623.png)
+
 ### PMI Project Management Body of Knowledge (PMBOK)
-- procesně orientovaná metodika, podrobně popsaná sada good practices
+- **procesně orientovaný** standard, podrobně popsaná sada good practices
 - snadno se používá jako handbook pro vhodné znalostní oblasti a nástroje/techniky při životním cyklu projektu
+- vhodný, když
+    - manažer potřebuje tipy na nástroje a techniky, jaké by měl použít, ale aspoň trochu tuší co a jak
+
 - 49 procesů (série aktivit s definovanými vstupy, výstupy, nástroji a technikami) dělených do
     - 5 procesních skupin, logické dělení procesů podle fází (inicializace, plánování, provedení, monitoring a řízení, uzavírání)
     - 10 vědomostních oblastí/disciplín projektového managementu, každá má vlastní procesy
@@ -59,15 +90,15 @@ Je třeba rozlišovat mezi
         - Dodavatelé - produkty a služby pocházející mimo náš tým, kontrakty, objednávky, SLAčka, výběr dodavatelů, monitoring výkonu dodavatelů
         - Stakeholdeři - zúčastněné osoby; jejich identifikace, plánování a správa zapojení stakeholderů do projektu
 
-### PRINCE 2
-- metodika pro řízení obecného projektu
+### PRINCE 2 (PRojects IN Controlled Environment)
+- standard pro řízení obecného projektu
 - předepsaný postup, krok za krokem (spousta formulářů na vyplňování, checklisty)
 - součástí není správa požadavků, rozpočtování
-- vhodná metodika pro
+- vhodný pro
     - nutnost velkého reportování
     - nutnost kompletní projektové dokumentace
     - tým vyžaduje řád a kontrolu
-    - manažery s málo zkušenostmi
+    - manažery s málo zkušenostmi, hodí se mu podrobný popis postupu
 
 - 7 principů (vše máme nějak zdokumentované)
     - **Kontinuální odůvodnění projektu** - proč to děláme? dokumentujeme v Business Case 
@@ -101,10 +132,16 @@ Je třeba rozlišovat mezi
 *V otázce není, ale není na škodu znát*
 - obecný standard pro vedení projektu
 - narozdíl od většiny ostatních obsahuje podrobnou sekci o soft skills
-- vhodné pro zkušené manažery
+- vhodný, když
+    - projekt vyžaduje dobré soft-skills (komunikace, leadership, řešení konfliktů)
+    - manažer je zkušený, zná procesy
+    - není nutná spousta reportingu
 - vhodné pro použití jako handbook pro různé manažerské kompetence
 - kompetenční přístup, pro každou ICB popisuje požadované dovednosti a schopnosti, popis a metriky indikátorů kompetence
     > kompetence je aplikace znalostí (knowledge, informace & zkušenosti), dovedností (skill, schopnost aplikovat znalosti) a schopností (ability, použití dovedností efektivně, ve správný čas a na správném místě) k dosažení kýženého výsledku
     - kompetence perspektivy - metody a techniky pro interakci jedinců s prostředím
     - lidské kompetence - techniky pro jednání s jedinci/skupinami
     - praktické kompetence - metody a techniky pro úspěch projektu
+
+### Metodiky
+- popsány v [otázce 3](./3_softwarove_inzenyrstvi.md)
