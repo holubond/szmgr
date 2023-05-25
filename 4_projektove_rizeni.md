@@ -48,21 +48,34 @@ Pro konkrétní projekt je potřeba si zvolit vhodný přístup **prediktivní**
     - **Service operation** - dokumentace pro uživatele/helpdesk, řešení incidentů/změnových požadavků/problémů, řešení identit a přístupu k systému
     - **Continual service improvement** - monitoring, logování, aktualizace běžící služby
 
-
-
-
-
-
-
 ## Role modelů v projektovém řízení
+TODO
 
 ## Ganttovy diagramy
+- nástroj pro plánování (nejen) projektů
+V základu toto:
+![](img/20230525192847.png)
+ale lze rozšířit...
+
+- y osa obsahuje úlohy (případně zdroje)
+- x osa zobrazuje čas
+- úloha jako uzel/obdélník (šířka udává časovou náročnost), případná hrana značí vztah
+- je možné přidat
+    - milestones
+    - progress
+    - zdroje (kdo co dělá, dávají se místo událostí na osu y), pak řešíme problém plánování job-shopu
+    - omezení, precedenční podmínky (úloha musí být započata až po dokončení jiné úlohy, něco je možné paralelizovat...)
+- obvykle minimalizujeme makespan (čas dokončení poslední úlohy a tedy i celého projektu)
+![](img/20230525195955.png)
 
 ## Síťová analýza
+TODO
 
 ## Metoda kritické cesty (CPM)
+TODO
 
 ## Program Evaluation and Review Technique (PERT)
+TODO
 
 ## Mezinárodní standardy a metodiky projektového řízení 
 - standardy projektového řízení PRINCE2, PMBOK, IPMA ICB popisují obecnější způsob řízení
@@ -79,7 +92,13 @@ Pro konkrétní projekt je potřeba si zvolit vhodný přístup **prediktivní**
 - 49 procesů (série aktivit s definovanými vstupy, výstupy, nástroji a technikami) dělených do
     - 5 procesních skupin, logické dělení procesů podle fází (inicializace, plánování, provedení, monitoring a řízení, uzavírání)
     - 10 vědomostních oblastí/disciplín projektového managementu, každá má vlastní procesy
-        - Integrace - tvorba Project Charteru (základní info o projektu), vývoj plánu řízení projektu, nastavení řízení změn (review, schválení, dodání, komunikace), obsahuje i procesy pro uzavírání fáze/projektu
+        - Integrace 
+            - tvorba **Project Charter**u
+                - **Business case (proč)** - cíle projektu, hrubá cena, rozpočet, rizka 
+                - **Project outcome (co)** - popis, hlavní cíle a požadavky
+                - **Stakeholders (kdo)** - externí i interní, řešíme jejich role, potřeby, zapojení a odpovědnosti
+                - **Management approach (jak)** - popis použitých standardů, nástrojů, metodik, životního cyklu projektu...
+                - **Schedule (kdy)** - hrubý plán projektu, fáze, milestones, Ganttův diagram..
         - Rozsah (scope) - sesbírání požadavků, definice, validace a řízení rozsahu funkcionalit systému, tvorba Work Breakdown Structure
         - Plán - definice a určení pořadí aktivit, odhady časů aktivit, tvorba a řízení plánu
         - Cena - odhad cen a rozpočtu aktivit nebo jednotek práce pomocí Work Breakdown Structure, řízení ceny a rozpočtu
