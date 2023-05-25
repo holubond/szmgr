@@ -6,7 +6,7 @@
 Je třeba rozlišovat mezi
 - **Projekty**
     - dočasné - mají start i konec, typické fáze (příprava, provedení, uzavření, případně fáze sw životního cyklu)
-    - přinášející změnu, dodávají hodnotu stakeholderům (všem zúčastněným; uživatelům, zákazníkům i dodavatelům produktu...), hodnota popsána v business case
+    - přinášející změnu, dodávají hodnotu stakeholderům (všem zúčastněným; uživatelům, zákazníkům i dodavatelům produktu...)
     - unikátní - každý má svá specifika (požadavky, zákazníky, tým...), nejedná se o každodenní rutinnou práci firmy
     - plánované
     - opakovatelné prvky projektu (či celé projekty) jsou **procesy** - řízené událostmi, bývají dobře definované (jak postupovat), vizualizované flow chartem
@@ -30,6 +30,17 @@ Pro konkrétní projekt je potřeba si zvolit vhodný přístup **prediktivní**
 
 ### Agilní plánování
 Dále je potřeba u plánování projektů sepsat [Project Charter](./4_projektove_rizeni.md#pmi-project-management-body-of-knowledge-pmbok) popisující základní informace o projektu (proč, co, kdo, kdy, jak, za kolik...), sepsat podrobnosti klíčových strategií (komunikace, rizika, kvalita, změny) a nějakým způsobem začít plánovat práci (product backlog, řešení architektury...).
+
+### Prediktivní plánování
+
+Sepisuje se projektová dokumentace obsahující Project Brief, veškeré informace o projektu (proč, co, kdo, kdy, jak, za kolik), definují se klíčové strategie (komunikace, rizika, kvalita, změny), vše se dokumentuje, vytváří se příslušné registry, vše se schvaluje product boardem (zástupci exekutivy, inženýrů a zákazníků). 
+
+Dělá se detailní analýza požadavků, spousta Use case diagramů, detailní rozsah sloužící jako základ pro ocenění, design mockupy. Tvoří se **specifikační dokument** produktu - obsahuje požadavky, rozbití systému na komponenty (včetně detailního popisu až po pole vstupních formulářů), očekávánou kvalitu, akceptační kritéria.
+
+Dělá se **projektový plán** (proč, co, kdo, kdy, jak, za kolik...) - **Work Breakdown Structure** tvořená ze specifikačního dokumentu, počítá se čas a cena Work Packages (součást WBS, nejnižší jednotka), jejich závislosti, tvoříme rozvrh (gantt/network diagram).
+*WBS*
+![](img/20230526000518.png)
+
 
 ## Řízení rizik
 Postup:
@@ -58,7 +69,7 @@ Možné zdroje rizik (nejčastější tučně):
 - firemní prostředí - nestabilní, změna vedení...
 - **subdodavatelé** - opoždění, nedostatečná kvalita, komunikace...
 
-### Agilní řízení rizik
+### Specifika agilního řízení rizik
 Prevence:
     - **Transparence a zpětná vazba**, abychom předešli nedorozumnění v týmu
     - **Používání user stories** - jsou snadno pochopitelné pro zákazníka, dají se dobře ověřovat
@@ -66,7 +77,10 @@ Prevence:
     - **Krátké iterace** - brzo zjistíme, co je případně blbě
 
 ## Role modelů v projektovém řízení
-TODO
+
+Těžko říct, co se tím myslí; v přednáškách PA179 žádná významná zmínka o modelech nebyla :thinking:
+
+Datové modely? Modelování komunikace, financí, rizik?
 
 ## Ganttovy diagramy
 - nástroj pro plánování (nejen) projektů
@@ -92,7 +106,12 @@ TODO
 TODO
 
 ## Program Evaluation and Review Technique (PERT)
-TODO
+
+Technika k odhadu času k dokončení tasku. Bereme **optimistický** odhad, **pesimistický** odhad a **nejpraděpodobnější** odhad
+
+`očekávaný = (optimistický + 4 * nejpravděpodobnější + pesimistický) / 6`
+
+Pokud máme informace o úrovni platů implementátorů tasků, můžeme dopočítat odhadovanou cenu.
 
 ## Mezinárodní standardy a metodiky projektového řízení 
 - standardy projektového řízení PRINCE2, PMBOK, IPMA ICB popisují obecnější způsob řízení
@@ -136,18 +155,47 @@ TODO
     - tým vyžaduje řád a kontrolu
     - manažery s málo zkušenostmi, hodí se mu podrobný popis postupu
 
+- fáze (hrubě odpovídá UP inception, elaboration, construction a transition)
+    - **Starting up** 
+        - tvorba **Project brief**
+            - řešíme feasibilitu, zachycujeme klíčové požadavky, rizika
+            - popis významných požadavků s dopadem na architekturu
+            - identifikace actorů
+            - identifikace dalších systémů, se kterými máme komunikovat
+            - na konci známe cíle, hrubou architekturu
+            - co se používá pro podobné systémy? s čím máme zkušenosti?
+            - určení použitých technologií
+            - určení orientační ceny, časového plánu a rizik
+        - plán další fáze
+            - **Work Breakdown Structure**
+            - identifikace aktivit, dependencí
+            - odhad trvání aktivit, stanovení milestones
+            - definice rolí a odpovědností
+            - tvorba rozvrhu (Gantt/síťový diagram)
+    - **Initiation** 
+        - tvorba **Project Initiation Documentation** (dokument/vícero dokumentů)
+            - obsahuje současný stav projektu, plány, Kdo, Co, Kdy, Jak, Proč, Za Kolik...
+            - slouží k definici projektu, určení rámce...
+            - schvaluje product board
+            - detailní Business Case (důvody projektu, očekávání, cost-benefit analýzu, časovou škálu, ceny, rizika)
+            - popis struktury managementu, rolí týmu
+            - popis přístupu ke kvalitě, změnám, riziku, komunikaci
+            - plán projektu
+    - **Delivery**
+    - **Close**
+
 - 7 principů (vše máme nějak zdokumentované)
-    - **Kontinuální odůvodnění projektu** - proč to děláme? dokumentujeme v Business Case 
+    - **Kontinuální odůvodnění projektu** - proč to děláme? 
     - **Učení se ze zkušeností** -  co (ne)fungovalo
     - **Role a odpovědnosti** - přesně specifikovaná struktura týmu, vymezené práva a odpovědnosti
-    - **Řízení po fázích** - po každé fázi děláme review Business Case, provádíme reporting vyššímu managementu
+    - **Řízení po fázích** - po každé fázi děláme review Project brief, provádíme reporting vyššímu managementu
     - **Manage by exception** - řízení soustřeďujeme na části, které se nějak (negativně) vymykají. Nezasahujeme do toho, co funguje. Vytyčíme cíle a tolerovatelné odchylky v kvalitě, času, ceně a rozsahu, určíme zodpovědnosti za nepřekračování
     - **Důraz na produkt** - primární cíl je produkt, ne práce
     - **Přizpůsobení metodiky projektu** - není nutné PRINCE používat úplně doslovně, řádek po řádku. Ne všechny formuláře jsou vždy zcela relevantní
 
 - 7 témat
     - **Business case** - obsahuje očekávané přínosy, rizika, časový a cenový rozsah, důvody projektu... Měl by být neustále aktualizován a držen validní po celou dobu projektu
-    - **Organizace** - definice rolí a odpovědností, typy stakeholderů (dodavatel, business/zákazník, uživatel), 3 úrovně managementu (project board pro směrování projektu, project manager pro řízení projektu, team manager pro dodávání produktu), manage by exception
+    - **Organizace** - definice rolí a odpovědností, typy stakeholderů (dodavatel, business/zákazník, uživatel), 3 úrovně managementu (project board pro směrování projektu (obsahuje exekutivu, senior suppliera, senior usera), project manager pro řízení projektu, team manager pro dodávání produktu), manage by exception
     - **Kvalita** - monitoring, akceptační kritéria, určíme si strategii řízení kvality (nástroje, procesy), řešíme kvalitu produktu i manažerských výtvorů (plány, reporty)
     - **Plány** - plánujeme projekt i jednotlivé fáze, Gantt diagram, Work Breakdown Structure je základem plánování
     - **Rizika** - identifikace možných rizik, určujeme způsob reakce na dané riziko na základě ceny prevence, pravděpodobnosti a dopadu, uchováváme registr rizik
