@@ -122,6 +122,9 @@ RUP je konkrétní metodika stavějící na UP (přidává třeba jednotlivé ro
 - klíčová je dobrá komunikace a spolupráce týmu
 - automatizované testování
 - variabilita funkcionality (vývoj postupuje tak, že když dojde čas/peníze, tak se ptáme zákazníka, zda něco přihodí, nebo zda vyškrtneme nějakou část systému)
+- face-to-face komunikace, rychlé meetingy - rychlejší, získáme lepší porozumnění
+- jednoduchá dokumentace - dokumentace těžko udržuje tempo s realitou, proto ji držme co nejjednodušší, ideálně navázanou na kód
+- častá setkání se stakeholdery (sprint review), prezentace nové funkcionality (lepší, než jen popis)
 - e.g. 
     - extreme programming - osvědčené postupy tahá do extrému (osvědčuní se reviews? => dělej reviews co to jde)
         - párové programování, důraz na testy, refaktorizaci, kód je single source of truth (dokumentaci generujeme z kódu, používáme schéma pro generování ostatních věcí...)
