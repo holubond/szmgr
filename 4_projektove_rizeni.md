@@ -33,14 +33,13 @@ Dále je potřeba u plánování projektů sepsat [Project Charter](./4_projekto
 
 ### Prediktivní plánování
 
-Sepisuje se projektová dokumentace obsahující Project Brief, veškeré informace o projektu (proč, co, kdo, kdy, jak, za kolik), definují se klíčové strategie (komunikace, rizika, kvalita, změny), vše se dokumentuje, vytváří se příslušné registry, vše se schvaluje product boardem (zástupci exekutivy, inženýrů a zákazníků). 
+Sepisuje se **Project Initiation Documentation** obsahující detailní Business Case, veškeré informace o projektu (proč, co, kdo, kdy, jak, za kolik), definují se klíčové strategie (komunikace, rizika, kvalita, změny), vše se dokumentuje, vytváří se příslušné registry, vše se schvaluje product boardem (zástupci exekutivy, inženýrů a zákazníků). Do PID se pak zapisují i změny a průběh, aby bylo možné porovnat plán a realtu, je dostupný všem v rámci projektu. 
 
 Dělá se detailní analýza požadavků, spousta Use case diagramů, detailní rozsah sloužící jako základ pro ocenění, design mockupy. Tvoří se **specifikační dokument** produktu - obsahuje požadavky, rozbití systému na komponenty (včetně detailního popisu až po pole vstupních formulářů), očekávánou kvalitu, akceptační kritéria.
 
-Dělá se **projektový plán** (proč, co, kdo, kdy, jak, za kolik...) - **Work Breakdown Structure** tvořená ze specifikačního dokumentu, počítá se čas a cena Work Packages (součást WBS, nejnižší jednotka), jejich závislosti, tvoříme rozvrh (gantt/network diagram).
+Dělá se **projektový plán** (proč, co, kdo, kdy, jak, za kolik...) - **Work Breakdown Structure** tvořená ze specifikačního dokumentu, počítá se čas a cena jedntlivých **Work Package**s (součást WBS, nejnižší jednotka) třeba pomocí [PERT](./4_projektove_rizeni.md#program-evaluation-and-review-technique-pert), jejich závislosti, tvoříme rozvrh (gantt/network diagram), přiřazujeme odpovědnosti (mělo by jít snadno najít aktivity člověka i všechny spojené s aktivitou).
 *WBS*
 ![](img/20230526000518.png)
-
 
 ## Řízení rizik
 Postup:
@@ -79,8 +78,11 @@ Prevence:
 ## Role modelů v projektovém řízení
 
 Těžko říct, co se tím myslí; v přednáškách PA179 žádná významná zmínka o modelech nebyla :thinking:
-
 Datové modely? Modelování komunikace, financí, rizik?
+
+V řízení lze modely použít při plánování projektů pomocí [síťové analýzy](./4_projektove_rizeni.md#síťová-analýza), [metody kritické cesty](./4_projektove_rizeni.md#metoda-kritické-cesty-cpm).
+
+Dále je možné modelovat procesy (komunikace), finance, rizika... a na těchto modelech hledat kritická místa, zkoumat co by kdyby...
 
 ## Ganttovy diagramy
 - nástroj pro plánování (nejen) projektů
@@ -100,10 +102,26 @@ ale lze rozšířit...
 ![](img/20230525195955.png)
 
 ## Síťová analýza
-TODO
+
+Metody pro modelování souboru činností vedoucích k dosažení nějakého cíle (i.e. projektů).
+
+Cílem je projekt naplánovat, minimalizovat prostoje a náklady, určit termíny, celkovou dobu trvání projektů, identifikovat kritické úlohy v projektu. 
+
+Používá se pro to síťový graf hranově/uzlově orientovaný - úlohy jsou na hranách/uzlech. Uzlově orientovaný umožňuje snadno modelovat precedenční podmínky, lze snadno použít pro metodu kritické cesty.
 
 ## Metoda kritické cesty (CPM)
-TODO
+
+Metoda pro identifikaci vzájemně závislých aktivit, které mají vliv (jsou kritické) na dobu dokončení projektu a nemohou být opožděny bez prodloužení dokončení projektu.
+
+[Postup](https://www.youtube.com/watch?v=4oDLMs11Exs)
+
+- uděláme si graf závislostí, určíme si dobu trvání aktivit
+- v prvním průchodu jdeme start => konec, řešíme earliest start/completion time. Když vedou 2 do 1, bereme maximum těch 2.
+- v druhém průchodu jdeme konec => start, řešíme latest completion/start time. Když vedou 2 z 1, bereme minimum těch 2.
+- kritická cesta obsahuje aktivity, které mají earliest & latest finish time identický
+- slack/float udává, o kolik můžeme danou aktivitu opozdit, aniž by došlo ke zpoždění projektu (`latest completion time - earliest completion time`)
+
+![](img/20230526101347.png)
 
 ## Program Evaluation and Review Technique (PERT)
 
@@ -181,8 +199,17 @@ Pokud máme informace o úrovni platů implementátorů tasků, můžeme dopoč�
             - popis struktury managementu, rolí týmu
             - popis přístupu ke kvalitě, změnám, riziku, komunikaci
             - plán projektu
+        - plán další fáze
     - **Delivery**
+        - obvykle má více částí (iterací), každá max 3 měsíce, každá má definované měřitelné a ověřitelné milestones 
+        - produktový manažer se stará o udržení ceny, termínů, rozsahu a kvality specifikované v PID
+        - produktový manažer autorizuje, provádí reviews work packages, reportuje (pravidelně) status, změny, problémy a kvalitu výš, spravuje rizika a problémy
+        - týmový manažer provádí týmové plánování (jednotlivých work packages), demonstruje kvalitu produktu, zajišťuje dodání work packages
+        - mezi fázemi se hodnotí končící fáze a plánuje (zase WBS, gantt) další, aktualizuje se PID
     - **Close**
+        - předání produktu (samozřejmě opět spousta protokolů), nasazení, uzavření všech dokumentů, PID, dokumentace, tvorba end report a lessons learned
+        - případné předání projektu ops a maintenance týmu
+        - tvorba SLA
 
 - 7 principů (vše máme nějak zdokumentované)
     - **Kontinuální odůvodnění projektu** - proč to děláme? 
