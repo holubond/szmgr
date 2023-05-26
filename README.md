@@ -13,5 +13,6 @@ Sepsáno na základě přednášek, osobních zkušeností a samozřejmě ChatGP
 - [Programování a softwarový vývoj](./1_programovani_a_softwarovy_vyvoj.md)
 - [Kvalita kódu](./2_kvalita_kodu.md)
 - [Softwarové inženýrství](./3_softwarove_inzenyrstvi.md)
+- [Projektové řízení](./4_projektove_rizeni.md)
 
 @mazanec
