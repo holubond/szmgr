@@ -72,7 +72,7 @@ Hlavní metodiky řízení sw projektů jsou **prediktivní metodiky (e.g. RUP)*
 - vyžaduje podstatné plánování předem
 - iterativní a inkrementální
 - řízena riziky, use-case požadavky
-- argitektura je středobodem
+- argitektura je středobodem - existuje architektonický tým, se kterým ostatní týmy konzultují případné nejasnosti/problémy, slouží jako centrální komunikační uzel (lepší, než kdyby spousta dev týmů komunikovala navzájem)
 - umožňuje pevnou kontrolu nad procesy a týmem
 - vhodná, pokud potřebujeme pořádnou dokumentaci (UML diagramy)
 - hodí se pro velké a heterogenní produkty, velké týmy...
@@ -102,8 +102,10 @@ Hlavní metodiky řízení sw projektů jsou **prediktivní metodiky (e.g. RUP)*
         - na konci máme architekturu, návrh systému reflektující požadavky 
     - **Construction** (4 iterace)
         - tvoříme systém, testujeme, nasazujeme
+        - na konci máme beta verzi, relativně stabilní a otestovanou, připravenou k použití
     - **Transition** (2 iterace)
         - hledáme a opravujeme chyby, děláme manuály, poskytujeme konzultace
+        - testování s uživateli (beta, na základě feedbacku děláme změnové požadavky), akceptační testy
 
 - iterace by neměla překročit 3 měsíce, přínos iterace je **inkrement**, každá iterace obsahuje workflows, které jsou více či méně přítomné. Pro každé workflow se používají určité UML diagramy
     - **Business modelování**
