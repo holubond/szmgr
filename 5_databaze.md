@@ -21,9 +21,26 @@ Data se v praxi ukládají přímo do souborového systému, nebo do databáze (
 - relační systémy korelují s ERD
 - deklarativní přístup
 - optížná implementace složitějších struktur (záleží však na systému)
+- O relačních databázích platí, že umožňují ACID [transakce](./5_databaze.md#řízení-transakcí). 
 
 ## Kódování a komprese dat
-TODO
+
+Techniky s cílem transformace informací do formátu, který je efektivní na ukládání či přenos. 
+
+**Bezztrátová komprese** - z komprimovaných dat jsme schopni plně rekonstruovat původní data (e.g. png, zip)
+**Zztrátová komprese** - část komprimovaných dat je ztracena (e.g. jpeg, mp3), ale jsme schopni dosáhnout větší komprese
+
+### Vybrané metody 
+
+**Statistické**
+- [Huffmanovo kódování](https://www.youtube.com/watch?v=iEm1NRyEe5c) - na základě frekvence určíme pro každý symbol kódovací znak, kód má minimální redundanci, proměnlivá délka kódu symbolů
+    1. seřadíme znaky podle frekvence do prioritní fronty ve formě uzlů, u každého máme uvedenou frekvenci
+    2. vyjmeme 2 uzly s nejmenšími frekvencemi a spojíme je do uzlu, který bude mít frekvenci rovnou součtu frekvencí. Takto vytváříme stromovou strukturu. Opakujeme, dokud nemáme 1.
+    3. procházíme stromovou strukturu od kořene, levé větve značíme `0`, pravé `1`, cesta od kořene po uzel unikátně identifikuje symbol a kombinací `0` a `1` získáme kód pro daný symbol
+    
+- [Shannon-Fano](https://www.youtube.com/watch?v=iEm1NRyEe5c) - podobný jako Huffman, nemusí být optimální, ale jdeme od kořene a sekvenci symbolů seřazených dle frekvence dělíme na poloviny (+-, sčítáme frekvence a při překročení poloviny dělíme), Při každém dělení značíme `0` a `1`. Jakmile je ve vytvořené polovině jen 1 symbol, už není co dělit.
+
+
 
 ## Architektura relačních databází
 
@@ -32,8 +49,8 @@ TODO
 Nějaká jednoduchá architektura by mohla vypadat takto:
 - databázový server 
     - přijímá, zpracovává a odpovídá na požadavky
-    - autentizace, autorizace
 - relační databázový systém 
+    - autentizace, autorizace
     - aplikace pracující nad samotnou databází
     - umožňuje tvorbu tabulek/indexů... manipulaci s daty, jejich čtení...
     - zajišťuje integritu dat
@@ -41,10 +58,18 @@ Nějaká jednoduchá architektura by mohla vypadat takto:
     - může dělat kešování
 - databáze - samotné místo, kde jsou data uložena
 
+RDBMS může obsahovat techniky pro administraci přístupových práv (omezení určitých operací, viditelnost dat až na row/column level...).
+
 ## Dotazovací jazyk SQL a jeho části (definice, manipulace, transakce)
 Dotazovací jazyk SQL vychází z [relační algebry](./5_databaze.md#relační-algebra). 
 
 Obsahuje konstrukty pro definici datového schématu, pro manipulaci s daty a pro transakční zpracování (viz další sekce).
+
+V některých systémech má prostředky pro procedurální programování, PL/SQL (třeba Oracle).
+
+SQL může obsahovat triggery, tedy dodatečné akce, které se mají vykonat při určitém příkazu (INSERT, UPDATE, DELETE). Používají se třeba pro udržování history table, nebo pro aktualizaci `updated_at`, pokud to nepodporuje daný RDBMS.
+
+Při práci s SQL používáme prepared stetements, abychom zabránili SQL injection.
 
 ## Jazyk definice datového schématu, DDL.
 
@@ -178,26 +203,44 @@ Existují dotazy, které nejsme schopní vyjádřit relační algebrou, třeba t
 Součástí DDL, jazyku definice dat. Určitým způsobem omezují, jakých hodnot mohou pole nabývat. E.g. `NOT NULL`, `UNIQUE`, `FOREIGN KEY .. RERERENCES ..(..)`, `CHECK(price>0)`... Uvádí se na příslušný řádek (ideálně), tabulky, jako dodatečný řádek tabulky, nebo jako samostatný výraz `ALTER TABLE .. ADD CONSTRAINT ... NOT NULL (id)`.
 
 ## Řízení transakcí.
-TODO
+
+Transakce v RDBMS mají ACID vlastnosti
+- **Atomicity** - skupina příkazů transakce brána jako jednotka; provedou se všechny, nebo žádný
+- **Consistency** - po vykonání transakce ke db v konzistentním stavu, není porušeno žádné integritní omezení
+- **Isolation** - transakce je isolovaná od ostatních transakcí, je možné nastavit úrovně transakce, dle toho může transakce skončit chybou (pokud došlo k modifikaci stejného objektu, jaký modifikovala jiná transakce), nebo se využijí zamykací mechanismy
+- **Durability** - data jsou po vykonánání transakce persistentně uložena
+
+Transakce se potvrzují příkazem `COMMIT`, vrací příkazem `ROLLBACK` na stav před započením transakce, či po poslední `SAVEPOINT` 
 
 ## Indexování
 
-Index slouží ke zrychlení/zefektivnění častých dotazů nad tabulkou. Dotazy obsahující zvolený sloupec (či jejich kombinaci) budou rychlejší. Tradiční indexy fungují obdobně jako indexy v knihách, odkazy na řádky s danou hodnotou.
+Index slouží ke zrychlení/zefektivnění častých dotazů nad tabulkou. Dotazy obsahující zvolený sloupec (či jejich kombinaci) budou rychlejší.
 
 ```sql
 CREATE INDEX my_index ON Products (Price)
 ```
 
 Pro indexy se mohou používat 
-- **B+ stromy** - každý uzel obsahuje odkazy na uzly níže, nebo hodnoty (jedná se o listový uzel). Hodnoty jsou v listech vzestupně uspořádány, uzly v sobě mají i informace o intervalech daných odkazů/hodnot.
+- **tradiční indexy** - jako v knihách, odkazy na řádky s danou hodnotou, je možné dělat více úrovní indexů, používat různá indexová uspořádání...
+- **haše** - pro získání jednoduché hodnoty velkých dat
+- **B+ stromy** - každý uzel obsahuje odkazy na uzly níže, nebo hodnoty (jedná se o listový uzel). Hodnoty jsou v listech vzestupně uspořádány, uzly v sobě mají i informace o intervalech daných odkazů/hodnot, listy jsou provázané.
     ![](img/20230526220652.png)
 
 - **R stromy** - podobné jako B+, ale jsou vícedimenzionální, ve 2D fungují jako obdélníky, uzly potomků jsou obsaženy v rodičovských uzlech
     ![](img/20230526220927.png)
 
-## Hešování.
-TODO
+## Hašování
 
+Cílem hašování je převést vstupní data na výstup jednétné délky (číslo, nebo fixed-length řetězec), hash. Zároveň je důležité, aby podobné vstupy měli zásadně rozdílné heše, aby bylo možné snadno odhalit drobnou (záměrnou či nechtěnou) modifikaci vstupu. Z heshe by nemělo být možné odvodit vstup a zároveň je cílem minimalizovat riziko kolize, tedy že dva vstupy mají stejný hash. Pro prolamování hašů se použávají rainbow tables, obsahující známé vstupy a jejich haše.
 
+Hešování se používá pro zajištění integrity dat (certifikáty, checksum), rychlé porovnávání dat (HashMap), porovnávání dat se znalostí pouze heše (uchovávání hash hesel v databázi, Argon2).
 
-TODO: vysvetli acid, base
+Pro hašování hesel se může přidávat do vstupu salt a pepper
+- **salt** - náhodná data, která se ukládají zároveň s hašem a při hešování se přidávají ke vstupu, efektivně prodlužuje délku hesla a znemožní detekci stejných hesel dle shody hešů
+- **pepper** - data, která se při hešování přidávájí ke vstupu, jsou však utajená (neukládáme je vedle haše)
+
+Pro různé účely používáme různé algoritmy, jde o balanc rychlosti a bezpečnosti/pravděpodobnosti kolize.
+- MD5 - rychlý, není bezpečný. 
+- rodina Secure Hashing Algorithm (SHA256, SHA512...)
+- Argon2 - v současnosti doporučovaný pro hašování hesel
+- hašem (hloupým, ale rychlým) může být třeba i délka vstupu, modulo...
