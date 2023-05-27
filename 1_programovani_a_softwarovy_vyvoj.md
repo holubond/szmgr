@@ -141,7 +141,7 @@ Pro vývoj rozsáhlých systémů se používají následující typy nástrojů
     - separátní UI (může jich být více), separátně nasazené služby (obvykle 4-12), každá se soustředí na jednu úlohu (nebo část systému), sdílená db, služby jsou interně tvořeny vrstvenou architekturou/děleny dle domény
     - Pokud služba využívá část databáze, kterou žádná jiná služba nevyužívá, je možné tuto část oddělit do vlastní databáze.
     - pokud chceme jednotné API, používá se vrstva fasády, která přeposílá komunikaci jednotlivým službám
-    - ACID transakce (microservices mají BASE), fajn pro konzistenci a integritu, ale úprava znamená nutnost testu celého systému
+    - ACID transakce (microservices mají BASE, basically available, soft state, eventually consistent, i.e. duplikace dat, konzistence může chvíli trvat..), fajn pro konzistenci a integritu, ale úprava znamená nutnost testu celého systému
     - fajn pro domain driven design bez přílišné složitosti
     - fajn když potřebujeme ACID
 
