@@ -9,10 +9,12 @@
 Ideální síť je transparentní (uživatel si ani nevšimne, že komunikuje skrz síť), s neomezenou propustnostní, bezztrátová, bez latence, zachovávající pořadí paketů. V reálu sítě takovéto problémy a limitace mají.
 
 Zákadní typy sítí
-- **Connection-oriented (propojované)** - pro komunikaci se stanoví/vyhradí kapacita, která není využívaná nikým jiným (e.g. dřívější drátový telefon), snadno se zajišťuje kvalita služeb
-- **Connection-less (paketové)** - kapacita využívána všemi komunikujícími, komunikátoři své zprávy dělí a balí na pakety, těžko se řeší kvalita služeb (e.g. Internet)
+- **Connection-oriented (propojované)** - pro komunikaci se stanoví/vyhradí kapacita, která není využívaná nikým jiným (e.g. dřívější drátový telefon), snadno se zajišťuje kvalita služeb, v QoS tomu odpovídají integrované služby
+- **Connection-less (paketové)** - kapacita využívána všemi komunikujícími, komunikátoři své zprávy dělí a balí na pakety, těžko se řeší kvalita služeb (e.g. Internet), v QoS tomu odpovídají diferenciované služby
 
 K stanovení jednotných pravidel a způsobu komunikace slouží standardizované **protokoly**.
+
+Architektury peer-to-peer vs klient-server
 
 ## ISO/OSI,  TCP/IP model
 
@@ -92,26 +94,7 @@ V praxi se ujal model TCP/IP, který jednotlivé vrstvy ISO/OSI slučuje.
 - Zajišťuje doručení IP datagramů (data rozřezané na kousky s obálkou) v rámci internetu host-to-host (i přes prostředníky, a.k.a. routery), síť je connection-less, paketová
 - Best-effort služba, není garance o doručení.
 
-### IPv4 datagram
-
-Hlavička obsahuje
-- verzi
-- délku hlavičky
-- type of service (pro zajištění quality of service)
-- celkovou délku datagramu
-- identifikaci, flags, offset (používá se při fragmentaci, rozdělení datagramu na vícero, pokud přenosová technologie nezvládá velikost)
-- time to live (dekrementován na každém hopu/routeru, při hodnotě 0 je paket zahozen, slouží k eliminaci zatoulaných paketů)
-- protokol - specifikace protokolu vyšší úrovně, ICMP, IGMP, TCP, UDP, OSPF...
-- checksum hlavičky (ne těla, protože by přepočítávání trvalo déle, děje se na každém hopu kvůli změně TTL)
-- adresa odesilatele i příjemce
-- options - slouží pro testování, debugging, volitelná část díky poli "délka hlavičky"
-
-IPv4 obecně
-- spolupracuje s protokoly 
-    - ICMP - poskytuje informace o stavu sítě (e.g. echo request/reply), poskytuje odesilateli inforace o chybě doručení (e.g. příjemce nedosažitelný, TTL šlo na nulu)
-    - IGMP - správa skupin pro multicast, (od)registrace do skupin
-    - ARP, RARP - překlad IP na MAC a obRáceně
-- umožňuje multicast
+Více v sekcích [IPv4](./6_pocitacove_site.md#funkce-ipv4) a [IPv6](./6_pocitacove_site.md#pokročilé-funkce-ipv6).
 
 ## transportní protokoly (TCP, UDP)
 
@@ -130,7 +113,7 @@ Hlavička obsahuje
 ### TCP (Transmission Control Protocol)
 - poskytuje spolehlivou spojovanou službu, uchovává pořadí
 - pracuje s byte streamy
-- komunikace musí být ustanovena 3way handshake (hello, hello&ack, ack)
+- komunikace musí být ustanovena 3way handshake (syn, syn&ack, ack)
 - komunikace je rozpoznatelná jen end-to-end, routery neřeší, že jde o spojení
 - nepodporuje multicast
 
@@ -151,36 +134,74 @@ Tcp mění množství poslaných dat v průběhu komunikace, aby nebyl příjemc
 TODO
 
 ## funkce IPv4
+
+Protokol umožňující komunikaci host-to-host.
+
 - 32 bitů, 0.0.0.0 - 255.255.255.255
 - typy adres
     - **unicast** - komunikace 1 na 1
     - **broadcast** - zpráva všem na LAN
     - **multicast** - zpráva těm, kteří se přihlásili k odběru dat na dané multicast adrese
-TODO
+
+Hlavička obsahuje
+- verzi
+- délku hlavičky
+- type of service (pro zajištění quality of service)
+- celkovou délku datagramu
+- identifikaci, flags, offset (používá se při fragmentaci, rozdělení datagramu na vícero, pokud přenosová technologie nezvládá velikost)
+- time to live (dekrementován na každém hopu/routeru, při hodnotě 0 je paket zahozen, slouží k eliminaci zatoulaných paketů)
+- protokol - specifikace protokolu vyšší úrovně, ICMP, IGMP, TCP, UDP, OSPF...
+- checksum hlavičky (ne těla, protože by přepočítávání trvalo déle, děje se na každém hopu kvůli změně TTL)
+- adresa odesilatele i příjemce
+- options - slouží pro testování, debugging, volitelná část díky poli "délka hlavičky"
+
+IPv4 obecně
+- spolupracuje s protokoly 
+    - ICMP - poskytuje informace o stavu sítě (e.g. echo request/reply), poskytuje odesilateli inforace o chybě doručení (e.g. příjemce nedosažitelný, TTL šlo na nulu)
+    - IGMP - správa skupin pro multicast, (od)registrace do skupin
+    - ARP, RARP - překlad IP na MAC a obRáceně
+- umožňuje multicast
 
 ## pokročilé funkce IPv6
 - řeší problém nedostatku IPv4 adres 128 bitovou délkou
 - 0000:0000:0000:0000:0000:0000:0000:0000 - FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF (možnost zkráceného zápisu vynecháním prefixových 0, případně až jedné sevkence 0)
 - oproti IPv4
-    - má i **anycast** - jako multicast, ale stačí, aby se data doručily jen jednomu členu skupiny
-    - broadcast nahrazen specifickými multicastovými skupinami (e.g. skupina routerů na LAN)
-    - jednodušší hlavička s možností extension headers
+    - IPSec je povinnou součástí
+    - delší adresa => možnost více zařízení v síti
+    - jednodušší hlavička (chybí checksum (úplně odstraněn), options, fragmentation) s možností extension headers
     - podpora označování toků a jejich priorit
-    - podpora šifrování, autentizace, integrity dat
-    - podpora mobility
+    - podpora bezpečnosti, šifrování, autentizace, integrity dat
+    - podpora mobility - každé zařízení je někde doma, kde má svého *Home Agenta*. Pokud je zařízení mimo domov, posílá informace o své cizí adrese Home Agentovi, který se stará o případné přeposílání zpráv, nebo spolupracuje pro ustanovení přímého tunelu
     - podpora autokonfigurace zařízení
+    - má i **anycast** - jako multicast, ale stačí, aby se data doručily jen jednomu členu skupiny
+    - odebrána fragmentace při doručování, toto si musí ohlídat odesílatel. Pokud je datagram moc velký, je zahozen a vygeneruje se ICMP zpráva obsahující zprávu o maximální velikosti na daném linku (procesu určení správné velikosti se říká **Path MTU Discovery** - pošli datagram, když se nevejde, fragmentuj na hodnotu dle ICMP zprávy, opakuj proces. MTU = maximum transmission unit)
     - odebrání checksumu (řeší se na nižší, nebo vyšší vrstvě)
+    - broadcast nahrazen specifickými multicastovými skupinami (e.g. skupina routerů na LAN)
 
-Hlavička obsahuje
-- Verzi
-- prioritu
-- label toku
+Hlavička (40B) obsahuje
+- Verzi protokolu
+- prioritu (obsahuje i pole, které může indikovat, zda byla po cestě zaznamenáno zpoždění)
+- label toku (pakety jednoho toku musí být zpracovány stejným způsobem, volbu směrování lze kešovat)
 - délka dat
 - další hlavička - může být rozšiřující hlavička (auth, options...), nebo třeba TCP hlavička dat
 - hop limit 
 - adresy
 
 Podpůrný ICMPv6 rozšiřuje funkcionalitu i o to co dělal IGMP a ARP.
+- původní ARP nahrazuje **Neighbour Discovery Protocol**, který řeší
+    - autokonfiguraci IPv6 adresy (možnost i bez DHCP serveru) na základě síťového prefixu (info od routerů), MAC adresy/lokálně unikátního ID
+    - detekci kolizí adres IPv6 (odešle zprávu na svou adresu, pokud někdo jiný odpoví, máme duplikát)
+    - určení MAC adres uzlů na stejném linku, sledování změn
+    - určení sousedů, kteří mohou přeposílat pakety dál
+    - sledování dostupnosti sousedů
+    - funguje díky komunikaci přes multicast skupiny
+
+(Pod)síť definována pomocí CIDR notace (všichni v síti sdílí stejný prefix)
+
+*Přechod z IPv4 na IPv6*
+- nutnost úpravy legacy systémů
+- složitější zpracovávání IPv6 adresy
+- ideální je dnes dělat aplikaci fungující s obojím, alternativně je potřeba použít enkapsulaci (tunelování) IPv6 do IPv4 paketů, nebo překládání (NAT) 
 
 ## Peer-to-peer (P2P) sítě
 TODO
