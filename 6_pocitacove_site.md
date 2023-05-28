@@ -32,17 +32,45 @@ V praxi se ujal model TCP/IP, který jednotlivé vrstvy ISO/OSI slučuje.
 ### TCP/IP
 
 4 vrstvy
-- **Aplikační** - SMTP, HTTP
+- **Aplikační** 
+    - poskytuje služby uživatelům (web, mail...)
+    - používají se aplikační protokoly (HTTP, SMTP, DNS, FTP...), které jsou součástí aplikací, každý protokol definuje syntaxi, sémantiku, typy a pravidla výměny zpráv
+    - rozlišujeme
+        - peer-to-peer vs klient-server
+        - pull (datový přenos iniciuje klient) vs push (datový přenos iniciuje server) model
+
 - **Transportní** - TCP, UDP
+    - bere **data**, transformuje je na **segmenty**
+    - zajištění transportu segmentů do cílové aplikace, komunikace mezi procesy
+    - adresování pomocí portu (16 bitové číslo 0-65535)
+    - může poskytovat end-to-end spolehlivost, spojení (pakety jsou číslovány, záleží na pořadí, dodání je potvrzeno)
+    - může poskytovat kontrolu spojení, quality of service
+    - logický komunikační kanál, iluze přímé komunikace
+
 - **Síťová (internet layer)** 
     - IP (internet protocol)
     - bere **segmenty**, transformuje je na **pakety**
     - zajišťuje přenos paketů mezi komunikujícími uzly (i napříč různými LAN), čímž de facto vytváří WAN
     - umožňuje adresování každého zařízení na internetu pomocí IP adresy (IPv4 32 bitů, IPv6 128 bitů)
-    - zajišťuje směrování paketů
-    - umožňuje multicast
-    - pro překlad IP adresy na MAC adresu se používá ARP, obráceně RARP
-    - pro případné problémy s doručením slouží ICMP
+    - zajišťuje směrování paketů - závisí na vytíženosti sítě a její topologii
+        - topologie celého internetu se těžko určuje, dynamicky se mění
+        - každý router řeší doručení paketu na své nejbližší sousedy ve snaze doručit paket blíže (domnělému) cíli na základě své **směrovací tabulky**
+            - upravována manuálně (vhodné pro malé sítě), nebo automaticky pomocí distribuovaných algoritmů
+                - **Distance Vector** 
+                    - *vše co vím řeknu svým sousedům*
+                    - protokol **RIP**
+                    - sousedící routery si periodicky/při změně vyměňují směrovací tabulky ve kterých jsou informace o vzdálenostech (hop distance) k různým cílům (distance vector), princip [Bellman-Ford](https://www.youtube.com/watch?v=obWXjtg0L64) algoritmu
+                    - používaný pro malé sítě, kde není redundance
+                - **Link State** 
+                    - *všem řeknu informaci o svých sousedech*
+                    - routery si vyměňují informace o stavu svch sousedů, je uchovávána topologie celkové sítě, každý si dopočítá svou routovací tabulku, pro cesty se používá [Dijkstra](https://www.youtube.com/watch?v=_lHSawdgXpI).
+                    - protokol **OSPF**, open shortest path first
+                    - metrikou (výhou hrany) je cena odvozená od šířky pásma, nižší je lepší
+                    - robustnější, protože si každý počítá routing tabulky sám
+                    - používaný pro velké sítě
+        - je možné použít interní (RIP, OSPF) pro naši doménu (autonomní systém) a externí routing (EGP, BGP-4) pro směrování mezi doménami (autonomními systémy)
+            - **BGP (Border Gateway Protocol)** - podporuje cykly, používá Path Vector (vyměňují se nejen ceny cest, ale jejich celé popisy)m umožňuje routing pravidla (policies), používá CIDR na zefektivnění routování
+
 
 - **Vrstva síťového rozhraní (network access layer)** - často se tato vrstva ještě rozlišuje na
     - **datalinkovou**  
@@ -63,10 +91,6 @@ V praxi se ujal model TCP/IP, který jednotlivé vrstvy ISO/OSI slučuje.
 
 - Zajišťuje doručení IP datagramů (data rozřezané na kousky s obálkou) v rámci internetu host-to-host (i přes prostředníky, a.k.a. routery), síť je connection-less, paketová
 - Best-effort služba, není garance o doručení.
-- spolupracuje s protokoly 
-    - ICMP - poskytuje informace o stavu sítě (e.g. echo request/reply), poskytuje odesilateli inforace o chybě doručení (e.g. příjemce nedosažitelný, TTL šlo na nulu)
-    - IGMP - správa skupin pro multicast, (od)registrace do skupin
-    - ARP, RARP - překlad IP na MAC a obRáceně
 
 ### IPv4 datagram
 
@@ -82,8 +106,46 @@ Hlavička obsahuje
 - adresa odesilatele i příjemce
 - options - slouží pro testování, debugging, volitelná část díky poli "délka hlavičky"
 
+IPv4 obecně
+- spolupracuje s protokoly 
+    - ICMP - poskytuje informace o stavu sítě (e.g. echo request/reply), poskytuje odesilateli inforace o chybě doručení (e.g. příjemce nedosažitelný, TTL šlo na nulu)
+    - IGMP - správa skupin pro multicast, (od)registrace do skupin
+    - ARP, RARP - překlad IP na MAC a obRáceně
+- umožňuje multicast
+
 ## transportní protokoly (TCP, UDP)
-TODO
+
+### UDP (User Datagram Protocol)
+
+- jednoduchý, poskytuje nespojovanou, best-effort službu (spolehlivost si musí případně řešit aplikace)
+- klíčová je jednoduchost => minimální režie, rychlost
+- používá se pro jednoduchou request-reply komunikaci (DNS), real-time přenosy (livestream), multicast
+
+Hlavička obsahuje
+- Zdrojový port
+- Cílový port
+- Celkovou délku
+- Checksum
+
+### TCP (Transmission Control Protocol)
+- poskytuje spolehlivou spojovanou službu, uchovává pořadí
+- pracuje s byte streamy
+- komunikace musí být ustanovena 3way handshake (hello, hello&ack, ack)
+- komunikace je rozpoznatelná jen end-to-end, routery neřeší, že jde o spojení
+- nepodporuje multicast
+
+Hlavička obsahuje
+- zdrojový port
+- cílový port
+- sekvenční číslo (v rámci toku)
+- ack číslo - číslo dalšího očekávaného bajtu, potvrzuje přijetí dat
+- délka hlavičky
+- příznaky (ack, reset spojení, konec spojení...)
+- velikost okna (pro flow control)
+- checksum
+- options
+
+Tcp mění množství poslaných dat v průběhu komunikace, aby nebyl příjemce (Flow Control), nebo síť (Congestion Control) zahlcen/a, slouží k tomu **velikost okna**.
 
 ## Protokoly na síťových vrstvách
 TODO
@@ -132,3 +194,8 @@ TODO
 ## počítačové sítě a multimédia
 TODO
 
+## Notes
+
+**CIDR** - kromě IP adresy uchováváme i masku sítě (e.g. 147.209.5.0/24 říká, že relevantních je jen prvních 24 bitů). Umožňuje subneting a efektivnější směrování - pokud máme v tabulkce adresy se stejným prefixem a stejnou cestou, můžeme říct, že naší cestou mají chodit pakety pro celý prefix 
+
+**Piggybacking** - Pokud chceme odesilateli poslat nějaká data a zároveň potvrdit příjem dat, můžeme tyto informace spojit do jednoho paketu 
