@@ -224,7 +224,43 @@ Podpůrný ICMPv6 rozšiřuje funkcionalitu i o to co dělal IGMP a ARP.
 - ideální je dnes dělat aplikaci fungující s obojím, alternativně je potřeba použít enkapsulaci (tunelování) IPv6 do IPv4 paketů, nebo překládání (NAT) 
 
 ## Peer-to-peer (P2P) sítě
-TODO
+
+Systém je tvořen vícero identickými (a na stejné úrovni) moduly, peery, které vzájemně komunikují. Každý peer funguje jako klient (posílá požadavky) i server (odpovídá na požadavky) současně. U P2P není potřeba znát topologii celé sítě.
+
+Oproti Server-Client:
+- lepší škálovatelnost (ale u C-S lze poměrně solidně obstát s load balancingem)- s počtem klientů roste i výpočetní kapacita
+- decentralizace - fajn z pohledu dostupnosti (pád 1 peera neznamená pád celého systému)
+    - může být problém z pohledu konzistence dat
+- větší proměnlivost topologie
+- sdílení výpočetní kapacity
+- sebeorganizace
+- C-S je jednodušší a zavedenější na vývoj, snadněji se spravuje
+- v C-S je server jasnou autoritou, která zajišťuje bezpečnost a autenticitu dat, u P2P je to složitější zajistit
+
+E.g.
+- distribuované výpočty Folding@Home
+- filesharing BitTorrent
+- Apache Cassandra (db)
+
+Vrstvy:
+- Aplikace 
+- Middleware
+    - abstrakce nad overlay, poskytuje přístup ke službám/zdrojům peerů, kontroluje přístup ke službám/zdrojům, hledání a udržování zdrojů (skupin peerů) distribuovaných služeb
+- Base overlay
+    - vrstva nad fyzickou sítí (obvykle TCP/UDP), kde se peery berou jako hopy (vyzicky vzdálení mohou být v p2p síti sousedi a naopak)
+    - peer discovery, přeposílání zpráv, udržování (části) sítě
+
+Peer discovery
+- **Static/Manuální** - peer má předkonfigurovaný seznam informací o ostatních možných peerech (ip, port), na ty se zkouší připojovat. Nevhodné pro dynamické systémy, u větších systémů lze omezit seznam na pár dlouhodobě běžících stabilnějších peerů.
+- **Centralizovaný registr peerů** - udržuje seznam aktivních peerů, používá se pro discovery, následně probíhá komunikace napřímo. Registr je de fakto server, single point of failure. Registr provádí healthcheck (peer může znenadání spadnout, takže odhlašování při ukončení peera nestačí)
+
+Service discovery lze pomocí záplavy sítě dotazy (nestrukturované sítě, každý peer zodpovídá za svá data/služby, zpráva má TTL pro prevenci zahlcení, je možné použít DFS/BFS/heuristiky... na základě most promising), nebo je nějaký registr (strukturované sítě, regitr je centrální, a/nebo data jsou v distribuované tabulce), případně jako registr slouží vybraní peerové (hybridní sítě).
+
+Topologie overlay (jak jsou mezi sebou peerové vzájemně provázání) určuje celkovou výkonost p2p sítě. Snažíme se vyhnout lineárním formacím, splitům.
+- **Random mesh** - po discovery peerů se k několika z nich připojím (vybírám podle latence, díky tomu je větší šance výběru fyzicky blízkých peerů).
+- **Vrstvy** - peeři se organizují do vrstev dle poskytovaných služeb/připojení, na nejvyšší úrovni jsou ti nejspolehlivější s kapacitou přeposílání zpráv, na každé vrstvě je peer spojen s několika peery nižších vrstev a přeposílá zprávy na vyšší/nižší vrstvy. Struktura je tree-like, ale je třeba zajistit, aby výpadek jednoho nezpůsobil rozdělení sítě. Fajn třeba pro video streaming - peer může zprávu jdoucí dolů zduplikovat a šetřit tak bandwidth na vyšších vrstvách.
+- **Mřížka/Grid** - peeři jsou propojeni do mřížky (může být vícedimenzionální, i okrajoví mohou být vzájemně propojení). Problém může být přidávání/odebírání peerů, řádky/sloupce nemusí mít konzistentní počet členů. Koordináty peerů mohou být použity k adresování poskytovaných služeb
+
 
 ## ad-hoc/senzorové sítě
 TODO
