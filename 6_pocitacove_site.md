@@ -14,7 +14,9 @@ Zákadní typy sítí
 
 K stanovení jednotných pravidel a způsobu komunikace slouží standardizované **protokoly**.
 
-Architektury peer-to-peer vs klient-server
+Architektury [peer-to-peer](./6_pocitacove_site.md#peer-to-peer-p2p-sítě) vs klient-server (klienti komunikují pouze se serveren, service discovery konfigurací klientů, klient iniciuje spojení)
+
+Směrování probíhá pomocí směrovacích tabulek routerů - na základě adresy (a případně typu) paketu se podle tabulky určí další směr, hop-by-hop princip. Další destinace se určuje na základě nejdelšího CIDR prefixu adresy. Směrovací jsou obvykle aktualizovány distribuovanými algoritmy. Na routerech je možné pakety filtrovat (zatoulané, k zajištění QoS) a případně klasifikovat (při modelech pay-as-you-go). Směrovat je možné nejen pomocí nejkratší cesty, ale i s ohledem na aktuální stav/vytíženost sítě.
 
 ## ISO/OSI,  TCP/IP model
 
@@ -63,6 +65,7 @@ V praxi se ujal model TCP/IP, který jednotlivé vrstvy ISO/OSI slučuje.
                     - protokol **RIP**
                     - sousedící routery si periodicky/při změně vyměňují směrovací tabulky ve kterých jsou informace o vzdálenostech (hop distance) k různým cílům (distance vector), princip [Bellman-Ford](https://www.youtube.com/watch?v=obWXjtg0L64) algoritmu
                     - používaný pro malé sítě, kde není redundance
+                    - dále se používají IGRP, EIGRP
                 - **Link State** 
                     - *všem řeknu informaci o svých sousedech*
                     - routery si vyměňují informace o stavu svch sousedů, je uchovávána topologie celkové sítě, každý si dopočítá svou routovací tabulku, pro cesty se používá [Dijkstra](https://www.youtube.com/watch?v=_lHSawdgXpI).
@@ -70,8 +73,12 @@ V praxi se ujal model TCP/IP, který jednotlivé vrstvy ISO/OSI slučuje.
                     - metrikou (výhou hrany) je cena odvozená od šířky pásma, nižší je lepší
                     - robustnější, protože si každý počítá routing tabulky sám
                     - používaný pro velké sítě
+                    - dále se používá IS-IS
+                - **Path Vector**
+                    - distance vector, ale vyměňují se nejen ceny cest, ale celé jejich popisy
+                    - protokol **BGP (Border Gateway Protocol)**, umožňuje routing pravidla (policies), používá CIDR na zefektivnění routování
+                    - používá se pro směrování mezi autonomními systémy
         - je možné použít interní (RIP, OSPF) pro naši doménu (autonomní systém) a externí routing (EGP, BGP-4) pro směrování mezi doménami (autonomními systémy)
-            - **BGP (Border Gateway Protocol)** - podporuje cykly, používá Path Vector (vyměňují se nejen ceny cest, ale jejich celé popisy)m umožňuje routing pravidla (policies), používá CIDR na zefektivnění routování
 
 
 - **Vrstva síťového rozhraní (network access layer)** - často se tato vrstva ještě rozlišuje na
@@ -81,7 +88,7 @@ V praxi se ujal model TCP/IP, který jednotlivé vrstvy ISO/OSI slučuje.
         - zajišťuje spolehlivost fyzické vrstvy (detekce chyb & případná korekce, možné díky redundanci, e.g. paritní bit, Hammingův kód)
         - flow control
         - řeší koordinaci přístupu více zařízení ke sdílenému médiu (dělením na kanály, na základě rezervací, náhodnosti...) - MAC protokol
-        - na této úrovni lze výtvářet sítě LAN (běžné topologie bus, hvězda, kruh) 
+        - na této úrovni lze zapojovat sítě do topologií (běžné topologie bus, hvězda, kruh) 
     - **fyzickou**
         - poskytuje rozhraní ve formě **frameů bitů** 
         - poskytuje přístup k přenosovému médiu,
@@ -128,10 +135,14 @@ Hlavička obsahuje
 - checksum
 - options
 
-Tcp mění množství poslaných dat v průběhu komunikace, aby nebyl příjemce (Flow Control), nebo síť (Congestion Control) zahlcen/a, slouží k tomu **velikost okna**.
+Tcp mění množství poslaných dat v průběhu komunikace, aby nebyl příjemce (Flow Control), nebo síť (Congestion Control) zahlcen/a, slouží k tomu **velikost okna**. Obecně to funguje tak, že při startu se exponenciálně zvyšuje velikost okna, dokud nedosáhneme učité hranice. Od této hranice lineárně zvyšujeme velikost, dokud nedojde ke ztrátě paketu. V ten moment snížíme velikost na hraniční hodnotu a pokračujeme v lineárním zvyšování rychlosti. Jednotlivé varianty si tuto metodu přizpůsobují, e.g. Tahoe po ztrátě jde na minimální velikost okna (jako na úplném začátku), Reno praktikuje popsaný postup.  
 
 ## Protokoly na síťových vrstvách
-TODO
+Aplikační - HTTP, SMTP, DNS, FTP...
+Transportní - TCP UDP
+Síťová IP - IPv4 (spolu s ARP, RARP, ICMP, IGMP), IPv6 (ICMPv6)
+- pro směrování Distance vector: RIP, IGRP, EIGRP, Link state: OSPF, IS-IS
+Vrstva síťového rozhraní - ethernet, 802.11 (Wi-Fi)
 
 ## funkce IPv4
 
@@ -161,6 +172,15 @@ IPv4 obecně
     - IGMP - správa skupin pro multicast, (od)registrace do skupin
     - ARP, RARP - překlad IP na MAC a obRáceně
 - umožňuje multicast
+
+
+Původně se IP adresy dělily pouze do tříd
+
+![](img/20230530162603.png)
+
+kvůli nedostatku se začala používat i maska sítě (CIDR)
+
+127.0.0.1 je loopback
 
 ## pokročilé funkce IPv6
 - řeší problém nedostatku IPv4 adres 128 bitovou délkou
@@ -220,3 +240,12 @@ TODO
 **CIDR** - kromě IP adresy uchováváme i masku sítě (e.g. 147.209.5.0/24 říká, že relevantních je jen prvních 24 bitů). Umožňuje subneting a efektivnější směrování - pokud máme v tabulkce adresy se stejným prefixem a stejnou cestou, můžeme říct, že naší cestou mají chodit pakety pro celý prefix 
 
 **Piggybacking** - Pokud chceme odesilateli poslat nějaká data a zároveň potvrdit příjem dat, můžeme tyto informace spojit do jednoho paketu 
+
+**NAT** Překlad adres na rozhraní sítě. E.g. pro naši síť máme 1 veřejnou IP adresu. Aby se zajistilo správné směrování všem v síti, musí se na rozhraní překládat veřejná adresa na interní adresu.
+
+**SSL** 
+TODO
+
+Pro zefetkivnění směrování je možné použít **Multiprotocol Label Switching** - pro předpokládané/známé toky definujeme cesty, každému toku dáme label a směrujeme jen podle labelů (je možné nastavit i více cest, třeba jako backup, nebo pro distribuci pro load balancing).
+
+**Flow control** se řeší pro příjemce, **congestion control** se řeší pro síť
