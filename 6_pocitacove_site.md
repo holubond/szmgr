@@ -263,10 +263,64 @@ Topologie overlay (jak jsou mezi sebou peerové vzájemně provázání) určuje
 
 
 ## ad-hoc/senzorové sítě
-TODO
 
-## vysokorychlostní sítě
-TODO
+Ideálně začít popisem [ad-hoc](./6_pocitacove_site.md#ad-hoc) a [senzorových](./6_pocitacove_site.md#senzorové-sítě) sítí.
+
+Rádiové sítě obecně
+- distribuované řízení ke sdílenému médiu
+- možná nutnost řešení problému odposlechů
+- možná velká chybovost, kolize... => používají se spojované protokoly, které mohou mít rezervační, nebo plánovací mechanismy pro zajištění QoS.
+- pro signalizaci přenosu (aby byla zajištěna prevence kolizí) je nutné použít separátní kanál, nebo tato signalizace musí proběhnout před samotným přenosem
+- absence interference u odesílatele neznamená nutně absenci interference u přijímajícího
+
+### Ad-hoc
+
+- Sítě fungující bez předešlé existující infrastruktury, využívající síťových schopností jednotlivců => distribuované
+- Každý účastník funguje zároveň jako host
+- Na rozdíl od P2P sítí 
+    - je mnohem větší dynamicita topologie, mobilita účastníků 
+    - účastníci jsou sami zodpovědni za přístup k přenosovému médiu (často je to vzdych -> možná vysoká chybovost, interference)
+    => nutnost specializovaných protokolů
+
+Příklady
+- komunikace mezi autonomními automobily
+- vytvoření komunikační infrastruktury při nouzových/záchranných situacích
+- za mini-ad-hoc síť by se daly považovat sledovací tagy, které využívají síťových schopností mobilních telefonů
+
+Směrování může být
+- adresové - každý účastník musí mít přiřazenou unikátní adresu, problém je najít ho v síti. Výhodou je podpora uni/multi/broadcastu
+- data-centrické - zprávy na sobě nemají cílovou adresu, ale identifikátor dat. Příjemci v síti avizují, o jaká data mají zájem -> ta jsou jim přeposílána, není nutnost řešit unikátní adresy
+
+Další dělení směrování
+- proaktivní (pravidelná výměna informací o stavu sítě, udržuje se info o topologii) vs reaktivní (nutnost flooding), záleží na kýžené rychlosti a vytížnosti sítě, energetických nárocích..
+- směrování hop-by-hop vs znalost celé topologie
+- flat vs hierarchické (nadřízení mohou mít přidané zodpovědnosti, používají specializované algoritmy...)
+
+### Senzorové sítě
+
+Koncová zařízení jsou obvykle zařízení obsahující
+- procesor a paměť
+- komunikační modul (rádio)
+- baterii (může být i s hw pro sběr energie, e.g. solární panel)
+- samotný senzor (světlo, pohyb...)
+
+Specifikem senzorových sítí je
+- důraz na energickou efektivitu, protože baterka může být malá, přísun energie omezený.. (toto mohou mít společné s ad-hoc sítěmi)
+- omezenou výpočetní/paměťovou kapacitu
+- omezenou šířku pásma  
+- možnou nespolehlivost
+- nutnost řešit unikátní adresování (obvykle to v sobě tato zařízení nemají pořešené)
+- možný důraz na sebeorganizaci, multi-hop v rámci sítě
+- pro šetření energie se může používat dočasné uspávání zařízení v případě neaktivity v síti
+
+Příklady
+- sledování přírodních jevů, chování/přesunů (ohrožených) zvířat
+- detekce požárů, zemětřesení, vln
+- automatizace zemědělství, detekce sucha, škůdců...
+- řízení dopravy
+- automatizace řízení teploty v budovách
+- měření kvality vzduchu
+- zabezpečení objektů
 
 ## počítačové sítě a multimédia
 TODO
@@ -279,8 +333,9 @@ TODO
 
 **NAT** Překlad adres na rozhraní sítě. E.g. pro naši síť máme 1 veřejnou IP adresu. Aby se zajistilo správné směrování všem v síti, musí se na rozhraní překládat veřejná adresa na interní adresu.
 
-**SSL** 
-TODO
+**SSL, TLS** - Kryptografické protokoly (SSL nahrazen TLS) používané mezi transportní a aplikační vrstvou, zajišťují autenticitu a šifrování dat komunikujících stran. Nejprve se účastníci dohodnou na podporovaných algoritmech, pak proběhne výměna klíčů (pro symetrické šifrování) založená na asymetrickém šifrování (certifikát serveru, může požadovat i certifikát klienta). Pak probíhá komunikace pomocí symetrického šifrování.
+
+
 
 Pro zefetkivnění směrování je možné použít **Multiprotocol Label Switching** - pro předpokládané/známé toky definujeme cesty, každému toku dáme label a směrujeme jen podle labelů (je možné nastavit i více cest, třeba jako backup, nebo pro distribuci pro load balancing).
 
