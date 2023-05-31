@@ -254,7 +254,7 @@ Peer discovery
 - **Static/Manuální** - peer má předkonfigurovaný seznam informací o ostatních možných peerech (ip, port), na ty se zkouší připojovat. Nevhodné pro dynamické systémy, u větších systémů lze omezit seznam na pár dlouhodobě běžících stabilnějších peerů.
 - **Centralizovaný registr peerů** - udržuje seznam aktivních peerů, používá se pro discovery, následně probíhá komunikace napřímo. Registr je de fakto server, single point of failure. Registr provádí healthcheck (peer může znenadání spadnout, takže odhlašování při ukončení peera nestačí)
 
-Service discovery lze pomocí záplavy sítě dotazy (nestrukturované sítě, každý peer zodpovídá za svá data/služby, zpráva má TTL pro prevenci zahlcení, je možné použít DFS/BFS/heuristiky... na základě most promising), nebo je nějaký registr (strukturované sítě, regitr je centrální, a/nebo data jsou v distribuované tabulce), případně jako registr slouží vybraní peerové (hybridní sítě).
+Service discovery lze pomocí záplavy sítě dotazy (nestrukturované sítě, každý peer zodpovídá za svá data/služby, zpráva má TTL pro prevenci zahlcení, je možné použít DFS/BFS/IDS/heuristiky/náhodné procházky... na základě most promising), nebo je nějaký registr (strukturované sítě, regitr je centrální, a/nebo data jsou v distribuované tabulce, skip listu...), případně jako registr slouží vybraní peerové (hybridní sítě).
 
 Topologie overlay (jak jsou mezi sebou peerové vzájemně provázání) určuje celkovou výkonost p2p sítě. Snažíme se vyhnout lineárním formacím, splitům.
 - **Random mesh** - po discovery peerů se k několika z nich připojím (vybírám podle latence, díky tomu je větší šance výběru fyzicky blízkých peerů).
