@@ -15,5 +15,6 @@ Sepsáno na základě přednášek, osobních zkušeností a samozřejmě ChatGP
 - [Softwarové inženýrství](./3_softwarove_inzenyrstvi.md)
 - [Projektové řízení](./4_projektove_rizeni.md)
 - [Databáze](./5_databaze.md)
+- [Počítačové sítě](./6_pocitacove_site.md)
 
 @mazanec

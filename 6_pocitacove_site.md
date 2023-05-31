@@ -323,7 +323,29 @@ Příklady
 - zabezpečení objektů
 
 ## počítačové sítě a multimédia
-TODO
+
+**Multimédia** data složená z různých typů médií (text, zvuk, video, obrázky...) integrovaných dohromady. E.g. videokonference (video + zvuk), televize/stream (video + zvuk + (text, titulky)). Některé média mohou být analogové, pro přenos je nutná konverze. Je kýžená komprese pro snížení objemu přenášených dat, ale komprese může znamenat overhead navíc, což nemusí být přijatelné u realtime přenosů. Dle aplikace nám může (ne)vadit chybovost.
+
+**Delay** - doba přenosu ze zdroje k cíli (člověk si všimne latence > 100-200 ms)
+    - **Processing delay** - časový overhead u odesílatele/příjemce, záleží na rychlosti/vytíženosti komunikujícího systému
+    - **Transmission delay** - doba, jakou trvá nacpat všechny bity do přenosového média (záleží na velikosti)
+    - **Propagation delay** - doba přenosu přes samotné přenosové médium, záleží na technologii a vzdálenosti
+    - **Routing/queuing delay** - záleží na vytíženosti sítě, rychlosti směrování
+**Jitter** - rozdílná doba přenosu mezi jednotlivými pakety
+
+Pro minimalizaci overheadu a zajištění maximální rychlosti (i za cenu chyb, výpadků...) se pro realtime aplikace používá UDP, příjemce může používat techniky jako odhadování chybějících dat, případně odesílatel může použít techniky pro detekci/korekci chyb pomocí redundance (nebo opětovaného zaslání). 
+
+Je možné použít interleaving - e.g. u videa přeskládáme sousedící snímky tak, aby nesousedily. Pokud vypadne paket, tak bude ovlivněno sice více částí, ale každá jen trochu, namísto znatelného výpadku jedné části. Toto ale zvyšuje latenci.
+
+Pro realtime přenosy se používá multicast, namísto spousty unicastů (síť není zahlcená tolik). Pokud multicast síť nepodporuje, můžeme na ní nasadit reflektor - odesílatel posílá jeden datový tok, reflektor přijímá a replikuje příjemcům, každému unicastem.
+
+Média se mohou přenášet diskretizovaně (soubor, zpráva), nebo kontinuálně (stream).
+
+**Text** - e.g. HTTP, SMTP, FTP, vyžaduje relativně málo bandwidth, delay a nároky na chybovost závisí na aplikaci. Komprese e.g. pomocí huffman, nebo shannon-fano kódování (více v [otázka 5 - databáze](./5_databaze.md#kódování-a-komprese-dat)), na webu se používá gzip (obsahuje huffmana), drobné chyby dělají problémy
+**Audio** - v základu analog, digitalizace pomocí vzorkování (hodnota v čase) signálu a kvantitatizace (mapování e.g. na celá čísla). Požadavky na šířku pásma záleží na požadované kvalitě a případné komprimaci, jsme ochotni tolerovat drobné chyby
+**Grafika** - obvykle nejsou požadavky na rychlost (pokud není tragická)
+**Video** - obvykle náročné na šířku pásma, jinak se specifiky podobá audiu
+
 
 ## Notes
 
@@ -335,8 +357,10 @@ TODO
 
 **SSL, TLS** - Kryptografické protokoly (SSL nahrazen TLS) používané mezi transportní a aplikační vrstvou, zajišťují autenticitu a šifrování dat komunikujících stran. Nejprve se účastníci dohodnou na podporovaných algoritmech, pak proběhne výměna klíčů (pro symetrické šifrování) založená na asymetrickém šifrování (certifikát serveru, může požadovat i certifikát klienta). Pak probíhá komunikace pomocí symetrického šifrování.
 
-
-
-Pro zefetkivnění směrování je možné použít **Multiprotocol Label Switching** - pro předpokládané/známé toky definujeme cesty, každému toku dáme label a směrujeme jen podle labelů (je možné nastavit i více cest, třeba jako backup, nebo pro distribuci pro load balancing).
+Pro zefetkivnění směrování je možné použít **Multiprotocol Label Switching** - pro předpokládané/známé toky definujeme cesty, každému toku dáme label a směrujeme jen podle labelů (rychlejší, je možné nastavit i více cest, třeba jako backup, nebo pro distribuci pro load balancing).
 
 **Flow control** se řeší pro příjemce, **congestion control** se řeší pro síť
+
+**Autenticita** - data jsou od správného odesilatele
+**Integrita** - data nebyla cestou změněna
+**Šifrování** - data nejsou čitelná/srozumitelná třetím stranám
