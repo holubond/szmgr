@@ -129,7 +129,7 @@ Pro vývoj rozsáhlých systémů se používají následující typy nástrojů
     - e.g. unix terminal
     ![](img/20230518144835.png)
 
-- **Microkernel architecture** - monolitická, dělí systém na jádro (core) a (ideálně) plug-in komponenty, aplikační logika je v těchto komponentech.  Jednoduchá rozšiřitelnost, adaptabilita, customizace
+- **Microkernel/Hexagonal/Component-based architecture** - monolitická, dělí systém na jádro (core) a (ideálně) plug-in komponenty, aplikační logika je v těchto komponentech.  Jednoduchá rozšiřitelnost, adaptabilita, customizace
     - Jádro obsahuje minimální nutnou funkcionalitu, která se rozšiřuje skrz pluginy
     - Pluginy by měly být nezávislé, připojitelné za běhu, mohou mít vlastní db, mohou být vzdálené a komunikovat s jádrem přes e.g. REST.
     - Pluginy jsou obvykle dostupné z nějakého registru, kde jsou data jako název, kontrakt, detaily pro připojení pluginu.
