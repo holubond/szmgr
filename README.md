@@ -16,5 +16,6 @@ Sepsáno na základě přednášek, osobních zkušeností a samozřejmě ChatGP
 - [Projektové řízení](./4_projektove_rizeni.md)
 - [Databáze](./5_databaze.md)
 - [Počítačové sítě](./6_pocitacove_site.md)
+- [Distribuované systémy](./7_distribuovane_systemy.md)
 
 @mazanec
