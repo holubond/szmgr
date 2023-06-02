@@ -64,7 +64,9 @@ V distribuovaných systémech se používá replikace dat z různých důvodů. 
 
 Replikace je kýžená u content delivery network (CDN), kde se snažíme mít statické zdroje (web, obrázky) co nejblíže uživateli, aby se dosáhlo rychlého načítání.
 
-Pro sdílení dat je možné použít Apache Kafka, platformu pro streamování dat ukládaných do logů. Pro sdílení informací o službách distribuovaného systému se dá použít Apache ZooKeeper.
+NoSQL databáze mají obvykle mechanismy pro automatickou replikaci/distribuci dat mezi různými uzly. Je možné použít sharding (rozbijeme data, uzel se stará o svou doménu) pro distribuci dat, a/nebo master-slave replikaci pro škálování (u aplikací s častým čtením) a prevenci výpadků (spadne master? jeden ze slaves je nový master) - master se při zápisu stará o aktualizaci dat na slaves.
+
+Pro sdílení dat (událostí) je možné použít Apache Kafka, platformu pro streamování dat ukládaných do logů. Pro sdílení informací o službách distribuovaného systému se dá použít Apache ZooKeeper.
 
 
 ## Architektura orientovaná na služby (SOA)
