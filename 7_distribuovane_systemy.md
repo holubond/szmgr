@@ -14,7 +14,7 @@ Architektury popsány v [otázce 1](./1_programovani_a_softwarovy_vyvoj.md#zákl
 
 **Hexagonal/Microkernel/component-based** - základní aplikace poskytuje minimální funkcionalitu, zbytek se dodává skrz plug-in komponenty komunikující přes předdefinované api. Komponenty je možné případně zapojovat za běhu systému. Další možnost využití komponentů - pokud potřebujeme používat legacy systém, který si nemůžeme dovolit přepsat, je možné ho zabalit jako komponent a přistupovat k němu přes naše kompatibilní rozhraní. Pokud komponenty zapojujeme sekvenčně, říká se tomu **pipeline architecture** (e.g. unix utilities spojené pipes). Vývoj komponentových systémů je náročnější (zvlášť problematické je správně určit rozhraní), ale umožňuje větší přizpůsobitelnost/znovupoužitelnost komponentů v budoucích projektech. E.g. extensions ve VSCode, component-based architekturu používá Jakarta Enterprise Edition, kde jednotlivé Java Beans jsou komponenty
 
-**Service-oriented architecture** - hybrid mezi monolitem a microservices, service je samostatně nasaditelná služba zajišťující logickou jednotku funkcionality (e.g. objednávání), služby sdílí databázi. Je náročnější na vývoj, ale celkově je systém díky modularizaci lépe udržitelný a škálovatelný. Je potřeba řešit service discovery.
+**Service-oriented architecture** - popsáno v [samostatné kapitole](./7_distribuovane_systemy.md#architektura-orientovaná-na-služby-soa)
 
 **Microservice architecture** - vysoká koheze, nízká provázanost služeb, systém je tvořen velkým množstvím malých služeb. Důležitá je rychlá komunikace mezi službami (gRPC). Služby nesdílí DB.
 
@@ -23,6 +23,18 @@ Architektury popsány v [otázce 1](./1_programovani_a_softwarovy_vyvoj.md#zákl
 Pro komunikaci se v distribuovaných systémech kromě RPC používají **message queues** a **event brokers**, kteří umožňují komunikaci typu publisher-subscriber, nebo zpracování jedním z množiny příjemců, a jsou schopny zprávy persistentně uchovávat (hodí se pro transakční zpracování, spolehlivost v případě výpadku). Obecně lze rozlišovat mezi zprávamy určenými do **queue** (klasická fronta, očekáváme zpracování jedním konzumentem) a **topic** (zpráva jde všem poslouchajícím). E.g. Apache Kafka, RabbitMQ.
 
 Alternativně se může pro komunikaci v distribuovaném systému používat e.g. REST, nebo (pokud chceme low level kontrolu a výkon) přímá komunikace mezi sockety.
+
+**Cloud** - výhodou je, že můžeme používat platformu/infrastrukturu jako službu, aniž bychom se o ni museli starat/provádět nákladnou iniciální investici. Výpočetní výkon lze (i automaticky) upravit/škálovat na základě aktuálního vytížení. Fyzické zdroje mohou být sdílené, čímž je možné dosáhnout nižší ceny a je možné distribuovat výpočetní požadavky (peaky různých aplikacích v různých dobách zvládne i jeden stroj). Datová centra lze volit na základě blízkosti k našim zákazníkům.
+
+**Batch vs Stream processing**
+![](img/20230602104120.png)
+
+U batch processingu můžeme distribuovat pomocí jednotlivých jobs, řeší se plánování jobs (může stačit obyčejná fronta)
+
+Stream e.g. Apache Kafka
+
+**MapReduce** - k transformaci dat používáme operace MAP (transformace dat 1:1) a REDUCE (sumarizace dat N:1). MAPery lze triviálně paralelizovat (stejné i rozdílné operace), u REDUCErů je to trochu složitější, paralelizujeme rozdílné operace. E.g. Apache Hadoop
+
 
 ## Rozdíl mezi centralizovanou a distribuovanou architekturou systému, nevýhody obojího a jejich překonávání
 
@@ -47,23 +59,29 @@ Oproti centralizované architektuře distribuované systémy
 - jsou flexibilnější na modifikace díky nízké provázanosti
 
 ## Replikace, sdílení dat
-TODO
+
+V distribuovaných systémech se používá replikace dat z různých důvodů. U distribuovaných databází(Apache Cassandra)/filesystémů (Apache Hadoop) to může být z důvodu bezpečnosti/dostupnosti/prevence výpadku, obecně se tím ale v systémech snažíme zajistit rychlejší odezvy. Centrální databáze, ve které se sdílí data, se může stát limitujícím bodem -> použijeme buď distribuovanou databázi, která replikaci řeší interně, nebo vícero databází, které mohou být jednodušší (MongoDB), protože se distribucí dat vzdáváme ACID a fungujeme s BASE. Určitá replikace dat vzniká kešováním (Redis). U replikace je potřeba nějakým způsobem řešit invalidaci dat po změně (timeout, nebo CQRS).
+
+Replikace je kýžená u content delivery network (CDN), kde se snažíme mít statické zdroje (web, obrázky) co nejblíže uživateli, aby se dosáhlo rychlého načítání.
+
+Pro sdílení dat je možné použít Apache Kafka, platformu pro streamování dat ukládaných do logů. Pro sdílení informací o službách distribuovaného systému se dá použít Apache ZooKeeper.
+
 
 ## Architektura orientovaná na služby (SOA)
-TODO
+
+Hybrid mezi microservices a monolitem, poměrně pragmatická architektura pro škálovatelný systém. Systém je tvořen vzájemně nezávislými, samostatně nasaditelnými a vzájemně komunikujícími službami (obvykle 4-12), které obsahují ucelené jednotky funkcionality (e.g. uživatelé, správa produktů, správa objednávek, platební služba, mailová služba...). Každá služba může být nezávisle na ostatních škálována. Nad službami může být pro zajištění jednotného API vrstva fasády. Služby obvykle sdílí databázi, ale je možné ji rozbít na vícero nezávislých celků. Je náročnější na vývoj, ale celkově je systém díky modularizaci lépe udržitelný a škálovatelný.
 
 ## Webové služby
 
 Komponenty umožňující komunikaci a interakci prostřednictvím standardizovaných protokolů a formátů. Jsou založeny na Service Oriented Architecture. Web services poskytují abstrakci funkcionalitě služby skrz webové API. Skrz definiční jazyk je formálně popsáno schéma/rozhraní dané služby a je možné generování klientského kódu pro různé programovací jazyky s cílem usnadnit použití webové služby. Schéma může být zároveň generováno přímo ze zdrojového kódu prostřednictvím anotací. 
 
-Dříve se používaly web services založené na SOAP (simple object access protocol) a XML, definované pomocí Web Service Definition Language (WSDL).
+Dříve se používaly web services založené na **SOAP** (simple object access protocol) a **XML**, definované pomocí **Web Service Definition Language (WSDL)**.
 
-Aktuálně se pro tyto účely spíše používá REST (representational state transfer) a JSON, definované pomocí OpenAPI Specification, případně GraphQL (a JSON) se svým GraphQL Schema a dotazovacím jazykem. GraphQL používá jeden entrypoint (+1 playground) a umožňuje přesně specifikovat kýžená data (až na úroveň polí) a řešit tak problém s overfetching (1 dotaz obsahuje zbytečná data) a underfetching (v dotazu nemáme dostatek dat, takže děláme vícero různých dotazů).
+Aktuálně se pro tyto účely spíše používá **REST** (representational state transfer, není to protokol, ale architektonický styl pro definici rozhraní) a **JSON** (byť je možné použít i jiné formáty), definované pomocí **OpenAPI Specification**, případně **GraphQL** (a JSON) se svým **GraphQL Schema** a dotazovacím jazykem. GraphQL používá jeden entrypoint (+1 playground) a umožňuje přesně specifikovat kýžená data (až na úroveň polí) a řešit tak problém s overfetching (1 dotaz obsahuje zbytečná data) a underfetching (v dotazu nemáme dostatek dat, takže děláme vícero různých dotazů).
 
+*SOAP je nezávislý na transportu, REST využívá HTTP. REST je jednodušší, rychlejší a efektivnější. SOAP umožňuje jednu zprávu cílit více příjemcům, přechod zprávy přes prostředníky, kteří mohou zpracovávat hlavičku (tělo je určeno jen příjemci). SOAP umožňuje výměnu strukturovaných a typovaných XML dat SOAP hlavička (nepovinná) může obsahovat metadata, QoS, bezpečnostní informace, SAML data, session identifikátor (a.k.a. cookie)..., SOAP obálka je root XML prvek zprávy, obsahuje namespace (určunící verzi protokolu), styl kódování dat, SOAP tělo obsahuje samotný obsah zprávy. REST umožňuje provázanost (díky hyperlinkům) a je možné se pomocí něj dostat na úplně jinou stránku mimo náš systém.*
 
-
-## Příklady existujících technologií a jejich využití.
-TODO
+*REST se dívá na web jako na zdroje adresovatelné URL, které vrací reprezentaci dat (HTML, XML, PNG, JSON...). Příjem dat uvede klienta do stavu, který může být transformován přístupem na jiný zdroj. Je bezstavový, každá zpráva obsahuje vše, co je nutné pro její interpretaci (správně by zpráva neměla obsahovat cookie, ale třeba JWT), dotazy jsou kešovatelné.*
 
 ## Notes
 
