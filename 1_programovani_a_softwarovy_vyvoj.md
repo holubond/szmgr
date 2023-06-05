@@ -98,23 +98,28 @@ Pro vývoj rozsáhlých systémů se používají následující typy nástrojů
 
 ## Základní koncepty softwarových architektur z pohledu implementace, Vícevrstvá architektura moderních informačních systémů, Architektura model-view-controller
 
-- **model Klient-Server** - klient slouží jako uživatelské rozhraní. Server zpracovává požadavky zasílané klientem a odpovídá na ně. Server dle požadavku klienta provádí aplikační logiku, přistupuje k databázi...
-
-- **architektura MVC - model, view, controller** - architektura oddělující systém na model, view a controller. model obsahuje data a business logiku. View  je zobrazením těchto dat a controller slouží k manipulaci nad modelem. Jde o cyklický vztah:  -->
+- **MVC pattern - model, view, controller** - odděluje systém na model, view a controller. Model obsahuje data a business logiku. View  je zobrazením těchto dat a controller slouží k manipulaci nad modelem. Jde o cyklický vztah:  -->
 
     `USER  (uses)>  CONTROLLER  (manipulates)>  MODEL  (updates)>  VIEW  (shown to)>  USER`
 
     - oddělení logiky zvyšuje modulárnost kódu, který je pak snadnější upravovat, testovat, udržovat 
     - e.g. multipage web
+- **MVP pattern - model, view, presenter** - presenter je prostředník mezi modelem a view, jde přes něj veškerá komunikace. Uživatel používá pouze view, akce uživatele view předává presenteru, který aktualizuje model a zasílá view nová data. E.g. SPA
+- **MVVM pattern - model, view, view model** - uživatel interaguje pouze přes view, veškerá komunikace jde přes view model, které provádí data, propisuje je do modelu. Rozdíl oproti mvp je, že view model může být použit pro vícero views, změny se sledují pomocí observeru. E.g. android aplikace.
 
-- **Vrstvená architektura** - Dělí monolitický systém na vrstvy, každá je zodpovědná za určitou část aplikace. Vrstva využívá služeb vrstvy pod ní. Každá vrstva může být otevřená/uzavřená, otevřené vrstvy je možné přeskočit.
+- **Klient-Server** - klient slouží jako uživatelské rozhraní. Server zpracovává požadavky zasílané klientem a odpovídá na ně. Server dle požadavku klienta provádí aplikační logiku, přistupuje k databázi... Komunikace je vždy iniciována klientem, server pouze odpovídá. Lze dělit na úrovně (2 tier, 3 tier i s databází, další úrovně můžou být servisní vrstvy...)
+
+- **Peer-to-Peer** - každý klient je současně i serverem, klienti spolu komunikují napřímo. Klienti takto sdílí výpočetní výkon, distribuují data... e.g. BitTorrent
+
+- **Vrstvená architektura (layered, případně clean)** - Dělí monolitický systém na vrstvy, každá je zodpovědná za určitou část aplikace. Vrstva využívá služeb vrstvy pod ní. Každá vrstva může být otevřená/uzavřená, otevřené vrstvy je možné přeskočit.
     - **Presentation** - closed, UI, klient
     - **Business** - closed, zpracovává business logiku
     - **Service** - open, obsahuje sdílené komponenty business vrstvy (autentizace, logování)
-    - **Persistence** - closed, slouží k přístupu do databáze
+    - **Persistence** - closed, slouží k přístupu do databáze, repository pattern ()
     - **Database** - closed, čistě databázová vrstva
 
-    - jednoduchá na vývoj, levná, vhodná pro projekty s velmi omezeným časem/rozpočtem, vhodná pokud si nejsme jistí co použít
+    - jednoduchá na vývoj (pořád je to monolit), levná, vhodná pro projekty s velmi omezeným časem/rozpočtem, vhodná pokud si nejsme jistí co použít
+    - oproti klasickému monolitu je větší overhead s předáváním dat mezi vrstvami
     - není odolná vůči chybám, pád části = pád celého systému, relativně dlouhý startup
     - vrstvu je možné nasadit samostatně a zlepšit tak škálovatelnost systému
     - e.g. eshop
@@ -122,10 +127,10 @@ Pro vývoj rozsáhlých systémů se používají následující typy nástrojů
 - **Pipeline architektura** - monolitická, funguje na principu MapReduce, skládá se z 
     - **pipe**, point-to-point komunikace
     - **filter**, komponenty transformující data, bezstavové, ale mohou zapisovat do db. Filter se má soustředit čistě na jednu úlohu. Jsou typy
-        - **Producer** - zdroj, iniciátor akce
+        - **Producer/source** - zdroj, iniciátor akce
         - **Transformer (map)** - transformuje vstup na výstup
         - **Tester (reduce)** - testuje kritérium a potenciálně vyprodukuje (mimo předání dat bez modifikace dál) výstup, který může vyvolat akci (zápis do datbáze)
-        - **Consumer** - ukončuje akci
+        - **Consumer/sink** - ukončuje akci
     - e.g. unix terminal
     ![](img/20230518144835.png)
 
