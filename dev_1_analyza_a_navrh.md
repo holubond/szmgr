@@ -30,6 +30,8 @@ TODO
 
 Návrhový vzor je obecné řešení k často se opakujícímu problému řešenému při návrhu sw, není potřeba kompletně vymýšlet vlastní řešení. Slouží nejen jako obecný návod pro implementaci, ale umožňují snadnější komunikaci v rámci týmu (e.g. tady použijeme Strategy pattern). Vzory je třeba používat s rozvahou, občas můžou být zbytečně obecné.
 
+[Pro pochopení a ukázky kódu](https://refactoring.guru/design-patterns)
+
 ### Creational patterns
 
 Řeší tvobu a inicializaci objektů, poskytují jednoduché rozhraní skrývající složitou inicializaci.
@@ -43,6 +45,39 @@ Singleton je mnohdy považován za antivzor, protože vytváří globální stav
 E.g. DB pool
 
 ![](img/20230603121311.png)
+
+#### Factory method
+
+Stará se o tvorbu konkrétních instancí objektů dle instance továrny (i.e., máme interfaces VehicleFactory a Vehicle. CarFactory bude dělat Car, zatímco stejné volání metody u PlaneFactory vytvoří Plane). Používá se pokud potřebujeme flexibilní a rozšiřitelný způsob vytváření objektů, nebo chceme oddělit logiku tvorby objektu od zbytku. Nevýhodou je nutnost tvorby nové Factory třídy a rozhraní.
+
+![](img/20230604152821.png)
+
+#### Abstract factory
+
+Podobná factory method, ale je zodpovědná za více produktů. Instance této factory zajišťuje tvorbu vzájemně kompatibilních produktů.
+
+![](img/20230605121553.png)
+
+#### Prototype
+
+Doslova trait `Clone`, vytvoří identickou kopii nějakého již existujícího objektu. Hodí se, pokud inicializace objektu je náročná, nebo neznáme konkrétní instanci (pracujeme s abstrakcí přes interface).
+
+![](img/20230604183448.png)
+
+#### Builder pattern
+
+Ke konfiguraci objektu při inicializaci používáme (deklarativním způsobem) metody příslušného `Builder` objektu, každá se stará o jeden aspekt. 
+
+E.g. Inicializace http požadavku
+
+```rust
+let request = HttpRequest::get("www.mysite.com/content")
+    .header("Authorization", "Bearer 8sa96d41a5s3fbwn")
+    .queryParam("offset", 42)
+    .build();
+```
+
+![](img/20230604183525.png)
 
 
 ### Structural patterns
@@ -66,6 +101,44 @@ E.g. integrace knihovny, případně můžeme adaptér použít k převodu mezi 
 Adaptér lze implementovat ve všech populárních jazycích jako wrapper, je možná i implementace class adaptéru v jazycích podporujících mnohonásobnou dědičnost.
 
 ![](img/20230603161229.png)
+
+#### Bridge
+
+Používá se k rozbití tightly coupled jednotek (nebo skupiny jednotek) pomocí abstrakcí (ty mohou mít vícero implementací, ale často nám bridge pomůže jen díky vytvoření abstrakce).
+
+E.g. Fullstack aplikaci využívající templating rozbijeme na frontend a backend api.
+
+![](img/20230604142514.png)
+
+#### Decorator
+
+Umožňuje rozšířit třídu, přidat k ní různé metody/atributy na základě použitého dekorátoru, dynamicky je přidávat/odebírat. Obdobně jako Adapter může obalit původní komponent, ale nemění rozhraní komponentu.
+
+E.g. BufReader pro bufferované čtení (ze souboru), BufReader obaluje Reader a přidává buffer.
+
+![](img/20230604142455.png)
+
+#### Proxy
+
+Prostředník mezi objektem a volajícím, transparentně předává zprávu (a může provádět další operace, hlídat přístup k objektu, provést alokaci objektu on-demand...).
+
+![](img/20230605125209.png)
+
+#### Facade
+
+Poskytuje jednotné (a jednoduché) rozhraní složitějšímu subsystému.
+
+![](img/20230605125311.png)
+
+#### Flyweight
+
+Sdílený objekt použitý na vícero místech - sdílený stav je uchováván v objektu, kontextuální stav se dodá skrz parametry volané metody. Slouží k úspoře paměti a/nebo výpočtu (pokud je inicializace drahá).
+
+E.g. DB pool
+
+![](img/20230605130130.png)
+
+![](img/20230605125734.png)
 
 ### Behavioral patterns
 
@@ -99,6 +172,30 @@ Na rozdíl od `Strategy`
 E.g. postavě se mění útok na základě nasazeného vybavení
 
 ![](img/20230603154910.png)
+
+#### Memento
+
+Uchovává předchozí stavy objektu, díky čemuž je možné přenést objekt do dřívějšího stavu. Používá se pro případy, kdy přímý přístup do atributů třídy není možný (private atributy).
+
+E.g. použití při implementaci UNDO.
+
+![](img/20230605132549.png)
+
+#### Observer
+
+Umožňuje tvorbu mechanismu pro notifikace. Observery se registrují ke sledování Subjektu (ukládáme si reference observerů do vektoru). V momentě, kdy se subjekt změní (a měly by být observery notifikovány), stačí zavolat metodu notify, která projde observery a každého notifikuje (obvykle zavoláním metody).
+
+Používá se pro nahrazení pollingu (opakovaně se ptám "už se událost stala?").
+
+![](img/20230605162806.png)
+
+#### Visitor
+
+Poskytuje jednotné rozhraní pro spuštění nějaké shodné akce nad objekty. Každý objekt má implementaci odlišnou, ale signatura pro všechny objekty je shodná (e.g. serializace různých struktur, bere Self, vrací String). Namísto abychom na základě typu struktury volali příslušnou metodu (`if let Vehicle::Car(_) = my_data { return serialize_car(my_data); }`), implementujeme metodu poskytnutou rozhraním (jen `serialize(&self)`). V diagramu je to metoda `accept(v: Visitor)`.
+
+E.g. serde
+
+![](img/20230605165644.png)
 
 ## Rozhraní komponent, kontrakty na úrovni rozhraní
 TODO
