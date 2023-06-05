@@ -24,11 +24,25 @@ TODO.
 TODO
 
 ## Softwarové architektury, komponentové systémy.
-TODO
+
+Sw architektura určuje, jakým způsobem je systém strukturován, jakým způsobem je dělen na komponenty/moduly a jak mezi sebou jednotlivé komponenty/moduly interagují a jak jsou jednotlivé části systému nasazeny na hw.
+
+SW architektury (vyšší úroveň abstrakce) a architektonické vzory (nižší úroveň abstrakce) jsou obecná řešení architektur systému. Uvádím jen seznam, podrobně jsou popsány v [části otázky 1](./1_programovani_a_softwarovy_vyvoj.md#základní-koncepty-softwarových-architektur-z-pohledu-implementace-vícevrstvá-architektura-moderních-informačních-systémů-architektura-model-view-controller)
+- **MVC/MVP/MVVM pattern**
+- **Klient-Server** 
+- **Peer-to-Peer** 
+- **Layered architecture** - vrstvená architektura používá architektonický vzor Repository
+- **Microkernel**
+- **Pipes and filters**
+- **Blackboard** - tabule je sdílená, jsou na ní data. Výpočetní agenti k tabuli přistupují a zpracovávají  data dle svých interních strategií. Klient následně vybere agenta, který přišel s nejlepším řešením, na základě čehož se aktualizují data na tabuli. Nedeterministický výpočet. e.g. použití různých algoritmů u kterých nevíme, jaký je nejlepší.
+- **SOA**
+- **Microservices**
 
 ## Návrhové a architektonické vzory.
 
 Návrhový vzor je obecné řešení k často se opakujícímu problému řešenému při návrhu sw, není potřeba kompletně vymýšlet vlastní řešení. Slouží nejen jako obecný návod pro implementaci, ale umožňují snadnější komunikaci v rámci týmu (e.g. tady použijeme Strategy pattern). Vzory je třeba používat s rozvahou, občas můžou být zbytečně obecné.
+
+*Architektonické vzory jsou popsány v [předchozí podotázce](./dev_1_analyza_a_navrh.md#softwarové-architektury-komponentové-systémy)*.
 
 [Pro pochopení a ukázky kódu](https://refactoring.guru/design-patterns)
 
@@ -266,6 +280,8 @@ Dekompozice podle [SOLID](./2_kvalita_kodu.md#solid-principy)
 - dependency inversion - závisíme na abstrakcích (rozhraní), ne na konkrétních implementacích
 
 **Problém s cyklickou vazbou objektů** - e.g. v metodě toString() je potřeba vhodně řešit, abychom se necyklili. Proto může být vhodnější definovat si pro takové případy speciální objekty s jasnou hierarchií a bez cyklů
+
+**Interface Definition Language** - popisuje rozhraní formou, která je nezávislá na použitém programovacím jazyce (e.g. OpenAPI Specification pro REST, protocol buffer pr gRPC, Web Service Definition Language pro SOAP, CORBA IDL). Obvykle je možné pomocí IDL schématu vygenerovat v daném programovacím jazyce kód/struktury, který poskytovatel implementuje a uživatel používá. Více v [otázce 7](./7_distribuovane_systemy.md).
 
 ### Analytické vzory
 Návrhové vzory nabízí řešení na často řešené problémy v návrzích systému. Tato řešení jsou místy až příliš sofistikovaná, takže se doporučuje složitější návrhové vzory používat z rozvahou, abychom problém *neoverengineeringovali*.
