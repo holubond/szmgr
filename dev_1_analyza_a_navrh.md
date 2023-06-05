@@ -197,15 +197,51 @@ E.g. serde
 
 ![](img/20230605165644.png)
 
-## Rozhraní komponent, kontrakty na úrovni rozhraní
-TODO
+## Rozhraní komponent, kontrakty na úrovni rozhraní, OCL
 
-## OCL.
-TODO
+Aby mohl komponent komunikovat se svým okolím (být volán a případně vracet data), potřebuje nějaké veřejné rozhraní, kterému se říká **signatura**. Skládá se z poskytovaných operací (funkcí/metod) a jejich vstupních a výstupních parametrů.
+
+U rozhraní nás zajímají i další omezení, které mohou upravovat (správné) používání rozhraní (*e.g. uživatel se může registrovat jen jednou*). Signatuře a omezení se souhrnně říká **kontrakt**. Kontrakt popisuje poskytnutou funkcionalitu za předpokladu, že dodržíme předem stanovené podmínky. 
+
+Součástí kontraktu (v kontextu struktur/objektů) můžou být:
+- **preconditions** - co musí platit před vyvoláním dané metody, aby metoda proběhla správně (e.g. máme dost peněz na účtu)
+- **postconditions** - co musí platit po skončení dané metody, i.e., co metoda poskytuje (e.g. proběhne platba, z účtu se nám odečte příslušná platba)
+- **invariants** - co vždy musí platit, váže se obvykle k objektům, nejen metodám (e.g. na debetním účtu není možné jít do mínusu)
+
+**OCL (Object Constraint Language)** je deklarativní jazyk, který umožňuje popis kontraktů a jejich constraintů (omezení domén hodnot), včetně jejich zavedení do UML, a může být použit i pro jejich vynucování (e.g. generování kódu na základě kontraktu popsaného v komentáři/anotacích (v Javě `@`)).
+
+Při definici kontraktů objektů s dědičností nesmíme porušit Liskov substitution principle, dědic může invarianty a postconditions pouze utahovat, ne je rozvolňovat (co platilo pro rodiče, musí platit i pro potomka). Naopak je to u preconditions, kde může dědic podporovat více vstupů než předek.
+
+Příklady:
+
+Auto (třída Car) nesmí překročit rychlost 240.
+`context Car inv: speed < 240`
+^ speed a self.speed (kde self je Car) jsou identické
+
+Před odebráním prvku musí zásobník něco obsahovat, vrací to co bylo na vrchu zásobníku
+```
+context Stack::pop()
+pre neniPrazdny: self.len() > 0
+post vraciVrsekZasobniku: result = self@pre.top()
+```
+
+Po vložení prvku se zvětší zásobník
+```
+context Stact::push(element)
+post: self.len() = self@pre.len() + 1
+```
+
+V OCL lze používat funkcionální přístup ke kolekcím (select, forAll...), řešit existenci (exists), provádět množinové operace (union, intersection...), používat booleovské operátory (or, and, implies...) a spoustu dalšího (proměnné, cykly...).
 
 ## Modely softwarových systémů, jazyk UML.
 
 Modely sw systémů popisují systém vždy z nějakého zjednodušeného pohledu (model je už z definice abstrakce). Různé modely se zabývají různými aspekty/fázemi vývoje systému. Důležité však je, aby byly modely systému vzájemně konzistentní. Obecně lze rozlišovat na modely popisující strukturu a modely popisující chování.
+
+Příklad interface
+
+![](img/20230605172409.png)
+
+TODO
 
 ### Use case diagram
 TODO
