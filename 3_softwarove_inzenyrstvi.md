@@ -39,7 +39,7 @@ Existuje několik základních modelů
     - O nutnosti změny se dozvíme dříve a její zavedení bude levnější (není třeba vše překopávat, přidáme změnový inkrement)
 
 - **Spirála**
-![](img/20230523213434.png)
+![](img/20230607122950.png)
     - kombinace iterací a vodopádu, důraz na analýzu rizik
     - vývoj probíhá v cyklech, každý má několik fází
     - fáze
@@ -70,7 +70,7 @@ Hlavní metodiky řízení sw projektů jsou **prediktivní metodiky (e.g. RUP)*
 - rigidní, důraz na procesy
 - vhodná, pokud máme jasné a pevné požadavky, variabilní aspekty mohou být čas a zdroje
 - vyžaduje podstatné plánování předem
-- iterativní a inkrementální
+- iterativní a inkrementální, jednotlivé aktivity (plánování, požadavky, modelování, návrh, vývoj, testování, nasazení..) se částečně překrývají
 - řízena riziky, use-case požadavky
 - argitektura je středobodem - existuje architektonický tým, se kterým ostatní týmy konzultují případné nejasnosti/problémy, slouží jako centrální komunikační uzel (lepší, než kdyby spousta dev týmů komunikovala navzájem)
 - umožňuje pevnou kontrolu nad procesy a týmem
