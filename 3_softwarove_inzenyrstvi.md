@@ -68,7 +68,7 @@ Hlavní metodiky řízení sw projektů jsou **prediktivní metodiky (e.g. RUP)*
 
 ## Metodika (Rational) Unified Process (UP, RUP)
 - rigidní, důraz na procesy
-- vhodná, pokud máme jasné a pevné požadavky
+- vhodná, pokud máme jasné a pevné požadavky, variabilní aspekty mohou být čas a zdroje
 - vyžaduje podstatné plánování předem
 - iterativní a inkrementální
 - řízena riziky, use-case požadavky
@@ -126,6 +126,7 @@ RUP je konkrétní metodika stavějící na UP (přidává třeba jednotlivé ro
 ## Agilní metodiky a principy agilního vývoje SW
 - flexibilní, důraz na lidi
 - radši budeme reagovat na změnu, než se pevně držet plánu
+- snažíme se fixovat čas a zdroje, proměnlivá může být funkcionalita (*Postavili jsme dům a plot, v rozpočtu zbývají zdroje na garáž, nebo bazén. Co z toho chcete?*)
 - vhodná, pokud se požadavky mění, není jasná kýžená výsledná podoba systému, nebo zákazník požaduje něco hmatatelného relativně brzo
     => není přesné datum dokončení
 - vyžaduje minimální plánování předem
