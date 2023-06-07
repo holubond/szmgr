@@ -28,19 +28,23 @@
 - fail-fast přístup - snažíme se detekovat problém ve vstupech, namísto abychom klidně akceptovali cokoliv a pak se divili při neočekávaném chování
 - design by contract - naše metody (zvlášť při tvorbě) mohou vyžadovat splnění určitého kontraktu (lze vynutit asserty), aby mohly poskytnout garance o výstupech. Je možné použít podmíněnou kompilaci a mít kontrakty třeba jen ve vývojovém prostředí (tím se ale můžeme připravit o přesné určení místa problému na produkci) 
 
+Nonfunkcionální problémy kvality se řeší architekturou. Pro prevenci těchto problémů je možné vytvořit model systému a na něm si simulačně ověřovat požadavky (e.g. schopnost obsloužit určitý počet požadavků za určitý čas) a případně odvodit nároky na jednotlivé komponenty (třeba maximální dobu zpracování požadavku v daném komponentu).
+
+Pro ověření kvality je také  možné použít formální verifikaci (používá se třeba pro dokazování správnosti algoritmů).
+
 ### Detekce problémů kvality
 - code reviews (vzájemné mezi vývojáři), inspections (formální, je fajn použít formulář; ukazuje to přípravu, na nic se nezapomene a zároveň se odfiltrují zbytečnosti, nelpíme na stylu, řešíme správnost, dodržování standardů...)
 - (automatizované) testování (rust\cargo test)
 - statická analýza (rust\cargo clippy, borrow checker, sonarqube) - nespouštíme kód
 
 ### Oprava problémů kvality (pro každý atribut)
-- **Udržitelnost (maintainability)** - refaktoring
-- **výkonnost** - paralelismus, asynchronní zpracování, detekce a mitigace bottlenecků
-- **Spolehlivost** - detekce a náprava zdrojů nespolehlivosti, kontrolní mechanismy pro zajištění spolehlivosti, vhodné ošetření chyb
-- **Testovatelnost** - refaktoring
-- **Škálovatelnost** - refaktoring, extrakce subsystému...
-- **Bezpečnost** - detekce a oprava chyb
-- **Použitelnost** - zlepšení UX, úprava systému
+- **Udržitelnost (maintainability)** - refaktoring na koherentní jednotky, aby bylo místo nutné změny minimální a snadno lokalizovatelné, separace dat od logiky (aby bylo možné jednotku nahradit jinou), decoupling (závislosti na rozhraních, namísto na implementacích)
+- **Výkonnost** - kešování, paralelismus, asynchronní komunikace/zpracování, detekce a mitigace bottlenecků, odstranění adaptérů, separace dat od logiky, zjednodušení komunikace
+- **Spolehlivost** - detekce a náprava zdrojů nespolehlivosti, kontrolní mechanismy pro zajištění spolehlivosti, konkrétně vhodné ošetření chyb, automatický reporting neočekávaných chyb, timeout, healthcheck, kontrola vstupů na každé úrovni, odstranění single point of failure, backup & recovery
+- **Testovatelnost** - refaktoring, decoupling, separace dat a logiky
+- **Škálovatelnost** - refaktoring na jednodušší jednotky, extrakce dat pro umožnění paralelizace jednotek, extrakce subsystému, distribuce a/nebo replikace dat (db bývá bottleneck, ostatní věci lze snadněji paralelizovat)
+- **Bezpečnost** - detekce a oprava chyb, použití šifrované komunikace
+- **Použitelnost** - zlepšení UX, použití taktik pro zlepšení výkonnosti/škálovatelnosti
 
 ### Špatný kód
 - pomíchané úrovně abstrakce
