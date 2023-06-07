@@ -1,27 +1,26 @@
 # Analýza a návrh systémů
 
-> Objektové metody návrhu informačních systémů. Specifikace a řízení požadavků. Softwarové architektury, komponentové systémy. Návrhové a architektonické vzory. Rozhraní komponent, kontrakty na úrovni rozhraní, OCL. Modely softwarových systémů, jazyk UML. Příklady z praxe pro vše výše uvedené. ([PA103](https://is.muni.cz/auth/el/fi/podzim2021/PA103/um/), PV167, PV258)
+> Objektové metody návrhu informačních systémů. Specifikace a řízení požadavků. Softwarové architektury, komponentové systémy. Návrhové a architektonické vzory. Rozhraní komponent, kontrakty na úrovni rozhraní, OCL. Modely softwarových systémů, jazyk UML. Příklady z praxe pro vše výše uvedené. ([PA103](https://is.muni.cz/auth/el/fi/podzim2021/PA103/um/), PV167, [PV258](https://is.muni.cz/auth/el/fi/jaro2021/PV258/um/))
 
 ## Objektové metody návrhu informačních systémů.
 
 Přístupy a postupy k návrhu IS založených na objektově orientovaném paradigmatu, kde jsou objekty spojením dat a metod nad těmito daty.
 
-Mezi metody se řadí modelování domény pomocí [UML](./dev_1_analyza_a_navrh.md#modely-softwarových-systémů-jazyk-uml), dekompozice systému do menších, koherentních částí, v různých částích vývoje se zabýváme různými úrovněmi detailů. Dále se aplikují návrhové a architektonické vzory, které popisují řešení na dobře známé a často se opakující problémy v (nejen) objektovém světě.
+Objektové paradigma si dobře rozumí s principy abstrakce, což lze aplikovat nejen na úroveň objektů, ale i komponentů - základních stavebních jednotek, ze kterých se skládá architektura systému.
 
-TODO popiš úrovně a použité diagramy, detaily diagramů tady nerozebírej
-Fáze vývoje a používané diagramy:
-- Analýza požadavků - [Use Case](./dev_1_analyza_a_navrh.md#use-case-diagram), [Conceptual Class Diagram](./dev_1_analyza_a_navrh.md#conceptual-class-diagram)
-
-
-
-
-
-TODO.
-
-
+Mezi metody se řadí:
+- modelování domény pomocí [UML](./dev_1_analyza_a_navrh.md#modely-softwarových-systémů-jazyk-uml), v různých částích vývoje se zabýváme různými úrovněmi detailů
+- dekompozice systému do menších, koherentních částí
+- aplikace návrhových a architektonických vzorů, které popisují řešení na dobře známé a často se opakující problémy v (nejen) objektovém světě.
 
 ## Specifikace a řízení požadavků.
+
+Požadavky na systém se dělí na:
+- **Funkcionální požadavky** - jaké funkce zákazník od systému očekává, jedná se o business logiku, řeší se programově, v implementaci
+- **Nefunkcionální (non-functional) požadavky** - jaké technické nároky jsou na systém, použité technologie, OS, garance dostupnosti (availability), response time, řeší se návrhem a architekturou
 TODO
+
+
 
 ## Softwarové architektury, komponentové systémy.
 
@@ -37,6 +36,10 @@ SW architektury (vyšší úroveň abstrakce) a architektonické vzory (nižší
 - **Blackboard** - tabule je sdílená, jsou na ní data. Výpočetní agenti k tabuli přistupují a zpracovávají  data dle svých interních strategií. Klient následně vybere agenta, který přišel s nejlepším řešením, na základě čehož se aktualizují data na tabuli. Nedeterministický výpočet. e.g. použití různých algoritmů u kterých nevíme, jaký je nejlepší.
 - **SOA**
 - **Microservices**
+
+Komponenty jsou spustitelné softwarové jednotky, která mají definované komunikační rozhraní, do vnitřního fungování nevidíme/nezajímá nás. Komponent by měl poskytovat logicky související funkcionalitu, funguje jako vrstva abstrakce. Komponenty mohou být vyvíjeny nezávisle na jiných komponentech, jsou nahraditelné (stačí splnit rozhraní a jeho kontrakt), znovupoužitelné. Komponenty mohou mít vnitřní stav, ten však může dělat problém u škálování (paralelizací komponentů), mohou být asynchronní, mohou se interně skládat z dalších komponentů...
+
+Pokud systém vystavuje rozhraní používaná i někým jiným (klient), je fajn nějakým způsobem verzovat rozhraní. Díky tomu se předejde problémům při přidávání změn, nějakou dobu totiž můžeme podporovat vícero rozhraní, než se klient aktualizuje na novou verzi.
 
 ## Návrhové a architektonické vzory.
 
@@ -261,10 +264,32 @@ TODO
 TODO
 
 ### Conceptual class diagram
+TODO
+
+### Component diagram
+- Popisují komponenty, jejich rozhraní a vzájemné zapojení. 
+
+### Class diagram
+### Object diagram
+### Interaction diagram
+### Activity diagram
+### Sequence diagram
+- Popisuje interakce v čase mezi jednotkami (třídami/komponenty) systému
+### Deployment diagram
 
 Diagram tříd, ale neřešíme datové typy ani metody. Zajímají nás klíčové entity (struktury/třídy), jejich data plynoucí z požadavků, a vazby mezi entitami (kontext). Pomáhá ujasňovat terminologii.
 
 TODO
+
+### Component diagram
+
+Třídní/lollipop notace
+
+![](img/20230606160621.png)
+
+Komunikační rozhraní koponentů se nazývají porty, přímé spoje connectors.
+
+![](img/20230606164944.png)
 
 ## Notes
 
