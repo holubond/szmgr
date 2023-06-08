@@ -124,14 +124,16 @@ Pro vývoj rozsáhlých systémů se používají následující typy nástrojů
     - vrstvu je možné nasadit samostatně a zlepšit tak škálovatelnost systému
     - e.g. eshop
 
-- **Pipeline architektura** - monolitická, funguje na principu MapReduce, skládá se z 
+- **Pipeline architektura/Pipes and Filters** - monolitická, funguje na principu MapReduce, skládá se z 
     - **pipe**, point-to-point komunikace
     - **filter**, komponenty transformující data, bezstavové, ale mohou zapisovat do db. Filter se má soustředit čistě na jednu úlohu. Jsou typy
         - **Producer/source** - zdroj, iniciátor akce
         - **Transformer (map)** - transformuje vstup na výstup
         - **Tester (reduce)** - testuje kritérium a potenciálně vyprodukuje (mimo předání dat bez modifikace dál) výstup, který může vyvolat akci (zápis do datbáze)
         - **Consumer/sink** - ukončuje akci
-    - e.g. unix terminal
+    - filtry je možné snadno používat znovu (reuse)
+    - vede k batch processingu, což není fajn pro rychlou odezvu systému
+    - e.g. unix terminal, compiler
     ![](img/20230518144835.png)
 
 - **Microkernel/Hexagonal/Component-based architecture** - monolitická, dělí systém na jádro (core) a (ideálně) plug-in komponenty, aplikační logika je v těchto komponentech.  Jednoduchá rozšiřitelnost, adaptabilita, customizace
@@ -139,6 +141,7 @@ Pro vývoj rozsáhlých systémů se používají následující typy nástrojů
     - Pluginy by měly být nezávislé, připojitelné za běhu, mohou mít vlastní db, mohou být vzdálené a komunikovat s jádrem přes e.g. REST.
     - Pluginy jsou obvykle dostupné z nějakého registru, kde jsou data jako název, kontrakt, detaily pro připojení pluginu.
     - Důležité je dobře definovat standardizované kontrakty, které musí pluginy splňovat
+    . pro využití komponentu je nutné řešit discovery pomocí nějakého registru (může stačit hashmapa), musíme znát identitu (která by se neměla měnit) chtěného komponentu, který v systému nemusí být
 
     - e.g. VS Code - jádro je textový editor, pluginy jsou extensions
 
