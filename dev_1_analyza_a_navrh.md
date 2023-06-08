@@ -6,6 +6,8 @@
 
 Přístupy a postupy k návrhu IS založených na objektově orientovaném paradigmatu, kde jsou objekty spojením dat a metod nad těmito daty.
 
+Při modelování systému je dobré definovat si jednotný jazyk, který reflektuje skutečnou terminologii pro danou doménu problému. Podle toho volíme jména funkcí/tříd, aby bylo pokaždé všem (od doménových expertů po vývojáře) jasné, o čem se mluví. Podstatná jména používaná v jednotném jazyce obvykle v kódu reflektují třídy/rozhraní, slovesa zase metody/funkce.
+
 Objektové paradigma si dobře rozumí s principy abstrakce, což lze aplikovat nejen na úroveň objektů, ale i komponentů - základních stavebních jednotek, ze kterých se skládá architektura systému.
 
 Mezi metody se řadí:
@@ -15,11 +17,34 @@ Mezi metody se řadí:
 
 ## Specifikace a řízení požadavků.
 
-Požadavky na systém se dělí na:
-- **Funkcionální požadavky** - jaké funkce zákazník od systému očekává, jedná se o business logiku, řeší se programově, v implementaci
-- **Nefunkcionální (non-functional) požadavky** - jaké technické nároky jsou na systém, použité technologie, OS, garance dostupnosti (availability), response time, řeší se návrhem a architekturou
-TODO
+Požadavky na systém se dělí (obvykle je mezi kategoriemi tenká hranice a závisí i na formulaci) na:
+- **Funkcionální požadavky** - jaké funkce zákazník od systému očekává, jedná se o business logiku, uživatelské požadavky, řeší se programově, v implementaci
+- **Nefunkcionální (non-functional/quality) požadavky** - jaké technické nároky jsou na systém, použité technologie, OS, garance dostupnosti (availability), response time, internacionalizace a lokalizace, řeší se návrhem, architekturou i kódem
 
+Součástí řízení požadavku je
+- porozumnění doméně problému 
+- sběr požadavků od stakeholderů - klíčem je ptát se PROČ, ne CO a JAK 
+- analýza a jednání (hej, toto není možné/hej, nestačilo by vám to udělat takto?...)
+- specifikace požadavků - úprava do jednoznačné/formální podoby (use case). Je jasné, v jakém momentě můžeme považovat za splněný.
+- validace požadavků - ověření, že formalizované požadavky odpovídají skutečným potřebám
+- prioritizace požadavků - umožňuje soustředit se na kritické části (dle potřeb zákazníka) a blbosti případně vynechat, pokud nebude čas/rozpočet.
+
+Dobrý/dobře specifikovaný požadavek
+- reflektuje skutečné potřeby zákazníka a je v něm obsaženo PROČ (abychom mohli vybrat nejvhodnější řešení, ale může obsahovat návrhy)
+- má jasné kritérium splnění, je měřitelný a testovatelný
+- má prioritu
+- je úplný
+
+Obecně platí, že čím později se požadavek změní, tím nákladnější bude jeho implementace.
+
+Požadavky se modelují pomocí **use case diagramu**, uchovávají se v **use case dokumentu** (forma: id, jméno, actor(s), popis, trigger, pre/post conditions, příklad typického flow, priorita, výjimky, častost používání...). Požadavky jsou také formalizovány v jednoduché formě pomocí **user stories** - krátké, výstižné popisy (As `role` I want to `akce` So I can `zdůvodnění`), srozumitelní zákazníkovi (+ obsahují akceptační kritéria, prioritu, story pointy...).
+
+Pro **určení priority požadavku** lze použít například:
+- klasické ohodnocení 1-10
+- binární strom - požadavky jsou uchovávány v uzlech. Vkládaný požadavek srovnáváme s uzly od kořene. Pokud je vkládaný požadavek prioritnější, jdeme doprava. Jinak jdeme doleva. Vložený požadavek bude listem stromu.
+- MoSCoW - požadavky dělíme na Must (kritické), Should (důležité), Could (bylo by fajn mít) a Won't (aktuálně to nemáme v plánu)
+
+Non-functional requirements platí vždy, je třeba je brát v potaz i s nově příchozími functional požadavky => máme pro ně vyhrazené místo (e.g. wiki), kde jsou důkladně popsány. Můžeme na konkrétní NFR poukázat v user stories (e.g. u FR `jako uživatel chci mít přístup k aktuálním datům senzoru` linkneme NFR `systém poskytne odezvu do vteřiny` a `data ze senzorů se do systému dostanou nejpozději minutu po naměření`).
 
 
 ## Softwarové architektury, komponentové systémy.
@@ -254,34 +279,70 @@ V OCL lze používat funkcionální přístup ke kolekcím (select, forAll...), 
 
 Modely sw systémů popisují systém vždy z nějakého zjednodušeného pohledu (model je už z definice abstrakce). Různé modely se zabývají různými aspekty/fázemi vývoje systému. Důležité však je, aby byly modely systému vzájemně konzistentní. Obecně lze rozlišovat na modely popisující strukturu a modely popisující chování.
 
+**UML** je modelovací jazyk umožňující jednotný způsob vizualizace návrhu systému. Pro snadné verzování je fajn PlantUML (píšeme UML jako deklarativní kód, ze kterého generujeme příslušné diagramy).
+
 Příklad interface
 
 ![](img/20230605172409.png)
 
-TODO
+### Context diagram
+
+Popisuje kontext a prostředí, v jakém systém má fungovat. Jsou zde znázorněny interakce s externími systémy a skupinami uživatelů.
+
+![](img/20230607124347.png)
+
+Neřešíme části, se kterými přímo neinteragujeme. Ty jsou vidět v [Ecosystem map](./dev_1_analyza_a_navrh.md#ecosystem-map). 
 
 ### Use case diagram
-TODO
+
+Zahrnuje všechny (uživatelé i jiné systémy), kteří budou systém používat ve formě actorů. U každého actora vidíme dostupné akce (use case) a případně vazby mezi akcemi (<--extend, include-->, spuštění další akce).
+
+| ![](img/20230607130528.png) | ![](img/20230607130605.png) |
+|---|---|
 
 ### Conceptual class diagram
-TODO
-
-### Component diagram
-- Popisují komponenty, jejich rozhraní a vzájemné zapojení. 
-
-### Class diagram
-### Object diagram
-### Interaction diagram
-### Activity diagram
-### Sequence diagram
-- Popisuje interakce v čase mezi jednotkami (třídami/komponenty) systému
-### Deployment diagram
 
 Diagram tříd, ale neřešíme datové typy ani metody. Zajímají nás klíčové entity (struktury/třídy), jejich data plynoucí z požadavků, a vazby mezi entitami (kontext). Pomáhá ujasňovat terminologii.
 
-TODO
+### Class diagram
+
+Statická reprezentace systému ve formě tříd, zobrazuje jejich metody, atributy a vzájemnou provázanost. Vztahy mají kardinalitu
+
+**Asociace** - klasická šipka (nebo čára pro oboustranný vztah), popisuje vztah daných tříd
+**Agregace** - bílý kosočtverec, popisuje, že třída obsahuje jinou třídu (u ní je kosočtverec)
+**Kompozice** - černý kosočtverec, popisuje, že třída (s kosočtvercem) je nedílnou součástí jiné třídy
+
+![](img/20230608120634.png)
+
+![](img/20230608120112.png)
+
+### Object diagram
+
+Zachycuje systém za běhu v určitém čase, zobrazuje konkrétní objekty a jejich vazby.
+
+![](img/20230608121047.png)
+
+### Activity diagram
+
+Popisuje workflow systému/komponentu (dle úrovně abstrakce), jednoduchý na pochopení i pro zákazníka.
+
+![](img/20230609000854.png)
+
+### Sequence diagram
+
+Popisuje interakce v čase mezi jednotkami (třídami/komponenty/actory) systému
+
+![](img/20230609001314.png)
+
+### Deployment diagram
+
+Popisuje jednotlivé komponenty systému a jejich komunikační toky, včetně použitých technologií.
+
+![](img/20230609001416.png)
 
 ### Component diagram
+
+Popisuje komponenty a jejich kompozici v sýstému.
 
 Třídní/lollipop notace
 
@@ -292,6 +353,8 @@ Komunikační rozhraní koponentů se nazývají porty, přímé spoje connector
 ![](img/20230606164944.png)
 
 ## Notes
+
+**Verifikace vs validace** - validace ověřuje, že náš model odpovídá požadavkům, verifikace ověřuje, že naše implementace odpovídá našemu modelu, že je implementace kvalitní. E.g. u mostu by se validovalo, že je postavený v místě, kde je potřeba. Verifikovalo by se, že je postavený správně.
 
 **Motivace objektových metod/návrhových vzorů**
 - Systémy bývají složité, špatně se udržují a je náročné měřit/zajistit kvalitu, často se mění nároky
@@ -307,6 +370,14 @@ Dekompozice podle [SOLID](./2_kvalita_kodu.md#solid-principy)
 **Problém s cyklickou vazbou objektů** - e.g. v metodě toString() je potřeba vhodně řešit, abychom se necyklili. Proto může být vhodnější definovat si pro takové případy speciální objekty s jasnou hierarchií a bez cyklů
 
 **Interface Definition Language** - popisuje rozhraní formou, která je nezávislá na použitém programovacím jazyce (e.g. OpenAPI Specification pro REST, protocol buffer pr gRPC, Web Service Definition Language pro SOAP, CORBA IDL). Obvykle je možné pomocí IDL schématu vygenerovat v daném programovacím jazyce kód/struktury, který poskytovatel implementuje a uživatel používá. Více v [otázce 7](./7_distribuovane_systemy.md).
+
+**Event list** - seznam všech událostí, které mohou v systému nastat
+
+### Ecosystem map
+
+Znázorňuje celý kontext (včetně částí, se kterými přímo nekomunikujeme), ve kterém náš systém funguje.
+
+![](img/20230607124544.png)
 
 ### Analytické vzory
 Návrhové vzory nabízí řešení na často řešené problémy v návrzích systému. Tato řešení jsou místy až příliš sofistikovaná, takže se doporučuje složitější návrhové vzory používat z rozvahou, abychom problém *neoverengineeringovali*.
