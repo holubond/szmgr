@@ -191,7 +191,7 @@ Kód, který se dobře čte a udržuje nemusí být ten nejrychlejší/nejefekti
 
 ### Jednotkové (unit) testy 
 - validace, že se izolovaná jednotka kódu (funkce/třída) chová tak, jak bychom očekávali
-- black box
+- white box
 - testy jsou automatizované, rychlé, jednoduché, čitelné, deterministické, každý testuje jednu jedinou věc
 - izolujeme jednotku od zbytku systému pomocí *test double*s, nafejkovaných závislostí
     - dummy objekt - nikdy se nepoužije, ale je potřeba třeba jako parametr
@@ -213,13 +213,13 @@ Kód, který se dobře čte a udržuje nemusí být ten nejrychlejší/nejefekti
 - testují použitelnost, kapacitu, výkon, splnění funkcionality, bezpečnost...
 - benchmarking, penetrační testování, uživatelské testy...
 - lze automatizovat pomocí programem ovládaným prohlížečem (selenium, puppeteer)
-- white box
+- black box
 
 ### Akceptační testy
 - ověření, že systém splňuje business požadavky a je připraven k vydání
 - může být ve formě odškrtávání políček s požadavky na systém, které zákazník předem určil
 - prováděny se zákazníkem
-- white box
+- black box
 
 
 ### Test-driven development (TDD)
