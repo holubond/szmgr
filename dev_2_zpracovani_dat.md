@@ -153,7 +153,7 @@ Pro zajištění rychlosti dotazů v OLAP se používá redundance v podobě
     |![](img/20230611224121.png)|![](img/20230611224138.png)|
     |---|---|
     |![](img/20230611224805.png)|![](img/20230611224906.png)|
-- **R stromy**
+- **R stromy** - obdélníky, popsány v [otázce 5](./5_databaze.md#indexování)    
 
 **Sloupcové databáze** - na rozdíl od řádkových databází (e.g. Postgres), kde jsou uloženy vedle sebe data náležící jednomu řádku ukládají sloupcové databáze (e.g. BigQuery, S4HANA) vedle sebe data z jednoho sloupce. Díky mohou být sloupcové databáze rychlejší pro čtení dat.
 
