@@ -60,6 +60,8 @@ Nějaká jednoduchá architektura by mohla vypadat takto:
 
 RDBMS může obsahovat techniky pro administraci přístupových práv (omezení určitých operací, viditelnost dat až na row/column level...).
 
+Pokud se otázkou myslí *Z jakých prvků se relační databáze skládají*, pak by bylo fajn mluvit o tabulkách, sloupcích, jazyku SQL pro jejich definici (DDL, data definition language) a manipulaci (DML, data manipulation language), indexech, (materializovaných) views...
+
 ## Dotazovací jazyk SQL a jeho části (definice, manipulace, transakce)
 Dotazovací jazyk SQL vychází z [relační algebry](./5_databaze.md#relační-algebra). 
 
@@ -225,7 +227,6 @@ Pro indexy se mohou používat
 - **haše** - pro získání jednoduché hodnoty velkých dat
 - **B+ stromy** - každý uzel obsahuje odkazy na uzly níže, nebo hodnoty (jedná se o listový uzel). Hodnoty jsou v listech vzestupně uspořádány, uzly v sobě mají i informace o intervalech daných odkazů/hodnot, listy jsou provázané.
     ![](img/20230526220652.png)
-
 - **R stromy** - podobné jako B+, ale jsou vícedimenzionální, ve 2D fungují jako obdélníky. Data jsou v listových uzlech stromu. Rodič uzlu zahrnuje všechny své potomky (ve 2D jde o větší obdélník, který obsahuje potomky). Ideální je, aby zabíraly rodičovské obdélníky co nejméně prostoru - rodič totiž jako index redukuje oblast nutnou k prohledání (říká *hledej ve mně!*).
     ![](img/20230526220927.png)
     ![](img/20230611232516.png)
