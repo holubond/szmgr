@@ -3,7 +3,7 @@
 
 ## Základní pojmy, principy
 
-**Distribuovaný systém** se skládá z komponentů (počítačů) propojených komunikační sítí. Distribuované systémy řeší problémy spoluprací jednotlivých komponentů. Díky tomu se systém snadněji škáluje (posilujeme subsystém, který má problémy).
+**Distribuovaný systém** se skládá z komponentů (počítačů) propojených komunikační sítí. Distribuované systémy řeší problémy (výpočty/zpracovávání requestů) spoluprací jednotlivých komponentů (každý dělá něco). Díky tomu se systém snadněji škáluje (posilujeme subsystém, který má problémy).
 
 Architektury popsány v [otázce 1](./1_programovani_a_softwarovy_vyvoj.md#základní-koncepty-softwarových-architektur-z-pohledu-implementace-vícevrstvá-architektura-moderních-informačních-systémů-architektura-model-view-controller), takže jen shrnutí
 
