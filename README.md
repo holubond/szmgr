@@ -18,4 +18,8 @@ Sepsáno na základě přednášek, osobních zkušeností a samozřejmě ChatGP
 - [Počítačové sítě](./6_pocitacove_site.md)
 - [Distribuované systémy](./7_distribuovane_systemy.md)
 
+Specializace DEV
+- [Analýza a návrh systémů](./dev_1_analyza_a_navrh.md)
+- [Zpracování dat](./dev_2_zpracovani_dat.md)
+
 @mazanec
