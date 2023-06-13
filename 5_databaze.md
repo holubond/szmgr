@@ -233,16 +233,20 @@ Pro indexy se mohou používat
 
 ## Hašování
 
-Cílem hašování je převést vstupní data na výstup jednétné délky (číslo, nebo fixed-length řetězec), hash. Zároveň je důležité, aby podobné vstupy měli zásadně rozdílné heše, aby bylo možné snadno odhalit drobnou (záměrnou či nechtěnou) modifikaci vstupu. Z heshe by nemělo být možné odvodit vstup a zároveň je cílem minimalizovat riziko kolize, tedy že dva vstupy mají stejný hash. Pro prolamování hašů se použávají rainbow tables, obsahující známé vstupy a jejich haše.
+**Cílem hašování je převést vstupní data libovolné na výstup jednotné délky (číslo, nebo fixed-length řetězec), hash.** Z heshe by nemělo být možné odvodit vstup (jednosměrnost), pro každý vstup bychom měli být schopni deterministicky určit jediný hash. Zároveň může být (dle použití) cílem minimalizovat riziko kolize, tedy že dva vstupy mají stejný hash. Dle použití může být také důležité, aby podobné vstupy měli zásadně rozdílné heše, aby bylo možné snadno odhalit drobnou (záměrnou či nechtěnou) modifikaci vstupu. Pro prolamování hašů se použávají rainbow tables, obsahující známé vstupy a jejich haše.
 
-Hešování se používá pro zajištění integrity dat (certifikáty, checksum), rychlé porovnávání dat (HashMap), porovnávání dat se znalostí pouze heše (uchovávání hash hesel v databázi, Argon2).
+Hašování se používá pro zajištění integrity dat (certifikáty, checksum), rychlé porovnávání dat (HashMap), porovnávání dat se znalostí pouze heše (uchovávání hash hesel v databázi, Argon2).
+
+**Bezkoliznost**
+- **slabá** - pro vstup A nejsme schopni nalézt rozdílný vstup B, který by měl stejný hash
+- **silná** - nejsme schopni najít libovolné dva vstupy se stejným hashem 
 
 Pro hašování hesel se může přidávat do vstupu salt a pepper
 - **salt** - náhodná data, která se ukládají zároveň s hašem a při hešování se přidávají ke vstupu, efektivně prodlužuje délku hesla a znemožní detekci stejných hesel dle shody hešů
 - **pepper** - data, která se při hešování přidávájí ke vstupu, jsou však utajená (neukládáme je vedle haše)
 
 Pro různé účely používáme různé algoritmy, jde o balanc rychlosti a bezpečnosti/pravděpodobnosti kolize.
-- MD5 - rychlý, není bezpečný. 
+- MD5 - rychlý, není bezpečný (lze rychle najít kolize i na běžném počítači). 
 - rodina Secure Hashing Algorithm (SHA256, SHA512...)
 - Argon2 - v současnosti doporučovaný pro hašování hesel
-- hašem (hloupým, ale rychlým) může být třeba i délka vstupu, modulo...
+- hašem (hloupým, ale rychlým) může být třeba i délka vstupu, modulo, součet ascii hodnot znaků...
