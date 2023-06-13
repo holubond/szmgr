@@ -241,12 +241,8 @@ Hašování se používá pro zajištění integrity dat (certifikáty, checksum
 - **slabá** - pro vstup A nejsme schopni nalézt rozdílný vstup B, který by měl stejný hash
 - **silná** - nejsme schopni najít libovolné dva vstupy se stejným hashem 
 
-Pro hašování hesel se může přidávat do vstupu salt a pepper
-- **salt** - náhodná data, která se ukládají zároveň s hašem a při hešování se přidávají ke vstupu, efektivně prodlužuje délku hesla a znemožní detekci stejných hesel dle shody hešů
-- **pepper** - data, která se při hešování přidávájí ke vstupu, jsou však utajená (neukládáme je vedle haše)
-
-Pro různé účely používáme různé algoritmy, jde o balanc rychlosti a bezpečnosti/pravděpodobnosti kolize.
+Pro různé účely používáme různé algoritmy, jde o balanc rychlosti (u hesel může je kýžená pomalost) a bezpečnosti/pravděpodobnosti kolize.
 - MD5 - rychlý, není bezpečný (lze rychle najít kolize i na běžném počítači). 
-- rodina Secure Hashing Algorithm (SHA256, SHA512...)
+- rodina Secure Hashing Algorithm, za bezpečnou se aktuálně považuje SHA-2 (SHA256, SHA512...)
 - Argon2 - v současnosti doporučovaný pro hašování hesel
 - hašem (hloupým, ale rychlým) může být třeba i délka vstupu, modulo, součet ascii hodnot znaků...
