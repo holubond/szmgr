@@ -123,7 +123,27 @@ Do zpráv je možné přidat identitu challengera, abychom předešli man in the
 
 ### Řízení přístupu
 
+Bezpečnostní mechanismus pro umožňení uživatelům vykonávat v systému nějaké akce.
 
+Pojmy
+- vlastník dat - zodpovědný za určitá data
+- správce dat - zodpovědný za bezpečnost určitých dat
+- uživatel - může vykonávat operace s daty dle svých přístupových práv
+- (de)centralizovaná správa řízení - existuje nějaká autorita (má víc práce), nebo má každý objekt nějakého správce (a hůř se koordinuje řízení přístupu)?
+
+Základní typy práv (obvykle specifikovatelná pro každou jednotku dat, e.g. soubory, nebo třeba buňky v tabulkách)
+- read (může i kopírovat a zrádný člen skupiny tak udělat veřejnou kopii)
+- write (modifikace)
+- execute (spouštění programu)
+- pokročilejší příznaky mohou být třeba append only soubor
+
+Práva mohou být specifikována v matici (jedna osa soubory, druhá uživatelé, uprostřed práva), ale může být nepřehledná -> práva lze ukládat v metadatech daného objektu - **Access Control List (ACL)** (ale těžko se zas hledá, k čemu všemu má daný uživatel přístup).
+
+Přístup k objektu
+- může být omezený časem, místem, intervalem hodnot, typem služby... 
+- na základě identity uživatele, jeho role/skupiny, nebo třeba jen hesla
+
+V unix systémech bývá obvykle nějaký superadmin/root, který má přístup ke všemu. Dobrou politikou je snaha o omezení práv tohoto uživatele a vytvoření skupin pro příslušné skupiny dat/objektů - pokud se hacker dostane k rootu, je vše v pytli. Moderní unixové systémy (obvykle komerční verze) nabízí jemnější granularitu nad skupinami, právy uživatelů...
 
 ## Biometrické metody autentizace, jejich dopady a problémy.
 
