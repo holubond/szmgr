@@ -5,7 +5,7 @@
 ## Metody autentizace a řízení přístupu.
 
 **Klíčové pojmy**
-- **Autentizace** - verifikace/ověření identity - kombinace identity (e.g. jména) a důkazu (e.g. hesla)
+- **Autentizace/verifikace identity** - verifikace/ověření identity - kombinace identity (e.g. jména) a důkazu (e.g. hesla)
 - **Identifikace** - rozpoznání - rozpoznání entity v dané množině entit, subjekt nepředkládá identitu, ale systém se mu ji snaží přiřadit z databáze známých identit, e.g. otisk prstu na vstupních dveřích
 - **Autorizace** - udělení práv k vykonání určitých akcí (e.g. autorizace terminálu k platbě vložením karty a pinu, zároveň se uživatel autentizoval pinem vůči kartě)
 
@@ -68,7 +68,41 @@
 - obvykle velmi krátké -> omezujeme počet pokusů
 
 ## Biometrické metody autentizace, jejich dopady a problémy.
-TODO
+
+> Automatizované metody identifikace nebo ověření identity na základě měřitelných fyziologických nebo behaviorálních (založených na chování) vlastností člověka
+
+Biometrická data je nejdříve třeba nasnímat (včetně kontroly kvality, extrakce charakteristik) a uložit, potom je možné je používat k autentizaci/identifikaci (pomocí srovnání charakteristik).
+
+Na rozdíl od ostatních metod autentizace **musíme řešit variabilitu** uložených dat a nasnímaného vzorku, data nejsou nikdy zcela identická.
+- velmi často závisí na měřících podmínkách, na samotném zařízení, stavu měřeného, schopnosti/motivace měřeného provést si měření správně...
+- 100% shoda může znamenat problém - útočník se dostal k uloženým datům
+- řeší se balanc mezi **false acceptance** (bezpečnostní problém) a **false rejection** (nepohodlí uživatelů)
+![](img/20230613154105.png)
+
+Biometriky jsou vhodné jako doplňkové metody, pro přístup k tajnému klíči, autentizaci uživatele (ne dat/počítače)... ne pro použití jako samotný klíč
+
+**Problémy biometrické autentizace**
+- nikdy nejsou zcela bezchybné
+- Failure to enroll - není možné získat biometrickou charakteristiku při registraci (e.g. někdo nemá prst, který chceme snímat)
+- Failure to acquire/capture - není možné získat charakteristiku při autentizaci
+- False positive identification - přijali jsme chybně (bezpečnostní riziko)
+- False negative identification - zamítli jsme chybně (naštvanější uživatelé)
+- fenotypické charakteristiky (e.g. geometrie ruky) se mohou v čase měnit
+- genotypické charakteristiky (e.g. dna) je zase obtížné rychle vyhodnotit
+- měření není dokonalé (prostředí, jiný měřák, nezkušenost/nespolupráce měřeného)
+- měření může být nepříjemné
+- metody mají různé charakteristiky rychlosti, spolehlivosti, příjemnosti, výpočetní náročnosti, míru vlivu prostředí...
+- musíme řešit živost - jde skutečně o člověka, nebo třeba o umělý prst? je daný člověk na živu?
+- jedna charakteristika může být použita ve více systémech, zveřejnění nesmí ohrozit soukromí
+- biometriky nejsou tajné
+- ochrana soukromí, legislativní omezení
+- kvůli nepřesnostem/možným změnám/netajnosti není vhodné z biometrik generovat kvalitní kryptografické klíče
+
+**Kontinuální autentizace** - subjekt kontinuálně sledujeme a snažíme se detekovat možné odchylky v chování, které by naznačovaly, že se jedná o útočníka, e.g. dynamika psaní na klávesnici
+
+Forenzní systémy pro biometrickou autentizaci jsou přesnější, spolehlivější, dražší, mohou být pomalejší, vyžadují odborníky.
+
+e.g. otisk prstu (tam sledujeme markanty), geometrie ruky, sken duhovky, sken sítnice, rozpoznání obličeje, rozpoznání hlasu, rozpoznání stylu interakce se zařízením (e.g. tempo psaní na klávesnici, dynamika podpisu), dna
 
 ## Elektronický podpis a jeho použití.
 
@@ -99,6 +133,10 @@ Některé algoritmy umožňují obnovu dat na základě podpisu (v podpisu jsou 
 - autentizace počítačů/tokenů díky mechanismu **výzva-odpověď (challenge-response)**
     - jestli jsi opravdu vlastníkem soukromého klíče, tak podepiš tato vzorová data
 - autentizace osob pomocí schopnosti spustit aplikaci na počítači/tokenu
+- digitální podpis neprovádí člověk, ale počítač
+
+Soukromý klíč je potřeba chránit, v případě vyzrazení se za nás může někdo vydávat.
+- klíč bývá ideálně šifrován/blokován (e.g. vyžaduje zadání přístupového hesla/pinu)
 
 ## Autentizace strojů a aplikací.
 TODO
@@ -121,7 +159,7 @@ TODO
 - kódování není šifrování (e.g. zakódované heslo v base64 lze snadno převést do původního tvaru bez jakéhokoliv klíče)
 - základním principem kryptografie je **veřejný algoritmus** (dobře otestovaný, vytvořený bezpečnostními experty) a zajištění bezpečnosti pomocí **tajného klíče**. Spoléhat na bezpečnost algoritmu jen jeho (algoritmu) utajením není dobrý nápad.
 - **symetrická kryptografie** - komunikující strany sdílí identický klíč, kterým se šifruje i dešifruje. Je to rychlejší, než asymetrická kryptografie, ale hůře se využívají, když vyžadujeme autentizaci (e.g. server by si musel bezpečně uchovávat klíč u každého klienta, zároveň je potřeba se na klíči nějak dohodnout, což může být odposloucháváno)
-- **asymetrická kryptografie** - existují 2 druhy klíčů, veřejný (pro šifrování/ověření podpisu) a soukromý (pro dešifrování/tvorbu podpisu). Pokud chtějí 2 strany plně komunikovat (full duplex), pak každá potřebuje znát svůj soukromý klíč a veřejný klíč druhé strany
+- **asymetrická kryptografie** - existují 2 druhy klíčů, veřejný (pro šifrování/ověření podpisu) a soukromý (pro dešifrování/tvorbu podpisu). Pokud chtějí 2 strany plně komunikovat (full duplex), pak každá potřebuje znát svůj soukromý klíč a veřejný klíč druhé strany. Pokud někomu prozradím svůj soukromý klíč, může se vydávat za mě.
 - **šifrování v praxi** - kombinace symetrické a asymetrické kryptografie
     - pro komunikaci proběhne ustanovení symetrického klíče náhodným vygenerováním, klíč se bezpečně předá pomocí asymetrické kryptografie. Následně probíhá komunikace šifrovaná symetricky.
 
