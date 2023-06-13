@@ -15,6 +15,15 @@
 - na základě biometrie (otisk prstu, který nikdo jiný nemá)
 - na základě fyzické/virtuální lokace (rychlá změna fyzické lokace může být varovný signál, přihlášení z určitého počítače s certifikátem může stačit k autentizaci)
 
+Autentizaci můžeme vyžadovat jednostranně (e.g. webový server, potřebujeme vědět, že se se nejedná o někoho jiného. Serveru je jedno, komu odpovídá, pokud jen vrací veřejnou webovou stránku), nebo oboustraně (pro důležité akce potřebuje server ujištění, že akce provádí opravdu uživatel).
+
+Autentizace může proběhnout na základě výzvy, nebo klidně z iniciativy subjektu.
+
+**Zero-knowledge protokoly** - umožňují demonstraci znalosti tajemství, aniž bychom odhalili jakoukoliv informaci vedoucí k získání tajemství
+- vlastnosti 
+    - **úplnost/completeness** - poctivci vždy dosáhnou úspěšného výsledku
+    - **korektnost/soundness** - mizivá šance na úspěch nepoctivce
+
 ### Autentizace tajnými informacemi
 
 **Tajné informace** 
@@ -66,6 +75,55 @@
 
 **PINy**
 - obvykle velmi krátké -> omezujeme počet pokusů
+
+#### Autentizace pomocí symetrické kryptografie
+
+Jak ověřit, že komunikuju s tím, kdo se mnou sdílí klíč?
+- pošlu náhodné číslo (a třeba sekvenční číslo/timestamp pro prevenci útoku), které mi má druhý vrátit zašifrované
+- lze i oboustraně, druhý komunikující ve své odpovědi zahrne zašifrovaný challenge pro mě
+
+Alternativně lze provést výpočetně jednodušší variantu - nepředáváme si šifrovaná data, ale hashe (pro jejichž vytvoření byl zahrnut klíč), jinak je to principiálně stejné. 
+- pokud chceme oboustrannou autentizaci, musí mi druhý poslat challenge i v nehašované podobě, ať ho můžu použít taky
+
+Do zpráv je možné přidat identitu challengera, abychom předešli man in the middle útokům.
+
+`r` je náhodné číslo, `E` znamená encrypted, `h` znamená hashed, `K` je sdílený klíč
+
+| s šifrováním | s hešováním |
+|---|---|
+|![](img/20230613181843.png)|![](img/20230613181909.png)|
+
+#### Autentizace pomocí asymetrické kryptografie
+
+Pomocí šifrování: Zašifruju zprávu veřejným klíčem. Jestli jsi majitel soukromého klíče, dešifruj a pošli výsledek zpět.
+
+Alternativně lze pomocí podpisu: Tady máš náhodné číslo, podepiš mi ho soukromým klíčem. Server do dat přihodí svoje náhodné číslo (aby předešel zneužití, kdy útočník chce od serveru získat svoje podepsaná data), celé to podepíše a vrátí.
+
+Lze samozřejmě provádět oboustranně.
+
+Do zpráv je možné přidat identitu challengera, abychom předešli man in the middle útokům.
+
+### Protokoly pro správu klíčů
+
+**Aktualizace klíče**
+- Nový klíč lze předat zašifrovaný. Lze opatřit časovým razítkem, nebo spojit s náhodným číslem od parťáka, abychom předešli útoku přehráním.
+- Tady máš náhodné číslo. Náš nový klíč je toto číslo zašifrované starým klíčem (je fajn si poslat kontrolní zprávu s informací šifrovanou novým klíčem)
+
+**Ustanovení klíče bez předchozího sdíleného tajemství**
+- **Shamirův protokol**
+    - Vyžaduje komutativní šifru, kde platí `E_a( E_b( X ) ) = E_b( E_a( X ) )`
+        1. vygeneruju nový klíč X. Ten zašifruju svým klíčem a. `E_a(X)` pošlu kámošovi
+        2. kámoš výsledek zašifruje svým klíčem b a pošle mi `E_b( E_a( X ) )`
+        3. odstraním svůj klíč a, pošlu kámošovi výsledek `E_b( X )`. Kámoš odstraní klíč b a zjistí nový klíč X, kterým můžeme šifrovat
+- **Diffie Hellman protokol**
+    - spolu s kámošem se dohodneme na společném základu (malé prvočíslo `g` a velké číslo `n`) a každý přidáme svou tajnou ingredienci, já `a`, kámoš `b`, `1 <= a, b <= n` (`x_a = g^a mod n` a `x_b = g^b mod n`)
+    - výsledek si vyměníme
+    - přidáme opět svou tajnou ingredienci a využijeme ekvivalence a kongruence modulo n (`(g^a mod n)^b mod n = g^ab mod n = (g^b mod n)^a mod n`)
+    - výsledek `g^ab mod n` používáme pro šifrování
+
+### Řízení přístupu
+
+
 
 ## Biometrické metody autentizace, jejich dopady a problémy.
 
@@ -139,7 +197,37 @@ Soukromý klíč je potřeba chránit, v případě vyzrazení se za nás může
 - klíč bývá ideálně šifrován/blokován (e.g. vyžaduje zadání přístupového hesla/pinu)
 
 ## Autentizace strojů a aplikací.
-TODO
+
+**Autentizace počítačů**
+- na základě adresy (IP, MAC fyzická adresa)
+    - MAC fyzická adresa - svázáním portu switch přepínače s určitou MAC adresou, nebo svázání IP adresy s MAC adresou
+    - IP - řízení přístupu k webovým službám na základě IP adresy
+    - problém může být, že MAC i IP adresy lze změnit, nejsou tajné, je možné uvést cizí IP adresu
+- na základě tajné informace (symetrická/asymetrická kryptografie)
+    - heslo/tajný symetrický klíč/soukromý asymetrický klíč
+    - vhodné ukládat zašifrované a při startu zadat heslo (pak to budeme držet v paměti), nebo použít e.g. HashiCorp Vault (secret manager)
+
+**TLS/SSL** - protokol vyšší úrovně
+- SSL je předchůdce TLS
+- autentizuje strany pomocí certifikátu a challenge-response (defaultně povinná pro server, volitelná pro klienta)
+- zajišťuje integritu a autenticitu dat (pomocí Message Authentication Code, MAC, funguje jako podpis (hash s klíčem))
+- zajišťuje důvěrnost
+- Nejprve proběhne iniciální handshake (autentizace pomocí asymetrické kryptografie). Následně se stanoví symetrický kryptografický klíč, kterým je šifrována celá komunikace.
+- je mezi TCP a aplikací, TLS nevidí do přenášených dat
+
+**IPSec** - na síťové vrstvě, přidán do IPv4, v IPv6 už je defaultně
+- pro každý IP datagram
+    - zajišťuje autentizaci odesilatele (IP hlavičky (vyjma měněných dat, e.g. TTL) a data, přidá tajný klíč, hash uloží do autentizační hlavičky)
+    - zajišťuje integritu dat (nezměněná data, ^^^)
+    - zajišťuje důvěrnost dat (symetrický šifrovací klíč známý objema stranám, data jsou šifrována)
+    - zajišťuje ochranu před útokem přehráním (MAC v kombinaci se sekvenčním číslem)
+- umožňuje transportní (end to end, nepodporuje NAT), nebo tunelovací režim (celý datagram beru jako data, přilepím tomu novou IP hlavičku)
+
+**Secure Shell Host (SSH)**
+- slouží k vzdálenému přihlášení k serveru
+- oproti telnetu je komunikace šifrovaná (symetrickou šifrou, klíč se stanoví po handshake)
+- probíhá autentizace serveru i klienta (určitě jste si někdy generovali key pair pomocí `ssh-keygen`, tak to bylo ono)
+- používá se pro to třeba RSA, DSA (asymetrická kryptografie)
 
 ## Zásady a principy bezpečného kódu.
 TODO
@@ -159,7 +247,9 @@ TODO
 - kódování není šifrování (e.g. zakódované heslo v base64 lze snadno převést do původního tvaru bez jakéhokoliv klíče)
 - základním principem kryptografie je **veřejný algoritmus** (dobře otestovaný, vytvořený bezpečnostními experty) a zajištění bezpečnosti pomocí **tajného klíče**. Spoléhat na bezpečnost algoritmu jen jeho (algoritmu) utajením není dobrý nápad.
 - **symetrická kryptografie** - komunikující strany sdílí identický klíč, kterým se šifruje i dešifruje. Je to rychlejší, než asymetrická kryptografie, ale hůře se využívají, když vyžadujeme autentizaci (e.g. server by si musel bezpečně uchovávat klíč u každého klienta, zároveň je potřeba se na klíči nějak dohodnout, což může být odposloucháváno)
+    - e.g. **AES** (advanced encryption standard), **DES** (data encryption standard)
 - **asymetrická kryptografie** - existují 2 druhy klíčů, veřejný (pro šifrování/ověření podpisu) a soukromý (pro dešifrování/tvorbu podpisu). Pokud chtějí 2 strany plně komunikovat (full duplex), pak každá potřebuje znát svůj soukromý klíč a veřejný klíč druhé strany. Pokud někomu prozradím svůj soukromý klíč, může se vydávat za mě.
+    - e.g. **RSA, DSA**
 - **šifrování v praxi** - kombinace symetrické a asymetrické kryptografie
     - pro komunikaci proběhne ustanovení symetrického klíče náhodným vygenerováním, klíč se bezpečně předá pomocí asymetrické kryptografie. Následně probíhá komunikace šifrovaná symetricky.
 
