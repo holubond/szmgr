@@ -349,6 +349,8 @@ Média se mohou přenášet diskretizovaně (soubor, zpráva), nebo kontinuáln�
 
 ## Notes
 
+**Protokol** je sada syntaktických (jak mají jednotlivé zprávy vypadat) a sémantických (jaký je význam jednotlivých zpráv) pravidel pro komunikaci nebo výměnu dat mezi systémy/zařízeními/komunikačními partnery
+
 **CIDR** - kromě IP adresy uchováváme i masku sítě (e.g. 147.209.5.0/24 říká, že relevantních je jen prvních 24 bitů). Umožňuje subneting a efektivnější směrování - pokud máme v tabulkce adresy se stejným prefixem a stejnou cestou, můžeme říct, že naší cestou mají chodit pakety pro celý prefix 
 
 **Piggybacking** - Pokud chceme odesilateli poslat nějaká data a zároveň potvrdit příjem dat, můžeme tyto informace spojit do jednoho paketu 
