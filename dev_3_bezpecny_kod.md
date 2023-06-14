@@ -331,7 +331,9 @@ TODO
 
 **RSA** - asymetricá kryptografie, funguje na principu faktorizace velkých čísel (a modulo) - faktorizace je lehká na výpočet, těžká na reverzní výpočet
 
-**Cipher Block Chaining (CBC)** 
+**Bloková šifra** - symetrická, vstupní data jsou rozdělena na bloky fixní délky, které jsou šifrovány stejným způsobem. Pro větší bezpečnost se nešifrují všechny bloky stejně, ale může se použít e.g. Cipher Block Chaining (CBC), kdy je mezi bloky vytvořena závislost (každý další blok je xorován zašifrovaným předchozím blokem)
+
+**Proudová šifra** - symetrická, z klíče vygenerujeme posloupnost a na jejím základě šifrujeme jednotlivé bity dat (=> každý jinak).
 
 **Cyclic Redundancy Check (CRC)**
 - kontrolní součet, umožňuje detekci neúmyslných chyb při přenosu/uložení
