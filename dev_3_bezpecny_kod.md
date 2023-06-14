@@ -353,5 +353,3 @@ Pro zajištění důvěrnosti dat bez šifrování lze použít **Chaffing and w
         - indukce chyb - pomocí náhlých změn podmínek (napětí, teplota...) se snažíme změnit operační podmínky
         - útoky přes api - snažíme se využít možné chyby programátora
             - e.g. počítadlo pokusů by mělo nejdřív snížit počet pokusů, pak ověřit pin a v případě úspěchu resetovat počítadlo pokusů... jinak lze po zadání pinu a detekce neúspěchu rychle odpojit zdroj
-
-TODO možná rozvést oauth, oidc, kerberos, saml,  kryptografie bez klíčů
