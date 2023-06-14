@@ -78,10 +78,10 @@ Více v [Bezpečný kód](./dev_3_bezpecny_kod.md)
 - **HTTP basic** - http header `Authorization: Basic <data>`, kde `<data>` jsou `<jmeno>:<heslo>` v base64
     - `-` hlavička je viditelná (=> použij aspoň https), údaje se zasílají s každým požadavkem
 - **TLS certifikáty** - server musí poskytnout certifikát, klient může poskytnout certifikát, čímž se autentizuje
-- **OAuth2** - protokol pro poskytnutí autorizace třetím stranám, funguje na principu vydávání tokenů (Refresh token, Access token)
+- **OAuth2** - protokol pro poskytnutí autorizace třetím stranám, funguje na principu vydávání tokenů (Refresh token, Access token). Access token má omezenou dobu platnosti a obsahuje autorizační data (majitel tokenu je oprávněn k akci) uživatele podepsanou soukromým klíčem autorizačního serveru. Refresh token může mít delší dobu platnosti, je uložený u uživatele a je možné ho použít k získání dalšího access tokenu bez nutnosti autentizace (provedou se ale kontroly ohledně práv uživatele).
 - **OpenID Connect** - nadstavba nad OAuth2, přidává autentizaci a informace o identitě uživatele. Používá se pro federalizovanou správu identity (single sign-on). *Klient* je aplikace, která potřebuje autentizovat uživatele. *Autorizační server* autentizuje uživatele, vydává token autorizující držitele k přístupu ke *scopes* obsahující *claims* (e.g. scope profil pro claimy id, email, name, picture, locale...) umístěných na *resource serveru*. Resource server slouží jako endpoint pro poskytování claimů na základě scopes v tokenu
 - **SAML** - xml protokol pro výměnu autentizačních a autorizačních dat, starší než oauth/oidc
-- **Kerberos**
+- **Kerberos** - na rozdíl od oauth2 a openid connect používá v základu symetrickou kryptografii (e.g. uživatelovo heslo je na autorizačním serveru, uživatel posílá pouze svou identitu a server vrací přístupová data šifrovaná heslem uživatele)
 
 ## Nástroje a prostředí pro softwarový vývoj rozsáhlých systémů
 Pro vývoj rozsáhlých systémů se používají následující typy nástrojů
