@@ -97,7 +97,7 @@ Do zpráv je možné přidat identitu challengera, abychom předešli man in the
 
 Pomocí šifrování: Zašifruju zprávu veřejným klíčem. Jestli jsi majitel soukromého klíče, dešifruj a pošli výsledek zpět.
 
-Alternativně lze pomocí podpisu: Tady máš náhodné číslo, podepiš mi ho soukromým klíčem. Server do dat přihodí svoje náhodné číslo (aby předešel zneužití, kdy útočník chce od serveru získat svoje podepsaná data), celé to podepíše a vrátí.
+Alternativně lze pomocí podpisu: Tady máš náhodné číslo, podepiš mi ho (hash a šifrování soukromým klíčem). Server do dat přihodí svoje náhodné číslo (aby předešel zneužití, kdy útočník chce od serveru získat svoje podepsaná data), celé to podepíše a vrátí.
 
 Lze samozřejmě provádět oboustranně.
 
@@ -129,7 +129,11 @@ Pojmy
 - vlastník dat - zodpovědný za určitá data
 - správce dat - zodpovědný za bezpečnost určitých dat
 - uživatel - může vykonávat operace s daty dle svých přístupových práv
-- (de)centralizovaná správa řízení - existuje nějaká autorita (má víc práce), nebo má každý objekt nějakého správce (a hůř se koordinuje řízení přístupu)?
+
+Politiky řízení přístupu
+- volitelný přístup/decentralizovaná správa řízení - vlastník dat/objektu rozhoduje (malá režie, o správu se starají vlastníci/správci, špatné vynucování/koordinace celosystémových pravidel, možnost problému, kdy někdo v souborovém systému tajný soubor zkopíruje a zveřejní ho omylem všem)
+- povinný přístup/centralizovaná správa řízení - o přístupu rozhoduje systémová politika
+- povinný a volitelný přístup lze kombinovat, systém je pak flexibilnější, ale stále zaručuje bezpečnost u kritických objektů
 
 Základní typy práv (obvykle specifikovatelná pro každou jednotku dat, e.g. soubory, nebo třeba buňky v tabulkách)
 - read (může i kopírovat a zrádný člen skupiny tak udělat veřejnou kopii)
@@ -144,6 +148,25 @@ Přístup k objektu
 - na základě identity uživatele, jeho role/skupiny, nebo třeba jen hesla
 
 V unix systémech bývá obvykle nějaký superadmin/root, který má přístup ke všemu. Dobrou politikou je snaha o omezení práv tohoto uživatele a vytvoření skupin pro příslušné skupiny dat/objektů - pokud se hacker dostane k rootu, je vše v pytli. Moderní unixové systémy (obvykle komerční verze) nabízí jemnější granularitu nad skupinami, právy uživatelů...
+
+Good practices řízení přístupu
+- separace oprávnění - potvrzení důležité operace vícero aktéry
+- omezení práv jednotlivce - každý má přístup jen k tomu, co nutně potřebuje
+- defaultní akce je zamítnutí - práva přidělujeme explicitním povolením, abychom nepodolili něco jen proto, že jsme zapomněli vzít v potaz určitý scénář, defaultně zamítneme vša a používáme whitelisty (e.g. firewall)
+
+**Multi-level systems (MLS)**
+- do systému mají přístup všichni uživatelé, data jim zobrazujeme/umožňujeme používat objekty dle jejich úrovně (nižším úrovním skrýváme to, co mohou vidět vyšší úrovně)
+- role jsou hierarchické
+- problémem může být **skrytý kanál**
+    - mechanismus, který není určen ke komunikaci je využit pro získání informací
+    - e.g. zátěž procesoru, zaplnění disku, čas posledního přístupu k souboru
+    - e.g. nemožnost vytvořit soubor (indikuje, že soubor se stejným jménem už existuje, jen je nám skrytý)/vložit hodnotu do databáze 
+        => máme automatizované schéma pro pojmenovávání
+
+**Role-based access control (RBAC)**
+- uživatelům přiřazujeme role (i vícero)
+- na role navazujeme oprvávnění
+- e.g. role v databázích
 
 ## Biometrické metody autentizace, jejich dopady a problémy.
 
@@ -194,17 +217,18 @@ Některé algoritmy umožňují obnovu dat na základě podpisu (v podpisu jsou 
 
 **Průběh podepisování**
 1. vytvořím asymetrické klíče (veřejný, soukromý), veřejný klíč zaregistruju/vystavím, aby mohl být později použit k ověření
-2. (pro každý podepisovaný dokument) - vytvořím hash (e.g. pomocí SHA-2) podepisovaného dokumentu, který podepíšu soukromým klíčem (asymetrické algoritmy bývají pomalé, takže nepodepisuju celý dokument)
+2. (pro každý podepisovaný dokument) - vytvořím hash (e.g. pomocí SHA-2) podepisovaného dokumentu, který šifruju soukromým klíčem (asymetrické algoritmy bývají pomalé, takže nešifruju celý dokument)
 3. podepsané dokumenty je možné ověřit pomocí mého vystaveného veřejného klíče 
 
 **Certifikát**
-- spojuje veřejný klíč a informace o subjektu, který veřejný klíč poskytuje
-- společně je s informacemi o certifikační autoritě podepsán pomocí soukromého klíče **certifikační agentury**
+- spojuje veřejný klíč a informace o subjektu, který veřejný klíč poskytuje => potvrzení identity
+- společně je s informacemi o certifikační autoritě podepsán pomocí soukromého klíče **certifikační autority**
     - vytváří se řetězec důvěry - pokud věříš autoritě, můžeš věřit i mně
 - certifikační autorita 
     - zajišťuje, že daný subjekt opravdu vlastní soukromý klíč
     - autentizuje subjekt vystavující veřejný klíč (zajišťuje, že daný subjekt je tím, co tvrdí) 
-    - potvrzuje platnost veřejného klíče daného subjektu svým podpisem (lze časově omezit)
+    - potvrzuje platnost veřejného klíče daného subjektu svým podpisem
+- bývá časově omezen
 
 **Použití podpisu**
 - autentizace dat (podpis zprávy, který si mohou ostatní ověřit)
@@ -212,9 +236,24 @@ Některé algoritmy umožňují obnovu dat na základě podpisu (v podpisu jsou 
     - jestli jsi opravdu vlastníkem soukromého klíče, tak podepiš tato vzorová data
 - autentizace osob pomocí schopnosti spustit aplikaci na počítači/tokenu
 - digitální podpis neprovádí člověk, ale počítač
+- pokud potřebujeme šifrovat, nejprve podepisujeme, potom šifrujeme
 
-Soukromý klíč je potřeba chránit, v případě vyzrazení se za nás může někdo vydávat.
-- klíč bývá ideálně šifrován/blokován (e.g. vyžaduje zadání přístupového hesla/pinu)
+**Soukromý klíč je potřeba chránit**, v případě vyzrazení se za nás může někdo vydávat.
+- soukromý klíč bývá ideálně šifrován/blokován (e.g. vyžaduje zadání přístupového hesla/pinu)
+
+**Veřejný klíč musí mít zajištěnou integritu** - pokud bychom používali nesprávný veřejný klíč, mohli bychom dojít k nesprávným výsledkům
+    => vystavuje se certifikát, který spojuje klíč s naší identitou pomocí podpisu certifikační autoritou
+
+**Infrastruktura pro správu veřejných klíčů (PKI)**
+- **Certifikační autorita** - poskytuje certifikační služby, vydává certifikáty a případně je zneplatňuje
+- **Registrační autorita** - registruje žadatele o vydání certifikátu, prověřuje jejich identitu (může být zároveň CA)
+- **Adresářová služba** - uchovává a distribuuje platné klíče (a seznam zneplatněných certifikátů)
+- certifikační autoritu obvykle certifikuje nadřazená certifikační autorita, čímž se tvoří řetězec důvěry
+
+**Vystavení certifikátu**
+- generování klíčových dat (e.g. key-pair pro asymetrickou kryptografii)
+- doložení a ověření identifikačních informací (e.g. pro web předáme údaje o identitě a instalujeme *Certbot*, nebo nahrajeme určitý soubor, abychom dokázali, že máme nad serverem kontrolu)
+- vydání certifikátu žadateli (včetně zveřejnění v adresářové službě) 
 
 ## Autentizace strojů a aplikací.
 
@@ -230,7 +269,7 @@ Soukromý klíč je potřeba chránit, v případě vyzrazení se za nás může
 **TLS/SSL** - protokol vyšší úrovně
 - SSL je předchůdce TLS
 - autentizuje strany pomocí certifikátu a challenge-response (defaultně povinná pro server, volitelná pro klienta)
-- zajišťuje integritu a autenticitu dat (pomocí Message Authentication Code, MAC, funguje jako podpis (hash s klíčem))
+- zajišťuje integritu a autenticitu dat (pomocí Message Authentication Code, MAC, k datům přidáme tajný klíč a celé to hašujeme (na rozdíl od podpisu neprovádíme šifrování heše dat tajným klíčem))
 - zajišťuje důvěrnost
 - Nejprve proběhne iniciální handshake (autentizace pomocí asymetrické kryptografie). Následně se stanoví symetrický kryptografický klíč, kterým je šifrována celá komunikace.
 - je mezi TCP a aplikací, TLS nevidí do přenášených dat
@@ -248,6 +287,17 @@ Soukromý klíč je potřeba chránit, v případě vyzrazení se za nás může
 - oproti telnetu je komunikace šifrovaná (symetrickou šifrou, klíč se stanoví po handshake)
 - probíhá autentizace serveru i klienta (určitě jste si někdy generovali key pair pomocí `ssh-keygen`, tak to bylo ono)
 - používá se pro to třeba RSA, DSA (asymetrická kryptografie)
+
+**Security Assertion Markup Language (SAML)**
+- standard pro popis a výměnu autentizačních dat
+- založený na XML, používaný pro webové aplikace
+- umožňuje oddělení poskytovatele identity a poskytovatele služeb, jinými slovy umožňuje Single Sign-On (SSO)
+- SAML token obsahuje
+    - subject (kdo je držitel tokenu, e.g. user id)
+    - auth statement (způsob & čas provedené autentizace)
+    - příslušnost ke skupinám, rolím, povolené operace
+    ...
+
 
 ## Zásady a principy bezpečného kódu.
 TODO
@@ -270,6 +320,7 @@ TODO
     - e.g. **AES** (advanced encryption standard), **DES** (data encryption standard)
 - **asymetrická kryptografie** - existují 2 druhy klíčů, veřejný (pro šifrování/ověření podpisu) a soukromý (pro dešifrování/tvorbu podpisu). Pokud chtějí 2 strany plně komunikovat (full duplex), pak každá potřebuje znát svůj soukromý klíč a veřejný klíč druhé strany. Pokud někomu prozradím svůj soukromý klíč, může se vydávat za mě.
     - e.g. **RSA, DSA**
+    - pro šifrování a podepisování používáme rozdílné páry klíčů, abychom nemuseli čelit problémům, kdy zaměstnanec odejde z firmy (a stále zná soukromý klíč)
 - **šifrování v praxi** - kombinace symetrické a asymetrické kryptografie
     - pro komunikaci proběhne ustanovení symetrického klíče náhodným vygenerováním, klíč se bezpečně předá pomocí asymetrické kryptografie. Následně probíhá komunikace šifrovaná symetricky.
 
@@ -277,6 +328,17 @@ TODO
 - secure hashing algorithm
 - SHA-0 a SHA-1 jsou zastaralé a nepovažují se za bezpečné
 - rodina hašovacích funkcí SHA-2, zahrnuje SHA-224, SHA-256, SHA-384 a SHA-512 (jména podle jejich délky v bitech)
+
+**RSA** - asymetricá kryptografie, funguje na principu faktorizace velkých čísel (a modulo) - faktorizace je lehká na výpočet, těžká na reverzní výpočet
+
+**Cipher Block Chaining (CBC)** 
+
+**Cyclic Redundancy Check (CRC)**
+- kontrolní součet, umožňuje detekci neúmyslných chyb při přenosu/uložení
+- je snadné vytvořit vstup odpovídající součtu, takže neposkytuje ochranu před úmyslnou změnou
+- e.g. xor, modulo
+
+Pro zajištění důvěrnosti dat bez šifrování lze použít **Chaffing and winnowing** - data rozdělíme na bity (lze i větší části). Pro každý bit budeme v náhodném pořadí posílat dvě zprávy, jednu s validním MAC a jednu (obsahující inverzi bitu) s nevalidním MAC.
 
 **Čipové karty**
 - součástí je paměť (RAM, ROM, EEPROM), procesor
@@ -292,4 +354,4 @@ TODO
         - útoky přes api - snažíme se využít možné chyby programátora
             - e.g. počítadlo pokusů by mělo nejdřív snížit počet pokusů, pak ověřit pin a v případě úspěchu resetovat počítadlo pokusů... jinak lze po zadání pinu a detekce neúspěchu rychle odpojit zdroj
 
-TODO možná rozvést oauth, oidc, kerberos, saml, tls certifikáty, symetrické/asymetrické klíče, kryptografie bez klíčů, zpracování dat po blocích/v souvislém proudu
+TODO možná rozvést oauth, oidc, kerberos, saml,  kryptografie bez klíčů
