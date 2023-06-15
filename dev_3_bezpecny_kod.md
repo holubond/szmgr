@@ -298,17 +298,117 @@ Některé algoritmy umožňují obnovu dat na základě podpisu (v podpisu jsou 
     - příslušnost ke skupinám, rolím, povolené operace
     ...
 
-
 ## Zásady a principy bezpečného kódu.
-TODO
+
+**Defensive programming** 
+- kód by měl být psán tak, aby byl systém připraven pracovat v prostředí, kde mohou nastávat (nechtěné) chyby
+    - důraz na ověřování vstupních dat
+    - ošetření i těch situací, které *přece nemůžou nastat*
+    - příprava systému na jednoduché testování (dekompozice, závislosti na abstrakcích) a diagnostiku chyb (logování, explicitní ošetření chyb)
+    - logování událostí (abychom dokázali detekovat, co se v systému dělo)
+
+Pro zajištění bezpečnosti kódy lze postupovat různými způsoby, přístupy se nevylučují (víceúrovňová ochrana rozhodně není na škodu)
+- použití bezpečnějšího jazyka, který některé chyby neumožňuje, nebo je aspoň dělá těžší na provedení e.g. Rust
+    - případně použití striktnějšího modu překladače
+- spouštění aplikace v sandbox prostředí, třeba kontejneru, aby případný útočník nezískal kontrolu nad celým strojem
+- důkladné testování statická a dynamická analýza, code reviews...
+- pro kritické věci (kryptografie) je dobré použít osvědčené knihovny
+- závislosti (knihovny) je dobré pravidelně sledovat ohledně výskytu bezpečnostních slabin (e.g. automatizovaně pomocí dependabot)
+- použití bezpečných verzí funkcí (u C/C++ třeba strncpy místo strcpy), nepoužívání funkcí označených *obsolete*
+- kontinuální integrace - automatizované spouštění testů, statické (případně i dynamické) analýzy
+- je klíčové dobře znát použitý jazyk a jeho typické slabiny
+
+Při vývoji kódu je dobré zajistit, aby byly chybové stavy nereprezentovatelné (třeba pomocí builder patternu a různých builder tříd).
 
 ## Typické bezpečnostní chyby na úrovni kódu, souběžnost, ošetření vstupů.
-TODO
+
+Seznamy běžných chyb
+- Common Weakness Enumeration (CWE) - obecně časté bezpečnostní chyby v programovacích jazycích
+- OWASP top 10 - nejčastější bezpečnostní díry ve webových aplikacích (ale OWASP mají i jiné zajímavé projekty zaměřené na bezpečnost)
+
+Typické chyby
+- **Injection** - vložení vlastních instrukcí do dat, která jsou bez dostatečné kontroly vyhodnocována interpretem
+    - e.g. SQL injection
+- absence logování/monitirování
+- **Race condition** - simultánní zápisy (nebo zápis a čtení) do sdílené paměti (ze stejného paměťového místa, ale i třeba ze dvou různých logicky závislých míst) - řešením je sekvenční zpracování nebo zamykání
+- **Buffer overflow** - v paměti máme pole a za ním data. Pokud provedeme zápis do pole a zapisovaná data jsou delší než pole (a neohlídáme si délku), mohou nám zapisovaná data přepsat i data za polem. Ovlivňuje hlavně C/C++.
+- **Buffer overread** - jako buffer overflow, ale se čtením - jsme schopní číst i data za polem
+- použití neinicializované paměti (po malloc), nebo uvolněného ukazatele (po free)
+- **Stack exhaustion** - vyplýtvání místa na zásobníku, typicky kvůli velké rekurzi
+- **Heap exhaustion** - vyplýtvání místa na haldě, není možné alokovat další paměť (může být způsobeno memory leaky, nebo velkou paměťovou náročností programu)
+- **Type overflow** - přetečení hodnoty. E.g. int overflow; způsobeno `i64::MAX + 1`, výsledek je 0
+    => kontrola hodnot, nebo speciální operace (e.g. hodí výjimku při přetečení)
+- **Floating point reprezentace** - `0.1 + 0.2 == 0.3000000001` => použít decimal/bigdecimal, což jsou inty s fixed-point desetinnou čárkou
+- **Off-by-one error**
+
+Některé chyby bývají specifické pro určité programovací jazyky (buffer overflow pro C/C++)
+
+*Zero-day exploit* - využití bezpečnostní chyby, která ještě není obecně známá/neexistuje proti ní obrana
+
+Zdrojový kód se může od výsledné binárky značně lišit (optimalizace, debug-only sekce kódu). Při vývoji se hodí mít dodatečné informace pro debugging (umožňující třeba detailní stack trace). V release verzi však tyto informace mohou pomoct útočníkovi.
+
+Pro explicitní řízení přechodů mezi stavy programu lze použít **automata-based modelling**.
+- Stavy a přechody programu modelujeme jako stavový automat; pomocí dat reprezentujeme stav a na základě něj můžeme explicitně definovat validní přechody (e.g. switch/match statement, případně transformace objektů (pokročilejší builder pattern)). Minimalizujeme tak místa, ve kterých se mění stav, díky čemuž je kód přehlednější a bezpečnější.
+
+Pro **ošetřování vstupů** je vhodný použít fail-fast přístup. Jakmile zjistíme, že pracujeme s chybnými daty, měli bychom přerušit standardní průchod funkcí a zpracovat chybu. Koncovému uživateli sdělujeme jen nutné minimum nutné pro identifikaci důvodu chyby (nadbytečné informace, jako třeba názvy tříd, by mu mohly odhalit interní strukturu aplikace, což by mohlo být bezpečnostní riziko).
+- Pro průzkum co všechno v našem systému závisí na uživatelském vstupu je možné použít **taint analýzu**
+- Jednotky systému mohou používat [kontrakty](./dev_1_analyza_a_navrh.md#rozhraní-komponent-kontrakty-na-úrovni-rozhraní-ocl) (preconditions, postconditions, invariants) jako pojistku v případě nedostatečného ošetření vstupů
+- Pro kontrolu dostatečného ošetření vstupů je možné použít **fuzzing** (viz další sekce)
+- Pro jednoduché zpracování sekvence vstupů (příkazů) je vhodné použít **automata-based modelling**
+    - v ideálním případě se chceme nutnosti udržovat stav mezi příkazy vyhnout, bezstavová komunikace je méně náchylná na chyby a je možné systém jednoduššeji škálovat
+
+TODO souběžnost, ošetření vstupů
 
 ## Detekce bezpečnostních zranitelností, penetrační testování.
-TODO
+
+Pro detekci (nejen) bezpečnostních zranitelností je možné použít vícero přístupů (nejsou exkluzivní)
+- statická analýza
+- dynamická analýza
+- fuzzing
+- penetrační testování
+
+Pro detekci buffer overflow lze pomocí překladače použít tzv. canary - data za každým polem. Pokud dojde k přetečení pole, bude canary přepsán, což je signál problému. Problém přetrvá, pokud útočník zná hodnotu canary. Alternativně (režijně náročnější) lze kontrolovat délku pole a zapisovaných dat.
+
+Prevencí změny návratové adresy funkce útočníkem (důsledek buffer overflow) je randomizace adres funkcí v kódu.
+
+Prevencí code injection může být data execution prevention - paměť dělíme na datovou a spustitelnou, není možné spouštět kód z datové části. SQL injection (zprávy jsou obvykle interpretované) se řeší pomocí prepared statements, čímž efektivně dělíme části příkazu na datovou a příkazovou.
+
+**Statická analýza**
+- analýza kódu programu, aniž by byl program spuštěn
+- lze analyzovat zdrojový kód (jednodušší, je k tomu víc kontextu), ale i binárku
+- lze aplikovat i na nedokončený kód
+- lze využít i pro vynucení jednotného stylu kódu
+- důležitou (ale špatně automatizovatelnou a škálovatelnou) variantou je code review
+- statickou analýzu provádí i samotný překladač (type checking) - ten si ale nemůže dovolit považovat za chybu něco, co chybou ve skutečnosti není
+- lze využít automatizované nástroje, kterým stačí zdrojový kód (e.g. cargo check, cargo clippy, pro vícero jazyků třeba sonarqube)
+- běžně bývá součástí CI - důraz na rychlost
+
+**Dynamická analýza**
+- program je spuštěn, poskytujeme různé vstupy
+- je možné použít virtualizovaný procesor/interpret, můžeme sledovat paměť
+- lze vynutit omezené prostředí (málo paměti, omezená práva, omezení v souborovém systému)
+- lze sledovat data a jejich změny v programu
+- lze vložit logovací instrukce
+- e.g. Valgrind (nahrazuje standardní alokátor a poskytuje vlastní, což mu umožňuje sledovat dění v paměti), miri (interpret pro rust, používá se pro detekci undefined behavior při práci s unsafe kódem)
+- **Fuzzing** - program spouštíme s *náhodnými* generovanými vstupy a sledujeme výstupy
+    - vhodné pro blackbox
+    - vstupy mohou být zcela náhodné, v praxi chceme poskytnout několik vhodných vstupů (jako základ), které fuzzer modifikuje různými způsoby (zcela náhodně, nebo pomocí nějaké inteligentní strategie)
+    - klíčové je, aby vstupů bylo velké množství, proces je možné snadno automatizovat a opakovat
+    - během fuzzingu sledujeme chování aplikace (zamrzla? běží v cajku?)
+    - po skončení fuzzingu máme množinu problematických vstupů, jejichž ošetřování se můžeme věnovat
+    - obvykle se takto najdou jen poměrně jednoduché chyby, nebo chyby validace (ale záleží na programu)
+    - některé fuzzery generují vstupy ze zdrojového kódu, cílem je vysoká code coverage (e.g. American Fuzzy Lop)
+    - e.g. MiniFuzz (input file fuzzer)
+- **Taint analýza** - data, které nějakým způsobem závisí na nedůvěrném vstupu, jsou označena. Pokud se označení dostane i ke kritickým částem kódu, vyskočí nám upozornění
 
 ## Notes
+
+**Brainstorm**
+- používání neaktuálních/nepodporovaných verzí systémů
+- odesílání uživateli zbytečně detailní informace, které mohou být zneužity
+    - e.g. verze používaného dobře známého systému (třeba nginx), útočník může cílit na slabosti této konkrétní verze
+    - e.g. *Cannot insert new record into table Users, unique constraint on column Email has been violated*
+- xss
 
 **Základní pojmy**
 - [hašování](./5_databaze.md#hašování)
