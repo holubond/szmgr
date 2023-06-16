@@ -317,6 +317,7 @@ Pro zajištění bezpečnosti kódy lze postupovat různými způsoby, přístup
 - použití bezpečných verzí funkcí (u C/C++ třeba strncpy místo strcpy), nepoužívání funkcí označených *obsolete*
 - kontinuální integrace - automatizované spouštění testů, statické (případně i dynamické) analýzy
 - je klíčové dobře znát použitý jazyk a jeho typické slabiny
+- pokud si můžeme vybrat, je lepší používat whitelisting než blacklisting (deny by default)
 
 Při vývoji kódu je dobré zajistit, aby byly chybové stavy nereprezentovatelné (třeba pomocí builder patternu a různých builder tříd).
 
@@ -341,6 +342,25 @@ Typické chyby
 - **Floating point reprezentace** - `0.1 + 0.2 == 0.3000000001` => použít decimal/bigdecimal, což jsou inty s fixed-point desetinnou čárkou
 - **Off-by-one error**
 
+**Souběžnost** a.k.a. race condition
+- špatné načasování operací (nebo jejich pořadí) způsobí nečekané stavy systému
+- e.g. máme současně běžící programy, každý chce přečíst hodnotu ze sdílené paměti a zvýšit ji o 1. 
+    ```
+    Procesy A a B chtějí inkremetovat sdílený čítač, každý o 1
+    A čte hodnotu 5
+    B čte hodnotu 5
+    A inkrementuje načtenou hodnotu 5+1=6
+    B inkrementuje načtenou hodnotu 5+1=6
+    A zapíše 6
+    B zapíše 6
+    Oba procesy inkrementovaly čítač, který se reálně zvedl pouze o 1
+    ```
+- řešením je vyznačení problematické části jako kritické sekce. Pro kritickou sekci se musí vynutit přístupová pravidla písařů a čtenářů:
+    - pokud existuje písař, musí být jediný a nesmí existovat žádní čtenáři
+    - pokud neexistuje písař, může existovat libovolný počet čtenářů
+- striktnějším řešením je uzamčení celé kritické sekce, aby k ním měl přístup vždy jen 1 proces
+- pokud máme vícero kritických sekcí a používáme zámky, je třeba dávat pozor na uváznutí (deadlock). Ten nastane, když každý proces z množiny procesů vlastní nějaký zdroj a pro dokončení své práce (a uvolnění vlastněného zdroje) vyžaduje zdroj vlastněný jiným procesem. Všichni tak čekají
+
 Některé chyby bývají specifické pro určité programovací jazyky (buffer overflow pro C/C++)
 
 *Zero-day exploit* - využití bezpečnostní chyby, která ještě není obecně známá/neexistuje proti ní obrana
@@ -351,13 +371,19 @@ Pro explicitní řízení přechodů mezi stavy programu lze použít **automata
 - Stavy a přechody programu modelujeme jako stavový automat; pomocí dat reprezentujeme stav a na základě něj můžeme explicitně definovat validní přechody (e.g. switch/match statement, případně transformace objektů (pokročilejší builder pattern)). Minimalizujeme tak místa, ve kterých se mění stav, díky čemuž je kód přehlednější a bezpečnější.
 
 Pro **ošetřování vstupů** je vhodný použít fail-fast přístup. Jakmile zjistíme, že pracujeme s chybnými daty, měli bychom přerušit standardní průchod funkcí a zpracovat chybu. Koncovému uživateli sdělujeme jen nutné minimum nutné pro identifikaci důvodu chyby (nadbytečné informace, jako třeba názvy tříd, by mu mohly odhalit interní strukturu aplikace, což by mohlo být bezpečnostní riziko).
+- pro jednodušší ověřování je vhodné omezit počet validních vstupů (e.g. jen čísla)
+- vstupní data mapujeme na interní data (e.g. používáme enumy)
+- maximální délku vstupu je důležité brát v potaz zvlášť u zpracování souborů (navíc je dobré použít bufferované čtení a zpracovávat soubor po řádcích)
+- problém může dělat třeba UTF-8 řetězce, kde jeden znak může mít různou délku
+- pro ošetření vstupů je navíc fajn používat validační knihovny (e.g. zod pro js, clap pro rust) 
 - Pro průzkum co všechno v našem systému závisí na uživatelském vstupu je možné použít **taint analýzu**
 - Jednotky systému mohou používat [kontrakty](./dev_1_analyza_a_navrh.md#rozhraní-komponent-kontrakty-na-úrovni-rozhraní-ocl) (preconditions, postconditions, invariants) jako pojistku v případě nedostatečného ošetření vstupů
 - Pro kontrolu dostatečného ošetření vstupů je možné použít **fuzzing** (viz další sekce)
 - Pro jednoduché zpracování sekvence vstupů (příkazů) je vhodné použít **automata-based modelling**
     - v ideálním případě se chceme nutnosti udržovat stav mezi příkazy vyhnout, bezstavová komunikace je méně náchylná na chyby a je možné systém jednoduššeji škálovat
+- důležité je samozřejmě nikdy nevěřit uživatelským vstupům
 
-TODO souběžnost, ošetření vstupů
+**Souběžnost**
 
 ## Detekce bezpečnostních zranitelností, penetrační testování.
 
@@ -366,6 +392,7 @@ Pro detekci (nejen) bezpečnostních zranitelností je možné použít vícero 
 - dynamická analýza
 - fuzzing
 - penetrační testování
+- security review
 
 Pro detekci buffer overflow lze pomocí překladače použít tzv. canary - data za každým polem. Pokud dojde k přetečení pole, bude canary přepsán, což je signál problému. Problém přetrvá, pokud útočník zná hodnotu canary. Alternativně (režijně náročnější) lze kontrolovat délku pole a zapisovaných dat.
 
@@ -382,6 +409,7 @@ Prevencí code injection může být data execution prevention - paměť dělím
 - statickou analýzu provádí i samotný překladač (type checking) - ten si ale nemůže dovolit považovat za chybu něco, co chybou ve skutečnosti není
 - lze využít automatizované nástroje, kterým stačí zdrojový kód (e.g. cargo check, cargo clippy, pro vícero jazyků třeba sonarqube)
 - běžně bývá součástí CI - důraz na rychlost
+- snadno odhalí i časté chyby jako ponechání hardcoded api klíče
 
 **Dynamická analýza**
 - program je spuštěn, poskytujeme různé vstupy
@@ -400,6 +428,32 @@ Prevencí code injection může být data execution prevention - paměť dělím
     - některé fuzzery generují vstupy ze zdrojového kódu, cílem je vysoká code coverage (e.g. American Fuzzy Lop)
     - e.g. MiniFuzz (input file fuzzer)
 - **Taint analýza** - data, které nějakým způsobem závisí na nedůvěrném vstupu, jsou označena. Pokud se označení dostane i ke kritickým částem kódu, vyskočí nám upozornění
+
+**Security review**
+- provádí se top-down, bottom up (vhodnější při nejasné architektuře, ale náročnější na provedení) či hybridně
+- začíná u architektury a dokumentace, snaha o detekci návrhových chyb, stanovují se možná rizika a zranitelnosti
+- u kódu se sleduje, jak dobře implementuje architekturu (často existují rozdíly), hledají se možné zranitelnosti v high-level logice, pak i v samotném kódy
+- hodnotí se dodržování bezpečnostních standardů
+- prakticky se testuje zabezpečení (penetrační testování, DDoS útoky, statická analýza)
+- sleduje se vliv nedůvěryhodných dat (taint analýza)
+- lze analyzovat přímo kód (řádek po řádku, nebo podle pořadí volaných funkcí), případně si můžeme udělat seznam potenciálních slabin a na ty se zaměřit
+- analyzuje se kontrola přístupu a správa oprávnění
+- hodnotí se bezpečnostní opatření, monitoring
+- hodnotí se ochrana dat, správa klíčů, šifrování
+- výsledkem je zpráva popisující současný stav a doporučení do budoucna
+
+**Penetrační testování**
+- obecné penetrační testování je náročné, obvykle je dobré si vytipovat/doporučit slabá místa, zaměřit útoky jen na některé části systému
+- interně - týmem v rámci organizace
+    - lze využít znalosti zdrojového kódu
+    - vyžaduje udržování specializovaného odborného týmu
+- externě - jinou, specializovanou společností 
+    - nabízí pohled z venku, který může brát v potaz problémy, které sami nevidíme
+    - může být součástí compliance
+    - poskytovat kód externě může být problém
+    - může být fajn použít víc společností, aby se vzájemně vychytala slabá místa
+- lze provádět whitebox/blackbox (graybox je, když dáme k dispozici dokumentaci, ale ne zdroják)
+- dobrou praxí je mít systém odměn za hlášení bezpečnostních chyb (bug bounty)
 
 ## Notes
 
@@ -455,3 +509,5 @@ Pro zajištění důvěrnosti dat bez šifrování lze použít **Chaffing and w
         - indukce chyb - pomocí náhlých změn podmínek (napětí, teplota...) se snažíme změnit operační podmínky
         - útoky přes api - snažíme se využít možné chyby programátora
             - e.g. počítadlo pokusů by mělo nejdřív snížit počet pokusů, pak ověřit pin a v případě úspěchu resetovat počítadlo pokusů... jinak lze po zadání pinu a detekce neúspěchu rychle odpojit zdroj
+
+**Honeypotting** - pro útočníka připravíme izolovaný subsystém, do kterého ho pustíme a sledujeme jeho chování, čímž se učíme o jeho způsobu práce
