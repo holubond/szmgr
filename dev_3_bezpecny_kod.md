@@ -485,9 +485,11 @@ Prevencí code injection může být data execution prevention - paměť dělím
 
 **RSA** - asymetricá kryptografie, funguje na principu faktorizace velkých čísel (a modulo) - faktorizace je lehká na výpočet, těžká na reverzní výpočet
 
-**Bloková šifra** - symetrická, vstupní data jsou rozdělena na bloky fixní délky, které jsou šifrovány stejným způsobem. Pro větší bezpečnost se nešifrují všechny bloky stejně, ale může se použít e.g. Cipher Block Chaining (CBC), kdy je mezi bloky vytvořena závislost (každý další blok je xorován zašifrovaným předchozím blokem)
+**Bloková šifra** - symetrická, vstupní data jsou rozdělena na bloky fixní délky, které jsou šifrovány stejným způsobem. Pro větší bezpečnost se nešifrují všechny bloky stejně, ale může se použít e.g. Cipher Block Chaining (CBC), kdy je mezi bloky vytvořena závislost (každý další blok je xorován zašifrovaným předchozím blokem). Změna bitu zašifrovaných dat zmenožní dešifrování zprávy. E.g. AES, DES
 
-**Proudová šifra** - symetrická, z klíče vygenerujeme posloupnost a na jejím základě šifrujeme jednotlivé bity dat (=> každý jinak).
+**Proudová šifra** - symetrická, z klíče vygenerujeme posloupnost a na jejím základě šifrujeme jednotlivé bity dat (=> každý jinak). Díky tomu není nutné dešifrovat všechno (jako u blokových šifer v reřimu Cipher Block Chaining), ale můžeme jít *od prostředka*. Fungují rychle (třeba pomocí XOR dat s klíčem). Změna bitu zašifrované zprávy pozmění původní zprávu => je vhodné přidat nějakou formu hašování.
+
+[https://www.youtube.com/watch?v=wlSG3pEiQdc&t=1s](https://www.youtube.com/watch?v=wlSG3pEiQdc&t=1s)
 
 **Cyclic Redundancy Check (CRC)**
 - kontrolní součet, umožňuje detekci neúmyslných chyb při přenosu/uložení
