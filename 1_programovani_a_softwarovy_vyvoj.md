@@ -167,29 +167,46 @@ Pro vývoj rozsáhlých systémů se používají následující typy nástrojů
     - **NoSQL** - alternativa k relačním db, umožňují ukládání a manipulaci s nestrukturovanými daty. Oproti relačním databázím poskytují lepší škálovatelnost a flexibilitu, problém může být konzistence (často se používá duplikaci pro vyšší rychlost) (mongodb, cassandra)
     - **Cachování** -dočasné ukládání často používaných dat/výsledků operací. Lze provádět na úrovni RAM, před databází, před serverem... (redis, nginx)
 
-## Dodatečné poznámky
+## Notes
+
 **Validace** - systém dělá to, co se od něj čeká (v rámci požadavků)
+
 **Verifikace** - systém dělá věci správně interně
+
 **DAO** - data access object, abstrahuje přístup k databázi/persistenčnímu mechanismu
     - umožňuje výměnu persistenční technologie, aniž by bylo třeba zasahovat do jiných vrstev
     - usnadňuje testování business logiky
     - obvykle jeden na entitu, CRUD
+
 **DTO a.k.a. Value Object** - data transfer object, zapouzdřuje data pro komunikaci mezi vrstvami
+
 **Inversion of Control** - struktura má pole (třeba connection pool), které používá pro své fungování (závisí na něm). Nemá si pole tvořit sama, naplnit ho z parametru konstruktoru/jiným způsobem.
+
 **Dependency Injection** - existují frameworky, které asistují s IoC pomocí injekce závislostí přímo do polí struktur "automaticky" (rust\di, java\spring)
+
 **Aspect Oriented Programming** - technika, kde se definuje aspekt, který je volán pokaždé definované akci. E.g. pro logování - aspekt je definován jednou a je řečeno, že se má provádět pro všechny metody. Není nutné upravit každou metodu, aby explicitně logovala.
 
-Software as a service, Platform as a service (staráme se jen o vývoj, vše ostatní zajišťuje služba, e.g. Heroku), Infrastructure as a service (pronajímáme si infrastrukturu, e.g. klasický cloud, AWS, azure, gcp...)
+**Software as a service**, **Platform as a service** (staráme se jen o vývoj, vše ostatní zajišťuje služba, e.g. Heroku), **Infrastructure as a service** (pronajímáme si infrastrukturu, e.g. klasický cloud, AWS, azure, gcp...)
 
 **CORS** - zabraňuje, aby skript z prohlížeče komunikoval se serverem odjinud, než z webové aplikace. E.g. pokud z klienta SPA myweb.com chci poslat asynchronní dotaz (pomocí fetch API) na other.com, tak pokud other.com explicitně nepovolí přístup, prohlížeč můj požadavek neodešle.
 
-- **Message queue** - namísto synchronního zpracování je možné použít message queue (používá se často interně v distribuovaných systémech, není nutné okamžité zpracování, usnadňuje load balancing, je možný broadcast, zprávy mohou být persisted, ...) (apache kafka, rabbit mq). Možné problémy: delay/blížíme se plné frontě (=> flow control), cíl doručení není dostupný a je důležité doručit (=> ulož do error queue, aby bylo možné zprocesovat později/ručně), zpráva dorazí vícekrát (=> služby dělej idempotentní). Obecně dokumentuj možné nestandardní chování a způsoby řešení problémů, měj recovery mechanismy. Queue (musí se doručit aspoň jednomu) vs Topic (publisher-subscriber model).
+**Message queue** - namísto synchronního zpracování je možné použít message queue (používá se často interně v distribuovaných systémech, není nutné okamžité zpracování, usnadňuje load balancing, je možný broadcast, zprávy mohou být persisted, ...) (apache kafka - byť je spíš event broker, rabbit mq).
+Možné problémy: 
+- delay/blížíme se plné frontě (=> flow control)
+- cíl doručení není dostupný a je důležité doručit (=> ulož do error queue, aby bylo možné zprocesovat později/ručně)
+- zpráva dorazí vícekrát (=> služby dělej idempotentní).
 
-- **Continuous integration** - pravidelně sestavujeme výsledný systém (děláme malé a relativně jednoduché změny), automaticky testujeme výsledek
-- **Continuous delivery** - pravidelně sestavujeme výsledný systém tak, že by mohl být okamžitě vydán, automaticky testujeme výsledek
-- **Continuous deployment** - pravidelně dodáváme, automaticky testujeme výsledek
+Obecně dokumentuj možné nestandardní chování a způsoby řešení problémů, měj recovery mechanismy. 
 
-- **Regresní testy** - provádí se po změnách, abychom detekovali nechtěné efekty
+Queue (musí se doručit aspoň jednomu) vs Topic (publisher-subscriber model).
+
+**Continuous integration** - pravidelně sestavujeme výsledný systém (děláme malé a relativně jednoduché změny), automaticky testujeme výsledek
+
+**Continuous delivery** - pravidelně sestavujeme výsledný systém tak, že by mohl být okamžitě vydán, automaticky testujeme výsledek
+
+**Continuous deployment** - pravidelně dodáváme, automaticky testujeme výsledek
+
+**Regresní testy** - provádí se po změnách, abychom detekovali nechtěné efekty
 
 #### REST (Representational State Transfer)
 - nejpoužívanější styl/způsob tvorby rozhraní webových aplikací (ne protokol), vychází z HTTP, požadavek má syntax `<metoda> <uri>`
@@ -204,10 +221,13 @@ Software as a service, Platform as a service (staráme se jen o vývoj, vše ost
     - dále existují **CONNECT**, **OPTIONS** a **TRACE**
 
 *safe* metody nemění stav na serveru (get, head, options, trace)
-*idempotentní* metody splňují vlastnost, že vícero identických požadavků má stejný efekt, jako jediný požadavek (všechny, kromě POST, PATCH (není zcela standardizované chování) a CONNECT) 
-- RESTové služby jsou bezstavové (pro vyhodnocení požadavku by nemělo být nutné znát nic, co není v požadavku obsazeno, e.g. namísto `GET /nextPage` se použije `GET /pages/2`)
-- některé metody jsou kešovatelné
-- v komunikaci mohou být prostředníci (třeba cache, proxy, load balancer..), o kterých klient neví
+
+*Idempotentní* metody splňují vlastnost, že vícero identických požadavků má stejný efekt, jako jediný požadavek (všechny, kromě POST, PATCH (není zcela standardizované chování) a CONNECT) 
+
+RESTové služby jsou bezstavové (pro vyhodnocení požadavku by nemělo být nutné znát nic, co není v požadavku obsazeno, e.g. namísto `GET /nextPage` se použije `GET /pages/2`)
+
+Některé REST metody jsou kešovatelné, v komunikaci mohou být prostředníci (třeba cache, proxy, load balancer..), o kterých klient neví
+
 **Best practices**
 - konzistentní pojmenovávání zdrojů
 - vztahy řešíme pomocí URI (e.g. `GET /users/1/orders` vrací objednávky uživatele 1)
@@ -215,7 +235,7 @@ Software as a service, Platform as a service (staráme se jen o vývoj, vše ost
 - používání správných metod, přemýšlíme v rámci CRUD operací
 - filtrování a řazení řešíme pomocí query parametrů (`/users?active=true&sort=name`)
 - verzování API
-- metody, které vytvářejí/upravují by měly vracet výslednou podobu
+- metody, které vytvářejí/upravují zdroje by měly vracet výslednou podobu zdroje
 - aktuálně je preference pracovat s JSON
 - používání správných HTTP návratových hodnot
 
@@ -224,7 +244,7 @@ Software as a service, Platform as a service (staráme se jen o vývoj, vše ost
 - k entitám přidáváme href
 
 #### WSDL (web services definition language)
-- standardizovaný způsob popisu rozhraní webových služeb (jméno, lokaci, podporované protokoly, operace, formát zpráv..), asociován se SOAP
+- standardizovaný způsob popisu rozhraní webových služeb (jméno, lokaci, podporované protokoly, operace, formát zpráv..), používá se se SOAP
 
 #### SOAP (simple object access protocol)
 - komunikační protokol pro web services, umožňuje výměnu dat, vzdálená volání funkcí
@@ -232,4 +252,8 @@ Software as a service, Platform as a service (staráme se jen o vývoj, vše ost
 
 #### Java specifické věci
 
-**Servlety** jsou komponenty umožňující zpracování požadavků a zaslání odpovědi (a.k.a. handler). **Java Web Containers** poskytují servletům runtime a starají se o další věci (e.g. sessions), může v nich běžet vícero web aplikací ve WAR (web archive). Alternativně je možné použít lehčí variantu, e.g. spring boot **Java Server Pages** umožňují psát javu do html (server-side), obdobně jako php
+**Servlety** jsou komponenty umožňující zpracování požadavků a zaslání odpovědi (a.k.a. handler). 
+
+**Java Web Containers** poskytují servletům runtime a starají se o další věci (e.g. sessions), může v nich běžet vícero web aplikací ve WAR (web archive). Alternativně je možné použít lehčí variantu, e.g. spring boot
+
+**Java Server Pages** umožňují psát javu do html (server-side), obdobně jako php
