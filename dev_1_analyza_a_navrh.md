@@ -211,7 +211,7 @@ Na rozdíl od `Strategy`
 - řešíme přechody stavu, stavy se můžou nahradit jiným stavem (=> stavy mohou mít referenci na kontext)
 - neřešíme jeden specifický task, ale poskytujeme implementaci pro většinu věcí co `Context` nabízí
 
-E.g. postavě se mění útok na základě nasazeného vybavení
+E.g. Vypínač má dva stavy (concrete state), Vypnutý Vypínač a ZapnutýVypínač. Interface Vypínač má metodu přepni(), čímž se změní stav (VypnutýVypínač na ZapnutýVypínač a opačně)
 
 ![](img/20230603154910.png)
 
