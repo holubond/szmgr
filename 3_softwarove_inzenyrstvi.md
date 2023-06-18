@@ -47,7 +47,7 @@ Existuje několik základních modelů
         - **Návrh**
         - **Implementace**
         - **Testování, zpětná vazba a plán dalšího cyklu** - zpětnou vazbu používáme pro práci v dalším cyklu
-    - oproti iteraci nemusíme mít po každé iteraci hotovou část nasazeného systému.
+    - oproti inkrementálnímu modelu nemusíme mít po každé iteraci hotovou část nasazeného systému (inkrement je třeba ve formě jasných požadavků, návrhu systému, nebo tak).
     - cykly aplikujeme i na jednotlivé fáze vodopádu
     - lépe pracujeme s nejistotou, ale trvá to dýl
 
