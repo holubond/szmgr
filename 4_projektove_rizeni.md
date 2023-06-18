@@ -88,7 +88,8 @@ Dále je možné modelovat procesy (komunikace), finance, rizika... a na těchto
 - nástroj pro plánování (nejen) projektů
 V základu toto:
 ![](img/20230525192847.png)
-ale lze rozšířit...
+
+    ale lze rozšířit...
 
 - y osa obsahuje úlohy (případně zdroje)
 - x osa zobrazuje čas
