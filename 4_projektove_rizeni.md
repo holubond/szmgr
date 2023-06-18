@@ -68,12 +68,12 @@ Možné zdroje rizik (nejčastější tučně):
 - firemní prostředí - nestabilní, změna vedení...
 - **subdodavatelé** - opoždění, nedostatečná kvalita, komunikace...
 
-### Specifika agilního řízení rizik
+### Specifika prevence u agilního řízení rizik
 Prevence:
-    - **Transparence a zpětná vazba**, abychom předešli nedorozumnění v týmu
-    - **Používání user stories** - jsou snadno pochopitelné pro zákazníka, dají se dobře ověřovat
-    - **Jasná definice, co znamená "hotovo"**
-    - **Krátké iterace** - brzo zjistíme, co je případně blbě
+- **Transparence a zpětná vazba**, abychom předešli nedorozumnění v týmu
+- **Používání user stories** - jsou snadno pochopitelné pro zákazníka, dají se dobře ověřovat
+- **Jasná definice, co znamená "hotovo"**
+- **Krátké iterace** - brzo zjistíme, co je případně blbě
 
 ## Role modelů v projektovém řízení
 
