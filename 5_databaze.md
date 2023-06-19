@@ -11,6 +11,7 @@ Data se v praxi ukládají přímo do souborového systému, nebo do databáze (
 - náročnější správa přístupových práv
 - nutnost konzistentně řešit formát dat
 - horší čitelnost & dokumentovatelnost datového modelu
+- operační systém slouží jako abstrakce pro aplikace, umožňuje jednotný přístup k různým souborovým systémům
 
 - pro aplikace se hodí na ukládání velkých souborů (pdf, obrázky, video, statická stránka, pokud tedy nepoužijeme CDN), které je nepraktické uchovávat v databázi. Je nutné dávat pozor, abychom neposkytli přístup jinam než chceme.
 
