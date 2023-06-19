@@ -138,11 +138,11 @@ Hlavička obsahuje
 Tcp mění množství poslaných dat v průběhu komunikace, aby nebyl příjemce (Flow Control), nebo síť (Congestion Control) zahlcen/a, slouží k tomu **velikost okna**. Obecně to funguje tak, že při startu se exponenciálně zvyšuje velikost okna, dokud nedosáhneme učité hranice. Od této hranice lineárně zvyšujeme velikost, dokud nedojde ke ztrátě paketu. V ten moment snížíme velikost na hraniční hodnotu a pokračujeme v lineárním zvyšování rychlosti. Jednotlivé varianty si tuto metodu přizpůsobují, e.g. Tahoe po ztrátě jde na minimální velikost okna (jako na úplném začátku), Reno praktikuje popsaný postup.  
 
 ## Protokoly na síťových vrstvách
-Aplikační - HTTP, SMTP, DNS, FTP...
-Transportní - TCP UDP
-Síťová IP - IPv4 (spolu s ARP, RARP, ICMP, IGMP), IPv6 (ICMPv6)
-- pro směrování Distance vector: RIP, IGRP, EIGRP, Link state: OSPF, IS-IS
-Vrstva síťového rozhraní - ethernet, 802.11 (Wi-Fi)
+- Aplikační - HTTP, SMTP, DNS, FTP...
+- Transportní - TCP UDP
+- Síťová IP - IPv4 (spolu s ARP, RARP, ICMP, IGMP), IPv6 (ICMPv6)
+    - pro směrování Distance vector: RIP, IGRP, EIGRP, Link state: OSPF, IS-IS
+- Vrstva síťového rozhraní - ethernet, 802.11 (Wi-Fi)
 
 ## funkce IPv4
 
