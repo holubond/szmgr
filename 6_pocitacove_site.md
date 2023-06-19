@@ -327,10 +327,10 @@ Příklady
 **Multimédia** data složená z různých typů médií (text, zvuk, video, obrázky...) integrovaných dohromady. E.g. videokonference (video + zvuk), televize/stream (video + zvuk + (text, titulky)). Některé média mohou být analogové, pro přenos je nutná konverze. Je kýžená komprese pro snížení objemu přenášených dat, ale komprese může znamenat overhead navíc, což nemusí být přijatelné u realtime přenosů. Dle aplikace nám může (ne)vadit chybovost.
 
 **Delay** - doba přenosu ze zdroje k cíli (člověk si všimne latence > 100-200 ms)
-    - **Processing delay** - časový overhead u odesílatele/příjemce, záleží na rychlosti/vytíženosti komunikujícího systému
-    - **Transmission delay** - doba, jakou trvá nacpat všechny bity do přenosového média (záleží na velikosti)
-    - **Propagation delay** - doba přenosu přes samotné přenosové médium, záleží na technologii a vzdálenosti
-    - **Routing/queuing delay** - záleží na vytíženosti sítě, rychlosti směrování
+- **Processing delay** - časový overhead u odesílatele/příjemce, záleží na rychlosti/vytíženosti komunikujícího systému
+- **Transmission delay** - doba, jakou trvá nacpat všechny bity do přenosového média (záleží na velikosti)
+- **Propagation delay** - doba přenosu přes samotné přenosové médium, záleží na technologii a vzdálenosti
+- **Routing/queuing delay** - záleží na vytíženosti sítě, rychlosti směrování
 **Jitter** - rozdílná doba přenosu mezi jednotlivými pakety
 
 Pro minimalizaci overheadu a zajištění maximální rychlosti (i za cenu chyb, výpadků...) se pro realtime aplikace používá UDP, příjemce může používat techniky jako odhadování chybějících dat, případně odesílatel může použít techniky pro detekci/korekci chyb pomocí redundance (nebo opětovaného zaslání). 
