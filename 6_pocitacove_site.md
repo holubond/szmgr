@@ -364,5 +364,7 @@ Pro zefetkivnění směrování je možné použít **Multiprotocol Label Switch
 **Flow control** se řeší pro příjemce, **congestion control** se řeší pro síť
 
 **Autenticita** - data jsou od správného odesilatele
+
 **Integrita** - data nebyla cestou změněna
+
 **Šifrování** - data nejsou čitelná/srozumitelná třetím stranám
