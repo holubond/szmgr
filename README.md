@@ -4,7 +4,7 @@ Oficiální link s otázkami: [https://www.fi.muni.cz/studies/fe-mgr/swe2021.htm
 
 Za správnost/aktuálnost neručím, jako příklady jsem používal technologie mně blízké. Občas jsou v materiálech informace navíc (z jiných předmětů/zdrojů). Pokud najdete chybu/nepřesnost, feel free to PR. Občas míchám pojmy jako struktura a třída, myslím tím v podstatě to samé (rust/go struktury víceméně odpovídají java/c# třídám). Odkazy na zdroje v ISu vám nemusí fungovat, pokud jste v daném období předmět neměli... v takovém případě by mělo stačit přepsat období v linku.
 
-Sepsáno na základě přednášek, osobních zkušeností a samozřejmě ChatGPT :) Pro rychlé pochopení základních konceptů dané technologie doporučuju mrknout na [Fireship](https://www.youtube.com/@Fireship) a jeho `in 100 seconds` videa.
+Sepsáno na základě přednášek, osobních zkušeností, praxe, a samozřejmě drobné pomoci ChatGPT :) Pro rychlé pochopení základních konceptů dané technologie doporučuju mrknout na [Fireship](https://www.youtube.com/@Fireship) a jeho `in 100 seconds` videa.
 
 #### Hotové otázky
 
