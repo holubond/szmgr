@@ -10,9 +10,11 @@ Architektury popsány v [otázce 1](./1_programovani_a_softwarovy_vyvoj.md#zákl
 **Monolitická architektura** - obsahuje vše, co systém potřebuje, je možné pouze vertikální škálování, špatná spolehlivost (pád znamená pád celého systému)
 
 **Úrovňová (tiered) architektura** (nezaměňovat s layered) - jednotlivé úrovně lze distribuovat, paralelizovat, nahradit (komunikace skrz API)
-- Klient může být tenký (e.g. teplating řešení typu php, django, askama)/tlustý (samostatná aplikace, separátně nasaditelná, e.g. js frameworky) dle poskytnuté funkcionality, klasické úrovně bývají klient, server, databáze.
+- Klient může být tenký/tlustý dle poskytnuté funkcionality, klasické úrovně bývají klient, server, databáze.
 
-**Hexagonal/Microkernel/component-based** - základní aplikace poskytuje minimální funkcionalitu, zbytek se dodává skrz plug-in komponenty komunikující přes předdefinované api. Komponenty je možné případně zapojovat za běhu systému. Další možnost využití komponentů - pokud potřebujeme používat legacy systém, který si nemůžeme dovolit přepsat, je možné ho zabalit jako komponent a přistupovat k němu přes naše kompatibilní rozhraní. Pokud komponenty zapojujeme sekvenčně, říká se tomu **pipeline architecture** (e.g. unix utilities spojené pipes). Vývoj komponentových systémů je náročnější (zvlášť problematické je správně určit rozhraní), ale umožňuje větší přizpůsobitelnost/znovupoužitelnost komponentů v budoucích projektech. E.g. extensions ve VSCode, component-based architekturu používá Jakarta Enterprise Edition, kde jednotlivé Java Beans jsou komponenty
+**Hexagonal/Microkernel/component-based** - základní aplikace poskytuje minimální funkcionalitu, zbytek se dodává skrz plug-in komponenty komunikující přes předdefinované api. Komponenty je možné případně zapojovat za běhu systému. Další možnost využití komponentů - pokud potřebujeme používat legacy systém, který si nemůžeme dovolit přepsat, je možné ho zabalit jako komponent a přistupovat k němu přes naše kompatibilní rozhraní. Vývoj komponentových systémů je náročnější (zvlášť problematické je správně určit rozhraní), ale umožňuje větší přizpůsobitelnost/znovupoužitelnost komponentů v budoucích projektech. E.g. extensions ve VSCode, component-based architekturu používá Jakarta Enterprise Edition, kde jednotlivé Java Beans jsou komponenty
+
+**Pipeline architecture** - sekvenční zpracování, každý komponent se stará o relativně transformaci vstupu na výstup (dělej malou věc, ale dělej ji dobře)
 
 **Service-oriented architecture** - popsáno v [samostatné kapitole](./7_distribuovane_systemy.md#architektura-orientovaná-na-služby-soa)
 
