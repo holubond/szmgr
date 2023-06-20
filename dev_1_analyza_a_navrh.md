@@ -180,8 +180,6 @@ E.g. DB pool
 
 ![](img/20230605130130.png)
 
-![](img/20230605125734.png)
-
 ### Behavioral patterns
 
 Řeší chování objektů a dynamické interakce mezi objekty.
