@@ -44,10 +44,11 @@ Autentizace může proběhnout na základě výzvy, nebo klidně z iniciativy su
 - může jít o pin/heslo/passphrase/identifikaci obrazové informace/spojení bodů v určitém pořadí...
 
 **Hesla**
-- skupinová (více uživatelů sdílí heslo) - mizivá bezpečnost
-- unikátní pro osobu, pomocí hesla se zároveň uživatel identifikuje
-- kombinace s uživatelským jménem
-- jednorázová - jdou odděleným kanálem, obvykle součástí vícefaktorové autentizace, prokazujeme vlastnictví dalšího tokenu
+- možnosti
+    - skupinová (více uživatelů sdílí heslo) - mizivá bezpečnost
+    - unikátní pro osobu, pomocí hesla se zároveň uživatel identifikuje
+    - kombinace s uživatelským jménem
+    - jednorázová - jdou odděleným kanálem, obvykle součástí vícefaktorové autentizace, prokazujeme vlastnictví dalšího tokenu
 - ukládají se [hašovaná](./5_databaze.md#hašování) (pokud nepotřebujeme získat původní heslo), ideálně včetně soli a pepře, nebo šifrovaná (problém je, že teď musíme chránit místo hesla šifrovací klíč), nikdy ne v plaintextu
     - **salt** - náhodně vygenerovaná data, která se ukládají zároveň s hašem a při hašování se přidávají k heslu, efektivně prodlužuje délku hesla a znemožní detekci stejných hesel dle shody hašů
     - **pepper** - data, která se při hešování přidávájí ke vstupu, jsou však utajená (neukládáme je vedle haše)
