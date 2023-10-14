@@ -28,7 +28,7 @@ Data se v praxi ukládají přímo do souborového systému, nebo do databáze (
 
 Techniky s cílem transformace informací do formátu, který je efektivní na ukládání či přenos. 
 
-**Bezztrátová komprese** - z komprimovaných dat jsme schopni plně rekonstruovat původní data (e.g. png, zip)
+**Bezztrátová komprese** - z komprimovaných dat jsme schopni plně rekonstruovat původní data (e.g. png, zip)  
 **Zztrátová komprese** - část komprimovaných dat je ztracena (e.g. jpeg, mp3), ale jsme schopni dosáhnout větší komprese
 
 ### Vybrané metody 
