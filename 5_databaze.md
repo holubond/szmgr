@@ -155,7 +155,7 @@ ORDER BY sloupec ASC
 ```
 *Join jde přepsat pomocí WHERE*
 
-Výsledek selectu lze dát do závorek a použít namísto nějaké tabulky, data mají požát tabulární strukturu.
+Výsledek selectu lze dát do závorek a použít namísto nějaké tabulky, data mají pořád tabulární strukturu.
 
 Mezi daty se stejnou strukturou lze provést množinové operace `UNION`, `INTERSECT`, `MINUS`.
 
