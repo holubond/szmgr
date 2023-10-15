@@ -210,7 +210,7 @@ Součástí DDL, jazyku definice dat. Určitým způsobem omezují, jakých hodn
 Transakce v RDBMS mají ACID vlastnosti
 - **Atomicity** - skupina příkazů transakce brána jako jednotka; provedou se všechny, nebo žádný
 - **Consistency** - po vykonání transakce ke db v konzistentním stavu, není porušeno žádné integritní omezení
-- **Isolation** - transakce je isolovaná od ostatních transakcí, je možné nastavit úrovně transakce, dle toho může transakce skončit chybou (pokud došlo k modifikaci stejného objektu, jaký modifikovala jiná transakce), nebo se využijí zamykací mechanismy
+- **Isolation** - transakce je izolovaná od ostatních transakcí, je možné nastavit úrovně transakce, dle toho může transakce skončit chybou (pokud došlo k modifikaci stejného objektu, jaký modifikovala jiná transakce), nebo se využijí zamykací mechanismy
 - **Durability** - data jsou po vykonánání transakce persistentně uložena
 
 Transakce se potvrzují příkazem `COMMIT`, vrací příkazem `ROLLBACK` na stav před započením transakce, či po poslední `SAVEPOINT` 
