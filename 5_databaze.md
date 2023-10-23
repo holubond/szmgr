@@ -28,7 +28,7 @@ Data se v praxi ukládají přímo do souborového systému, nebo do databáze (
 
 Techniky s cílem transformace informací do formátu, který je efektivní na ukládání či přenos. 
 
-**Bezztrátová komprese** - z komprimovaných dat jsme schopni plně rekonstruovat původní data (e.g. png, zip)
+**Bezztrátová komprese** - z komprimovaných dat jsme schopni plně rekonstruovat původní data (e.g. png, zip)  
 **Zztrátová komprese** - část komprimovaných dat je ztracena (e.g. jpeg, mp3), ale jsme schopni dosáhnout větší komprese
 
 ### Vybrané metody 
@@ -155,7 +155,7 @@ ORDER BY sloupec ASC
 ```
 *Join jde přepsat pomocí WHERE*
 
-Výsledek selectu lze dát do závorek a použít namísto nějaké tabulky, data mají požát tabulární strukturu.
+Výsledek selectu lze dát do závorek a použít namísto nějaké tabulky, data mají pořád tabulární strukturu.
 
 Mezi daty se stejnou strukturou lze provést množinové operace `UNION`, `INTERSECT`, `MINUS`.
 
@@ -210,7 +210,7 @@ Součástí DDL, jazyku definice dat. Určitým způsobem omezují, jakých hodn
 Transakce v RDBMS mají ACID vlastnosti
 - **Atomicity** - skupina příkazů transakce brána jako jednotka; provedou se všechny, nebo žádný
 - **Consistency** - po vykonání transakce ke db v konzistentním stavu, není porušeno žádné integritní omezení
-- **Isolation** - transakce je isolovaná od ostatních transakcí, je možné nastavit úrovně transakce, dle toho může transakce skončit chybou (pokud došlo k modifikaci stejného objektu, jaký modifikovala jiná transakce), nebo se využijí zamykací mechanismy
+- **Isolation** - transakce je izolovaná od ostatních transakcí, je možné nastavit úrovně transakce, dle toho může transakce skončit chybou (pokud došlo k modifikaci stejného objektu, jaký modifikovala jiná transakce), nebo se využijí zamykací mechanismy
 - **Durability** - data jsou po vykonánání transakce persistentně uložena
 
 Transakce se potvrzují příkazem `COMMIT`, vrací příkazem `ROLLBACK` na stav před započením transakce, či po poslední `SAVEPOINT` 
