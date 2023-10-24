@@ -49,9 +49,9 @@ Webové informační systémy mají tyto specifika:
     - obrana pomocí nastavení cookie jako "Secure" (lze poslat jen skrz https) a "HttpOnly" (nelze číst/upravit pomocí JS)
 - **Cross site scripting (XSS)** - útočník vloží na web obsah, který je validní html/js a oběti se zobrazí/spustí při načtení stránky. 
     - obrana pomocí sanitizace vstupů
-- **Cross site request forgery (CSRF)** - útočník připraví a pošle klientovi URL odkaz vyvolávající akci na serveru. Případně je na toto URL přesměrován uživatel z útočníkova webu. 
-    - obrana pomocí CSFR náhodných tokenů (jednorázově vydaný s GET požadavkem dávající uživateli přístup k akci)
-    - obrana pomocí cookie atributu "SameSite", který modifikuje, kdy se cookie posílá při cross-site požadavcích.
+- **Cross site request forgery (CSRF)** - útočník připraví a pošle klientovi URL odkaz (nebo vytvoří na svém webu formulář) vyvolávající akci na našem serveru.
+    - obrana pomocí CSFR náhodných tokenů (jednorázově vydaný s požadavkem dávající uživateli přístup k akci). Token vložíme do formuláře (aby ho uživatel mohl odeslat) a zároveň si ho buď uložíme, nebo ho nastavíme jako cookie. Při zpracování požadavku zkontrolujeme, zda se tokeny shodují.
+    - obrana pomocí cookie atributu "SameSite", který modifikuje, kdy se cookie posílá při cross-site požadavcích. `Strict` neposílá cookie nikdy při cross site požadavcích, `Lax` jen při GET požadavcích - ty by stejně neměly vyvolávat akci, takže by to nemělo vadit. Problém však přetrvává u starých prohlížečů, nebo pokud se útočníkovi podaří umístit vlastní formulář na naši doménu či subdoménu.
     - obrana pomocí explicitního potvrzení (nebo MFA) u důležitých akcí
 - **Clickjacking** útočník na svém webu zobrazí průhledný ifame nad svou stránkou. Uživatel si myslí, že kliká na tlačítko útočníkova webu, ale ve skutečnosti kliká na web v iframe, čímž může vyvolat nechtěnou akci
     - obrana pomocí `X-Frame-Options` hlavičky
