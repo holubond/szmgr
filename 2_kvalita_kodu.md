@@ -70,6 +70,7 @@
     - refaktoring na závislosti na abstrakcích, decoupling
     - separace dat a logiky
     - odstranění globálního stavu
+    - u UI systému například dodržování standardů používání id/class názvů atd.
 - **Škálovatelnost** 
     - refaktoring na jednodušší, samostetně nasaditelné jednotky
     - extrakce dat pro umožnění paralelizace jednotek
@@ -78,6 +79,9 @@
 - **Bezpečnost** 
     - detekce a oprava chyb
     - použití šifrované komunikace
+    - automatická kontrola zranitelností v kódu pomocí CI (např. Snyk)
+    - udržování updated dependencí
+    - zabezpečení soukromých klíčů a dat
 - **Použitelnost** 
     - zlepšení UX
     - použití taktik pro zlepšení výkonnosti/škálovatelnosti (když je to pomalý)
@@ -86,7 +90,7 @@
 
 - čitelný, snadno pochopitelný. Kód bývá mnohem více čten než psán, proto je důležité, aby byl srozumitelný, čas vývojářů je drahý. Klíčové je
     - **jasné pojmenovávání** reflektující doménu problému, dostatečně výstižné (a ne příliš dlouhé či generické, viď, Javo). V ideálním případě by mělo být sebevysvětlující a komentáře by neměly být potřeba, ALE i tak jsou komentáře fajn pro vysvětlení myšlenky, nebo shrnutí, co má daná funkce dělat
-        - důležitá je konzistence napříč codebase (ideálně stavěná na standardech daného jazyka)
+        - důležitá je konzistence napříč codebase (ideálně stavěná na standardech daného jazyka) - například můžu definovat, že `check*()` metody vrací true/false a `verify*()` vyhazují vyjímky
         - pokud vrací bool, pojmenuj to `has*()` nebo `is*()`
         - struktury jsou podstatná jména, metody začínají slovesem (nebo se jedná o getter v rustu)
         - veřejné API (public) jednotky by mělo být jasné a jednoduché, interně (private) se mohou používat delší názvy metod, když je díky tomu jasnější, k čemu slouží
@@ -163,7 +167,7 @@ Kód, který se dobře čte a udržuje nemusí být ten nejrychlejší/nejefekti
 = proces evaluace, zda systém splňuje specifikované požadavky... což se snadněji řekne, než dělá
 - v praxi je testování z pravidla nekompletní. Testováním odhalujeme chyby, ale nedokazujeme bezchybnost.
 - každý test by měl testovat pouze jednu věc/vlastnost/feature, ideální je spousta malých testů, díky čemuž můžeme snadno identifikovat zdroj problému.
-- ideálně by měl testování provádět někdo jiný, než autor testovaného kódu
+- ideálně by měl testování provádět někdo jiný, než autor testovaného kódu - tohle je důležité hlavně při black box metodách, u unit testů je dost časté, že je píše sám vývojář
 
 - **whitebox (strukturální)** - vidíme zdrojový kód a můžeme vstupy testů cílit na spouštění kritických míst (off-by-one error, zero division...)
     - e.g. unit, integration, performance tests
