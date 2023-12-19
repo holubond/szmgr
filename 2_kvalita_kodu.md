@@ -122,20 +122,25 @@ Dále se řídí principy:
     => menší šance, že něco rozbijeme, na nových třídách nic nezávisí
     - používá se implementace rozhraní/abstraktní třídy
     - dodržování OCP způsobuje vyšší komplexitu (a třeba v rustu trochu ubírá výkon díky nutnosti dynamic dispatch), takže je potřeba ho používat obezřetně a jen tam, kde se často mění/přidává funkcionalita
+    - např. v Pythonu (a jiných jazycích) se dost často vyplácí přidávat k existujícím funkcím optional variables -> funkce se pro existující volání chová stejně, ale se změnou nového atributu je možno dosáhnout jiného chování
+    - Příklad: Máte třídu ReportGenerator s metodou generateReport. Chcete přidat nový typ reportu. Místo úpravy ReportGenerator, vytvoříte novou třídu FinancialReportGenerator, která rozšiřuje ReportGenerator a přepisuje metodu generateReport pro generování finančních reportů.
 
 - **Liskov substitution principle**
     - instance tříd by měly být nahraditelné jejich podtřídami, aniž by došlo k narušení chování systému - všechny podtřídy by měly dodržovat kontrakty nadtříd a neměly by odstraňovat chování nadtříd
     - problém je, když musíme explicitně ověřovat, o jaký podtyp se jedná - toto by měl řešit polymorfismus
     - pokud dvě třídy sdílí mnoho funkcionality, ale nejsou nahraditelné, je vhodné je upravit na podtřídy nové třídy obsahující sdílené chování
+    - Příklad: Máte třídu Bird s metodou fly. Třída Duck je podtřídou Bird a může používat metodu fly. Ale když vytvoříte třídu Ostrich (pštros), který je také ptákem, nemůže používat metodu fly, protože pštrosi nelétají. Zde porušujete Liskov Substitution Principle, protože podtřída Ostrich nemůže správně nahradit svou nadřazenou třídu Bird.
 
 - **Interface segregation principle**
     - klienti kódu by neměli být závislí na metodách, které nepoužívají, a.k.a. dělej malá a jednoduchá rozhraní namísto velkých
     - e.g. chci v rustu převést strukturu na string. Jediné co proto musím udělat je zajistit implementaci Display traitu (a ničeho jiného).
-
+    - Příklad: Místo jednoho velkého rozhraní Vehicle s metodami jako drive(), fly(), a sail(), ISP by doporučil rozdělit toto rozhraní na několik menších, jako LandVehicle, AirVehicle, a WaterVehicle
+      
 - **Dependency inversion**
     - moduly by měly záviset na abstrakcích (rozhraní), ne na konkrétních implementacích
     - snižuje se tím provázanost modulů, je možné poskytnout vlastní implementaci či mockovat
     - konstruktur by měl přijímat vše, na čem struktura závisí, ne si vytvářet zdroje sám (e.g. repo si nemá tvořit připojení do databáze, ale má být předáno v konstruktoru) = dependency injection konstruktorem
+    - Například, pokud máte třídu Car závislou na konkrétní třídě GasEngine, změna na elektrický motor by vyžadovala změnu v třídě Car. Ale pokud Car závisí na abstraktním rozhraní Engine, lze snadno vyměnit GasEngine za ElectricEngine bez nutnosti měnit kód třídy Car.
 
 ## Refaktoring
 
@@ -202,6 +207,7 @@ Kód, který se dobře čte a udržuje nemusí být ten nejrychlejší/nejefekti
 - *AAA*, arrange (příprava), act (provedené testovaného chování), assert (ověření) - tři fáze každého testu, act by měl být co nejkratší
 - e.g. cargo test, jest, junit
 - pokročilejší techniky zahrnující analýzu zdrojového kódu a následné vygenerování vstupních hodnot (symbolic execution), případně formální verifikace využívající matematických důkazů, model checking...
+- v Pythonu existuje knihovna hypothesis - ta dokáže generovat kombinaci různých zajímavých vstupů pro testy (větší než 0, blízko maximální hodnotě daného typu atd.) a kontrolovat nějaké predikáty, které očekáváme
 
 ### Integrační testy
 - sledují, zda spolu jednotky interagují tak, jak bychom očekávali
@@ -213,12 +219,14 @@ Kód, který se dobře čte a udržuje nemusí být ten nejrychlejší/nejefekti
 - testují použitelnost, kapacitu, výkon, splnění funkcionality, bezpečnost...
 - benchmarking, penetrační testování, uživatelské testy...
 - lze automatizovat pomocí programem ovládaným prohlížečem (selenium, puppeteer)
+- je velmi časté vyvíjet další nezávislý systém/software na validaci/testování nějakého většího produktu - automatizovatelnost různých scénářů a i interní nástroj, který dokáže zajistit větší kvalitu kódu již při vývoji
 - black box
 
 ### Akceptační testy
 - ověření, že systém splňuje business požadavky a je připraven k vydání
 - může být ve formě odškrtávání políček s požadavky na systém, které zákazník předem určil
 - prováděny se zákazníkem
+- pokud jsou dev/test týmy odděleny, dost často probíhá psání těchto testů paralelně -> developeři tvoří danou feature a zároveň se na ni připravují i automatizované testy podle popsaného scénáře -> feature je kompletně akceptována, až projdou dané testy
 - black box
 
 
@@ -255,14 +263,15 @@ skládá se z
 - zajištění (assurance) sw kvality - definice a kontrola procesů, které povedou k zajištění sw kvality a prevenci defektů (mimo jiné nastavení CI/CD)
 - kontrola sw kvality - kontrola, zda produkt/jeho části splňují požadavky (včetně požadavků na kvalitu) a jejich vývoj se řídí definovanými procesy, monitoring zda se držíme procesů a vytyčených cílů
 - zlepšení kvality - snaha zlepšit procesy, abychom docílili zlepšení kvality
+- u velkých produktů mohou existovat speciální týmy, které mají za úkol validaci kvality produktu. Ty nejen tvoří testy a scénáře, ale mohou vyvíjet i vnitřní infrastrukturu na automatizování celého tohoto procesu. 
 
 ## Notes
 - **Capability Maturity Model** - definuje úrovně vyspělosti organizace v kontextu zajištění kvality
-    - Level 1 Výchozí - chaos, nepředvídatelná cena, plán
-    - Level 2 Opakovatelný - intuitivní, cena a kvalita jsou proměnlivé, plán je pod vědomou kontrolou, neformální metody & procedury
-    - Level 3 Definovaný - orientace na kvalitu, spolehlivé ceny a plány, stále nepředvídatelný výkon systému kvality
-    - Level 4 Řízený - měření, promyšlená a statisticky řízená kvalita produktu
-    - Level 5 Optimalizující - automatizace a zlepšení výrobního procesu, prevence chyb, inovace technologie
+    - Level 1 Výchozí - Procesy jsou ad hoc a často chaotické. Úspěch je závislý na individuálních úsilích.
+    - Level 2 Opakovatelný - Organizace má stabilní procesy pro projekty podobného typu, které umožňují opakování dřívějších úspěchů.
+    - Level 3 Definovaný - Procesy jsou standardizované a dokumentované napříč celou organizací.
+    - Level 4 Řízený - Organizace monitoruje a měří procesy, a používá tyto data pro řízení kvality a efektivity.
+    - Level 5 Optimalizující - Organizace se neustále zlepšuje a optimalizuje své procesy na základě shromažďovaných měření a zjištění.
 
 
 ### Prevence problémů kvality
@@ -272,7 +281,7 @@ skládá se z
 - použití procesních standardů (ITIL), agilních technik (scrum, kanban)
 - automatizované testování, CI
 - komunikace, jednotný jazyk
-- fail-fast přístup - snažíme se detekovat problém ve vstupech, namísto abychom klidně akceptovali cokoliv a pak se divili při neočekávaném chování
+- fail-fast přístup - snažíme se detekovat problém ve vstupech, namísto abychom klidně akceptovali cokoliv a pak se divili při neočekávaném chování - příklad u typování JS/Pythonu -> mnoho chyb odhalíme už při kontrole a není třeba ani spouštět kód
 - design by contract - naše metody (zvlášť při tvorbě) mohou vyžadovat splnění určitého kontraktu (lze vynutit asserty), aby mohly poskytnout garance o výstupech. Je možné použít podmíněnou kompilaci a mít kontrakty třeba jen ve vývojovém prostředí (tím se ale můžeme připravit o přesné určení místa problému na produkci) 
 
 Nonfunkcionální problémy kvality se řeší architekturou. Pro prevenci těchto problémů je možné vytvořit model systému a na něm si simulačně ověřovat požadavky (e.g. schopnost obsloužit určitý počet požadavků za určitý čas) a případně odvodit nároky na jednotlivé komponenty (třeba maximální dobu zpracování požadavku v daném komponentu).
