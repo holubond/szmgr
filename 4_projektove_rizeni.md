@@ -74,6 +74,7 @@ Prevence:
 - **Používání user stories** - jsou snadno pochopitelné pro zákazníka, dají se dobře ověřovat
 - **Jasná definice, co znamená "hotovo"**
 - **Krátké iterace** - brzo zjistíme, co je případně blbě
+- **Feature groomingy** - krátké meetingy k jednotlivým featurám, kde jsou přítomni všichni důležití lidé a zhodnocují se rizika a implementace
 
 ## Role modelů v projektovém řízení
 
