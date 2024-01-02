@@ -3,7 +3,7 @@
 
 ## Základní pojmy, principy
 
-**Distribuovaný systém** se skládá z komponentů (počítačů) propojených komunikační sítí. Distribuované systémy řeší problémy (výpočty/zpracovávání requestů) spoluprací jednotlivých komponentů (každý dělá něco). Díky tomu se systém snadněji škáluje (posilujeme subsystém, který má problémy).
+**Distribuovaný systém** se skládá z komponent (počítačů) propojených komunikační sítí. Distribuované systémy řeší problémy (výpočty/zpracovávání requestů) spoluprací jednotlivých komponentů (každý dělá něco). Díky tomu se systém snadněji škáluje (posilujeme subsystém, který má problémy).
 
 Architektury popsány v [otázce 1](./1_programovani_a_softwarovy_vyvoj.md#základní-koncepty-softwarových-architektur-z-pohledu-implementace-vícevrstvá-architektura-moderních-informačních-systémů-architektura-model-view-controller), takže jen shrnutí
 
@@ -12,7 +12,7 @@ Architektury popsány v [otázce 1](./1_programovani_a_softwarovy_vyvoj.md#zákl
 **Úrovňová (tiered) architektura** (nezaměňovat s layered) - jednotlivé úrovně lze distribuovat, paralelizovat, nahradit (komunikace skrz API)
 - Klient může být tenký/tlustý dle poskytnuté funkcionality, klasické úrovně bývají klient, server, databáze.
 
-**Hexagonal/Microkernel/component-based** - základní aplikace poskytuje minimální funkcionalitu, zbytek se dodává skrz plug-in komponenty komunikující přes předdefinované api. Komponenty je možné případně zapojovat za běhu systému. Další možnost využití komponentů - pokud potřebujeme používat legacy systém, který si nemůžeme dovolit přepsat, je možné ho zabalit jako komponent a přistupovat k němu přes naše kompatibilní rozhraní. Vývoj komponentových systémů je náročnější (zvlášť problematické je správně určit rozhraní), ale umožňuje větší přizpůsobitelnost/znovupoužitelnost komponentů v budoucích projektech. E.g. extensions ve VSCode, component-based architekturu používá Jakarta Enterprise Edition, kde jednotlivé Java Beans jsou komponenty
+**Hexagonal/Microkernel/component-based** - základní aplikace poskytuje minimální funkcionalitu, zbytek se dodává skrz plug-in komponenty komunikující přes předdefinované api. Komponenty je možné případně zapojovat za běhu systému. Další možnost využití komponent - pokud potřebujeme používat legacy systém, který si nemůžeme dovolit přepsat, je možné ho zabalit jako komponentu a přistupovat k němu přes naše kompatibilní rozhraní. Vývoj komponentových systémů je náročnější (zvlášť problematické je správně určit rozhraní), ale umožňuje větší přizpůsobitelnost/znovupoužitelnost komponent v budoucích projektech. E.g. extensions ve VSCode, component-based architekturu používá Jakarta Enterprise Edition, kde jednotlivé Java Beans jsou komponenty
 
 **Pipeline architecture** - sekvenční zpracování, každý komponent se stará o relativně transformaci vstupu na výstup (dělej malou věc, ale dělej ji dobře)
 
@@ -40,7 +40,7 @@ Stream e.g. Apache Kafka
 
 ## Rozdíl mezi centralizovanou a distribuovanou architekturou systému, nevýhody obojího a jejich překonávání
 
-Hlavním rozdílem je, že centralizovaná architektura shromažďuje data a logiku na jednom místě, distribuovaná architektura rozptyluje logiku do více samostatných komponentů (běžících třeba i na samostatných strojích), které spolu komunikují.
+Hlavním rozdílem je, že centralizovaná architektura shromažďuje data a logiku na jednom místě, distribuovaná architektura rozptyluje logiku do více samostatných komponent (běžících třeba i na samostatných strojích), které spolu komunikují.
 
 Nevýhody centralizované architektury
 - neumožňuje horizontální škálování => škálujeme vertikálně
@@ -75,6 +75,17 @@ Pro sdílení dat (událostí) je možné použít Apache Kafka, platformu pro s
 
 Hybrid mezi microservices a monolitem, poměrně pragmatická architektura pro škálovatelný systém. Systém je tvořen vzájemně nezávislými, samostatně nasaditelnými a vzájemně komunikujícími službami (obvykle 4-12), které obsahují ucelené jednotky funkcionality (e.g. uživatelé, správa produktů, správa objednávek, platební služba, mailová služba...). Každá služba může být nezávisle na ostatních škálována. Nad službami může být pro zajištění jednotného API vrstva fasády. Služby obvykle sdílí databázi, ale je možné ji rozbít na vícero nezávislých celků. Je náročnější na vývoj, ale celkově je systém díky modularizaci lépe udržitelný a škálovatelný.
 
+### Klíčové vlastnosti
+Loose Coupling: Služby jsou navrženy tak, aby byly co nejméně závislé na sobě. To znamená, že změna jedné služby by neměla vyžadovat změnu v jiných službách.
+
+Interoperabilita: SOA umožňuje snadnou komunikaci mezi různými systémy a aplikacemi, bez ohledu na použité technologie nebo platformy.
+
+Opakované Použití Služeb: Služby jsou navrženy tak, aby byly obecné a znovu použitelné pro různé účely, což snižuje redundantnost a usnadňuje údržbu.
+
+Standardizovaný Protokol: Komunikace mezi službami obvykle probíhá pomocí standardních protokolů, jako je HTTP, a formátů zpráv, jako je XML nebo JSON.
+
+Samostatná správa: Každá služba je spravována samostatně, což umožňuje aktualizace a úpravy bez narušení celého systému.
+
 ## Webové služby
 
 Komponenty umožňující komunikaci a interakci prostřednictvím standardizovaných protokolů a formátů. Jsou založeny na Service Oriented Architecture. Web services poskytují abstrakci funkcionalitě služby skrz webové API. Skrz definiční jazyk je formálně popsáno schéma/rozhraní dané služby a je možné generování klientského kódu pro různé programovací jazyky s cílem usnadnit použití webové služby. Schéma může být zároveň generováno přímo ze zdrojového kódu prostřednictvím anotací. 
@@ -86,6 +97,20 @@ Aktuálně se pro tyto účely spíše používá **REST** (representational sta
 *SOAP je nezávislý na transportu, REST využívá HTTP. REST je jednodušší, rychlejší a efektivnější. SOAP umožňuje jednu zprávu cílit více příjemcům, přechod zprávy přes prostředníky, kteří mohou zpracovávat hlavičku (tělo je určeno jen příjemci). SOAP umožňuje výměnu strukturovaných a typovaných XML dat SOAP hlavička (nepovinná) může obsahovat metadata, QoS, bezpečnostní informace, SAML data, session identifikátor (a.k.a. cookie)..., SOAP obálka je root XML prvek zprávy, obsahuje namespace (určunící verzi protokolu), styl kódování dat, SOAP tělo obsahuje samotný obsah zprávy. REST umožňuje provázanost (díky hyperlinkům) a je možné se pomocí něj dostat na úplně jinou stránku mimo náš systém.*
 
 *REST se dívá na web jako na zdroje adresovatelné URL, které vrací reprezentaci dat (HTML, XML, PNG, JSON...). Příjem dat uvede klienta do stavu, který může být transformován přístupem na jiný zdroj. Je bezstavový, každá zpráva obsahuje vše, co je nutné pro její interpretaci (správně by zpráva neměla obsahovat cookie, ale třeba JWT), dotazy jsou kešovatelné.*
+
+## Příklady existujících technologií a jejich využití
+
+#### Apache Hadoop
+Apache Hadoop je framework pro distribuované ukládání a zpracování velkých objemů dat, používající Hadoop Distributed File System (HDFS) a MapReduce. Je navržen pro vysokou škálovatelnost přes clustery počítačů a je vhodný pro analýzy big dat a datové těžby. Hadoop umožňuje efektivní zpracování velkých množství nestructurovaných nebo semi-structurovaných dat.
+#### Apache Kafka
+Apache Kafka je distribuovaná streamovací platforma pro publikování a odběr proudů zpráv. Je navržena pro vysokou propustnost, odolnost a nízkou latenci, ideální pro real-time analýzy a monitorování. Kafka se často používá pro logování aktivit z různých aplikací a přenos dat mezi službami a systémy.
+#### Apache Spark
+Apache Spark je rychlý distribuovaný výpočetní systém pro velké datové sady, poskytující rozhraní pro programování celých clusterů s paralelním zpracováním. Je vhodný pro úlohy jako zpracování dat v reálném čase, strojové učení a datové analýzy. Spark vyniká v rychlosti zpracování oproti tradičním MapReduce úlohám.
+#### Redis
+Redis je distribuovaný in-memory databázový systém, který je často používán jako mezipaměť nebo fronta zpráv díky své vysoké rychlosti a podpoře různých datových struktur.
+
+#### Elastic search
+Elasticsearch je vysoce škálovatelný vyhledávací engine, který umožňuje rychlé vyhledávání a analýzu velkých objemů dat. Je často používán pro full-textové vyhledávání a logování analýzy v distribuovaných systémech.
 
 ## Notes
 
