@@ -31,6 +31,26 @@ Pro konkrétní projekt je potřeba si zvolit vhodný přístup **prediktivní**
 ### Agilní plánování
 Dále je potřeba u plánování projektů sepsat [Project Charter](./4_projektove_rizeni.md#pmi-project-management-body-of-knowledge-pmbok) popisující základní informace o projektu (proč, co, kdo, kdy, jak, za kolik...), sepsat podrobnosti klíčových strategií (komunikace, rizika, kvalita, změny) a nějakým způsobem začít plánovat práci (product backlog, řešení architektury...).
 
+#### Project Charter
+dokument, který formalizuje zahájení projektu a poskytuje základní přehled o projektu ve fázi plánování, zejména v oblasti IT. Tento dokument je klíčový pro úspěšné řízení projektu, protože stanovuje rozsah a cíle projektu, jeho hlavní stakeholdery, a základní parametry, pod kterými bude projekt realizován.
+
+Klíčové aspekty projektové listiny mohou zahrnovat:
+
+Popis Projektu: Krátký přehled projektu, jeho účel, cíle a přínosy. Zahrnuje také definici problému nebo příležitosti, kterou projekt řeší.
+
+Rozsah Projektu: Definuje, co je součástí projektu a co není, aby se zabránilo rozšiřování rozsahu práce mimo původně stanovené hranice.
+
+Stakeholdeři a Role: Seznam klíčových osob a organizací zainteresovaných v projektu, včetně jejich rolí a odpovědností.
+
+Cíle a Očekávané Výsledky: Konkrétní, měřitelné cíle, kterých má projekt dosáhnout.
+
+Předběžný Harmonogram a Rozpočet: Hrubý odhad časového rámce projektu a jeho rozpočtu.
+
+Rizika a Omezení: Identifikace potenciálních rizik a omezení, které mohou projekt ovlivnit, a plán pro jejich řízení.
+
+Schvalovací Procesy: Procesy, které řídí schválení a změny v projektu.
+
+
 ### Prediktivní plánování
 
 Sepisuje se **Project Initiation Documentation** obsahující detailní Business Case, veškeré informace o projektu (proč, co, kdo, kdy, jak, za kolik), definují se klíčové strategie (komunikace, rizika, kvalita, změny), vše se dokumentuje, vytváří se příslušné registry, vše se schvaluje product boardem (zástupci exekutivy, inženýrů a zákazníků). Do PID se pak zapisují i změny a průběh, aby bylo možné porovnat plán a realtu, je dostupný všem v rámci projektu. 
@@ -41,6 +61,7 @@ Dělá se **projektový plán** (proč, co, kdo, kdy, jak, za kolik...) - **Work
 *WBS*
 ![](img/20230526000518.png)
 
+Zatímco Project Charter je výchozím bodem, který dává projektu zelenou a definuje jeho hlavní obrysy, PID je rozsáhlejší a podrobnější dokument, který slouží jako základ pro řízení a provedení projektu.
 ## Řízení rizik
 Postup:
 1. Identifikace rizik
@@ -211,7 +232,7 @@ Pokud máme informace o úrovni platů implementátorů tasků, můžeme dopoč�
     - **Close**
         - předání produktu (samozřejmě opět spousta protokolů), nasazení, uzavření všech dokumentů, PID, dokumentace, tvorba end report a lessons learned
         - případné předání projektu ops a maintenance týmu
-        - tvorba SLA
+        - tvorba SLA - SLA je velmi často definované již v PID a zde se na něj jen přechází po dodání projektu
 
 - 7 principů (vše máme nějak zdokumentované)
     - **Kontinuální odůvodnění projektu** - proč to děláme? 
