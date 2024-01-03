@@ -251,7 +251,7 @@ e.g. Gatling, Siege, LoadRunner
 ## Proces řízení kvality ve vývoji softwarových systémů
 
 skládá se z
-- definice požadavků na sw kvalitu a plánování - specifikace funkcionálních i nefunkcionálních požadavků, stanovení hodnotících kritérií, rizik, určení metrik, podrobný popis a rozvržení aktivit k zajištění kvality
+- definice požadavků na sw kvalitu a plánování - specifikace funkčních i nefunkčních požadavků, stanovení hodnotících kritérií, rizik, určení metrik, podrobný popis a rozvržení aktivit k zajištění kvality
 - zajištění (assurance) sw kvality - definice a kontrola procesů, které povedou k zajištění sw kvality a prevenci defektů (mimo jiné nastavení CI/CD)
 - kontrola sw kvality - kontrola, zda produkt/jeho části splňují požadavky (včetně požadavků na kvalitu) a jejich vývoj se řídí definovanými procesy, monitoring zda se držíme procesů a vytyčených cílů
 - zlepšení kvality - snaha zlepšit procesy, abychom docílili zlepšení kvality
