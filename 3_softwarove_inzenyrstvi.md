@@ -196,7 +196,7 @@ RUP je konkrétní metodika stavějící na UP (přidává třeba jednotlivé ro
     - **sprint**
         - iterace soustředěná na vývoj funkcionality v spring backlogu, cílem je vytvořit použitelný a potenciálně vydatelný product increment
         - pracuje na něm celý scrum team
-        - product owner řešní komunikaci, vývojáři vývojaří, scrum master sleduje dodržování procesů
+        - product owner řeší komunikaci, vývojáři vývojaří, scrum master sleduje dodržování procesů
         - analýza, návrh, implementace, testování
         - max 1 měsíc, všechny sprinty trvají stejnou dobu
         - po sprintu sledujeme [team velocity](./3_softwarove_inzenyrstvi.md#team-velocity), podle ní máme lepší odhad pro budoucí plány, lze podle ní upravit rozsah sprint backlogu
