@@ -36,7 +36,15 @@ Existuje několik základních modelů
     - Projekt se rozdělí na inkrementy, části, které budou vyvíjeny a dodávány postupně, pro každý si uděláme jednoduchou rámcovou analýzu
     - Inkrementy se vyvíjí v pořadí podle priority
     - Po nasazení do systému máme o inkrementu od zákazníka zpětnou vazbu
-    - O nutnosti změny se dozvíme dříve a její zavedení bude levnější (není třeba vše překopávat, přidáme změnový inkrement)
+    - Výhody:
+        - Systém je dodáván po částech, celkové náklady jsou distribuovány
+        - Není potřeba vytvářet velký tým, protože práce je dodávaná po částech
+        - Uživatel vidí systém v raných fázích projektu. Lze rychle reagovat na zpětnou vazbu uživatele
+        - O nutnosti změny se dozvíme dříve a její zavedení bude levnější (není třeba vše překopávat, přidáme změnový inkrement)
+    - Nevýhody:
+        - Náklady na vývoj jsou vysoké kvůli dodávce systému po částech
+        - Model vyžaduje náročné plánování k distribuci práce
+        - Pro připojení modulů vyvinutých s každou fází je nezbytné důkladně popsat rozhraní
 
 - **Spirála**
 ![](img/20230607122950.png)
