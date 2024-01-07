@@ -57,17 +57,31 @@ Na obrázku jde vidět o kolik dokáže být rychlejší NoSQL databáze s před
 
 
 
-Sharding Pattern: Efektivní rozdělení (sharding) dat je klíčové pro škálovatelnost aplikací v cloudu. Tento vzor umožňuje rozložit data do více oddělených oddílů nebo shardů, což umožňuje lepší distribuci zátěže a optimalizaci výkonu. Hlavní výzvou je navrhnout správnou strategii rozdělení tak, aby bylo možné efektivně ukládat a dotazovat data.
+##### Sharding Pattern
+Efektivní rozdělení (sharding) dat je klíčové pro škálovatelnost aplikací v cloudu. Tento vzor umožňuje rozložit data do více oddělených oddílů nebo shardů, což umožňuje lepší distribuci zátěže a optimalizaci výkonu. Hlavní výzvou je navrhnout správnou strategii rozdělení tak, aby bylo možné efektivně ukládat a dotazovat data. Nejčastější je indexování podle nějakého
+klíče:
 
-Hosting Statického Obsahu:
+![](img/sharding.png)
 
-Při návrhu cloudových aplikací je důležité efektivně spravovat statický obsah, jako jsou CSS, JavaScript a obrázky. Tento obsah by neměl být hostován společně s dynamickým obsahem na aplikačním serveru. Místo toho je vhodnější využít služby jako Azure Blob Storage ve spojení se síťovým distribučním systémem (CDN), což může výrazně zvýšit rychlost načítání statického obsahu a snížit zatížení aplikačních serverů.
-Vzor Valet Key:
+#### Hosting Statického Obsahu:
 
-Vzor Valet Key se používá pro poskytování bezpečného, ale omezeného přístupu k zdrojům. V cloudových aplikacích tento vzor umožňuje klientům přímý přístup k určitým zdrojům, jako jsou soubory uložené v cloudu, aniž by museli procházet aplikačním serverem. Tím se snižuje zatížení serveru a zvyšuje se efektivita přenosu dat.
-Oddělení Zodpovednosti za Příkazy a Dotazy (CQRS):
+Při návrhu cloudových aplikací je důležité efektivně spravovat statický obsah, jako jsou CSS, JavaScript a obrázky. Tento obsah by neměl být hostován společně s dynamickým obsahem na aplikačním serveru. Místo toho je vhodnější využít služby jako Azure Blob Storage ve spojení se síťovým distribučním systémem (CDN), což může výrazně zvýšit rychlost načítání statického obsahu a snížit zatížení aplikačních serverů. Je třeba říct, že aplikační prostředky stojí většinou větší množství peněz než služby zaměření na statický obsah. Proto se vyplatí decoupling mimo aplikaci
 
-CQRS je vzor, který odděluje čtecí operace (dotazy) od zapisovacích operací (příkazy) v aplikaci. Toto rozdělení umožňuje optimalizovat každou část aplikace pro její specifické potřeby, což vede k vyšší efektivitě, lepší škálovatelnosti a usnadňuje správu.
-Messaging a Zpracování Dat:
+**Vzor Valet Key**
+Vzor Valet Key se používá pro poskytování bezpečného, ale omezeného přístupu k zdrojům. V cloudových aplikacích tento vzor umožňuje klientům přímý přístup k určitým zdrojům, jako jsou soubory uložené v cloudu, aniž by museli procházet aplikačním serverem. Tím se snižuje zatížení serveru a zvyšuje se efektivita přenosu dat. Buď jsou dané soubory přístupné všem uživatelům,
+nebo aplikační server poskytuje uživateli klíč, pomocí kterého může k souboru přistoupit. Tato komunikace už jde mimo aplikační server:
 
-Ve světě cloudových aplikací je často výhodné využívat asynchronní zpracování zpráv, což umožňuje efektivnější a škálovatelnější architekturu. Asynchronní zpracování je zvláště užitečné pro dlouhotrvající nebo náročné operace, kde by synchronní zpracování mohlo vést k časovým limitům nebo špatné škálovatelnosti. PaaS cloudu nabízí různé služby pro zasílání zpráv, které mohou být využity k oddělení různých částí systému a zlepšení celkového výkonu.
+![](img/valet_key.png)
+
+#### Zpracování zpráv
+
+Ve světě cloudových aplikací je často výhodné využívat asynchronní zpracování zpráv, což umožňuje efektivnější a škálovatelnější architekturu. Asynchronní zpracování je zvláště užitečné pro dlouhotrvající nebo náročné operace, kde by synchronní zpracování mohlo vést k časovým limitům nebo špatné škálovatelnosti. PaaS cloudu nabízí různé služby pro zasílání zpráv, které mohou být využity k oddělení různých částí systému a zlepšení celkového výkonu. Pokud naši aplikaci sestavujeme z různých služeb, microservices, je využití zpráv naprosto ideální pro komunikaci mezi jednotlivými částmi systému. Cloud většinou nabízí několik služeb, které jsou specializované na messaging a každá nabízí trošku odlišné řešení.
+
+##### Asynchronní zasílání zpráv
+Využívá fronty, kde se ukládají zprávy a potom má subscribery, kteří zprávy zpracovávají a dělají požadované akce. U microservices dokážeme udělat logiku tak, že se microservices spouští jen podle toho, jestli jsou ve frontě zprávy -> dobré škálování, kdy si dynamicky řekneme o potřebný počet workerů. Většinou máme víc front podle typu zpráv, kde tak můžeme specializovat jednotlivé workery. U zpráv, kde dáváme ke zpracování více workerů najednou musíme řešit, aby nebyly závislé na pořadí ve kterém přijdou -> případně implementovat prioritu. Musíme vyřešit i zachytávání zpráv, které se nepodařilo zpracovat -> pokus o jejich zpracování vícekrát. Zprávy ve frontě se můžou duplikovat, je třeba s tím počítat. Ještě existuje **topic** oproti queue, tam se počítá s tím, že se konzument přihlásí o odběr a jedna zpráva je doručena všem konzumentům topicu -> využití, když chceme předat zprávu všem napojeným aplikacím.
+
+#### Mikroslužby
+Mikroslužby jsou architektonický styl vývoje softwaru, kde aplikace jsou rozděleny do malých, nezávislých služeb. Každá mikroslužba je zaměřena na jednu specifickou funkcionalitu a funguje autonomně. Služba má vlastní část kódu, nesdílí ho s dalšími částmi aplikace. Při návrhu aplikací do cloudu je mikroslužby dobré brát v úvahu, dají se pomocí nich škálovat nějaké hodně vytížené endpointy, poskytují dobrou modularitu, škálovatelnost a elastičnost. Nemusíme psát celou aplikaci pomocí mikroslužeb, ale můžeme ji využít jen k části
+
+#### Monitorování a správa
+Cloudy nabízí velké monžnosti při monitoringu a následných napojených akcích. Můžeme kontrolovat využití našich systémů a pokud nestačí, tak naškálovat. To stejné můžeme udělat i opačným směrem k šetření prostředků. Cloudy potom nabízí i aplikace na logy, které dokáže analyzovat atd.
