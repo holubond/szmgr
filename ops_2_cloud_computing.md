@@ -41,9 +41,21 @@ Abychom plně využili možnosti cloudu, je třeba kromě klasických principů 
 
 #### Výběr úložiště
 Při výběru vhodného úložiště pro cloudové aplikace je třeba zvážit několik faktorů. Cloudové prostředí nabízí širokou paletu úložných možností, každá s vlastními specifikami, výhodami a omezeními. Například, Azure SQL Database nabízí bohaté možnosti dotazů a je ideální pro úložiště, které vyžadují silnou podporu transakcí a konzistence dat. Na druhou stranu, Azure Table Storage je vhodnější pro scénáře, které vyžadují vysokou propustnost a nízké provozní náklady, ale s méně náročnými požadavky na dotazy a konzistenci. Ve většině složitějších aplikací je vhodné kombinovat tyto typy databází, protože nejlépe chceme na různé use casy využívat jejich výhody. Zde jsou porovnány jednotlivé typy DB služeb u Azure (PaaS):
+
 ![](img/db_differences.png)
 
-Materializované Zobrazení (Materialized View): Tento vzor je užitečný pro situace, kde je potřeba optimalizovat čtecí operace. Materializované zobrazení předvyplňuje a udržuje data ve formě, která je přímo vhodná pro čtení, což může znamenat výrazné zlepšení výkonu pro často používané dotazy. Tento přístup je obzvláště užitečný, pokud jsou zdrojová data složitá a jejich příprava pro dotazy je náročná na výpočetní výkon.
+#### Materializované zobrazení vs cache-aside
+**Materializované zobrazení** je užitečný pro situace, kde je potřeba optimalizovat čtecí operace. Materializované zobrazení předvyplňuje a udržuje data ve formě, která je přímo vhodná pro čtení, což může znamenat výrazné zlepšení výkonu pro často používané dotazy. Tento přístup je obzvláště užitečný, pokud jsou zdrojová data složitá a jejich příprava pro dotazy je náročná na výpočetní výkon.
+Je třeba si uvědomit, že relační databáze jsou jedním z nejčastějších bottlenecků v aplikaci. Pokud si dotazy předpočítáváme, ušetříme složité dotazy na databázi. Materializované zobrazení nemusí mít vždy nejnovější data z relační databáze, to nám však nevadí. Můžeme aplikovat různé principy na invalidaci.
+Na obrázku jde vidět o kolik dokáže být rychlejší NoSQL databáze s předpočítanými dotazy:
+
+![](img/sql_nosql_comparison.png)
+
+**Cache-Aside** má podobné využití jako materalizované zobrazení, je zde však mnoho rozdílů. Cache-aside vzor nepředpočítává data a jen cachuje ty, které si uživatel vyžádal -> není potřeba dávat stejný dotaz do DB dvakrát. Data jsou oproti materializovanému zobrazení většinou ve stejné podobě jako z originální databáze -> materializované zobrazení předpočítává většinou jiný typ dat a ukládá je někam. U cache-aside patternu se ptáme přímo relační databáze a pokud dotaz již přišel dřív, posíláme cachovaný výsledek -> u materializovaného zobrazení máme většinou odlišnou DB, kam se dotazujeme jinak než na relační. U obou přístupů můžeme nastavit politiku, jakým způsobem, nebo jak často mají být data přepočítána/invalidována -> to ovlivňuje efektivitu těchto přístupů a pravděpodobnost, že jsou k dispozici nejnovější data. Každý přístup je použitelný v jiných situacích. Materializované view jsou vhodné pro scénáře s komplexními dotazy, kde je přijatelná mírná zpoždění v konzistenci (třeba předpočítávání zdi na FB). Cache aside je vhodný pro aplikace, kde se opakují jednotlivé cally do relační databáze a nepotřebujeme tam úplnou nutnost aktuálnosti dat.
+
+
+
+
 
 Sharding Pattern: Efektivní rozdělení (sharding) dat je klíčové pro škálovatelnost aplikací v cloudu. Tento vzor umožňuje rozložit data do více oddělených oddílů nebo shardů, což umožňuje lepší distribuci zátěže a optimalizaci výkonu. Hlavní výzvou je navrhnout správnou strategii rozdělení tak, aby bylo možné efektivně ukládat a dotazovat data.
 
