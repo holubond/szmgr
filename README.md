@@ -23,3 +23,5 @@ Specializace DEV
 - [Zpracování dat](./dev_2_zpracovani_dat.md)
 - [Bezpečný kód](./dev_3_bezpecny_kod.md)
 - [Uživatelská rozhraní](./dev_4_uzivatelska_rozhrani.md)
+
+Za korekce díky @xvanick1 a @thes01!
