@@ -28,3 +28,34 @@ Cloud computing nabízí několik klíčových výhod, jako je snížení nákla
 **Výhody**: Minimalizace nákladů a starostí o aplikaci. Používáme buď jako uživatel, nebo pomocí API a nestaráme se tak o nic jiného než odpověď a pricing za dotazy.
 **Příklady**: Office 365, Google Apps (Gmail, Google Docs).
 nějak sem to opravil, lepší?
+
+
+## Vzory a principy návrhu cloudových aplikací:
+Abychom plně využili možnosti cloudu, je třeba kromě klasických principů u aplikací myslet na tyto věci:
+- **Škálovatelnost** - v cloudu je velmi jednoduché škálovat aplikaci vertikálně i horizontálně a měla by na to být připravená bez větších změn
+- **Drobné chyby cloudu** - v cloudu se můžeme setkat se specifickými chybami jako milisekundové výpadky, nebo pomalý náběh u služby, která nebyla dlouho využívaná -> aplikace by s němi měla počítat
+- **Chytré využívání zdrojů** - v cloudu je možné platit jen využívaný výkon aplikace, proto je důležité, aby aplikace využívala výkon, který opravdu potřebuje a zbytečně jim neplýtvala -> je také důležité rozmyslet se jaký typ služby a pricingu si vybereme, protože to dokáže dělat velké rozdíly
+
+
+
+
+#### Výběr úložiště
+Při výběru vhodného úložiště pro cloudové aplikace je třeba zvážit několik faktorů. Cloudové prostředí nabízí širokou paletu úložných možností, každá s vlastními specifikami, výhodami a omezeními. Například, Azure SQL Database nabízí bohaté možnosti dotazů a je ideální pro úložiště, které vyžadují silnou podporu transakcí a konzistence dat. Na druhou stranu, Azure Table Storage je vhodnější pro scénáře, které vyžadují vysokou propustnost a nízké provozní náklady, ale s méně náročnými požadavky na dotazy a konzistenci. Ve většině složitějších aplikací je vhodné kombinovat tyto typy databází, protože nejlépe chceme na různé use casy využívat jejich výhody. Zde jsou porovnány jednotlivé typy DB služeb u Azure (PaaS):
+![](img/db_differences.png)
+
+Materializované Zobrazení (Materialized View): Tento vzor je užitečný pro situace, kde je potřeba optimalizovat čtecí operace. Materializované zobrazení předvyplňuje a udržuje data ve formě, která je přímo vhodná pro čtení, což může znamenat výrazné zlepšení výkonu pro často používané dotazy. Tento přístup je obzvláště užitečný, pokud jsou zdrojová data složitá a jejich příprava pro dotazy je náročná na výpočetní výkon.
+
+Sharding Pattern: Efektivní rozdělení (sharding) dat je klíčové pro škálovatelnost aplikací v cloudu. Tento vzor umožňuje rozložit data do více oddělených oddílů nebo shardů, což umožňuje lepší distribuci zátěže a optimalizaci výkonu. Hlavní výzvou je navrhnout správnou strategii rozdělení tak, aby bylo možné efektivně ukládat a dotazovat data.
+
+Hosting Statického Obsahu:
+
+Při návrhu cloudových aplikací je důležité efektivně spravovat statický obsah, jako jsou CSS, JavaScript a obrázky. Tento obsah by neměl být hostován společně s dynamickým obsahem na aplikačním serveru. Místo toho je vhodnější využít služby jako Azure Blob Storage ve spojení se síťovým distribučním systémem (CDN), což může výrazně zvýšit rychlost načítání statického obsahu a snížit zatížení aplikačních serverů.
+Vzor Valet Key:
+
+Vzor Valet Key se používá pro poskytování bezpečného, ale omezeného přístupu k zdrojům. V cloudových aplikacích tento vzor umožňuje klientům přímý přístup k určitým zdrojům, jako jsou soubory uložené v cloudu, aniž by museli procházet aplikačním serverem. Tím se snižuje zatížení serveru a zvyšuje se efektivita přenosu dat.
+Oddělení Zodpovednosti za Příkazy a Dotazy (CQRS):
+
+CQRS je vzor, který odděluje čtecí operace (dotazy) od zapisovacích operací (příkazy) v aplikaci. Toto rozdělení umožňuje optimalizovat každou část aplikace pro její specifické potřeby, což vede k vyšší efektivitě, lepší škálovatelnosti a usnadňuje správu.
+Messaging a Zpracování Dat:
+
+Ve světě cloudových aplikací je často výhodné využívat asynchronní zpracování zpráv, což umožňuje efektivnější a škálovatelnější architekturu. Asynchronní zpracování je zvláště užitečné pro dlouhotrvající nebo náročné operace, kde by synchronní zpracování mohlo vést k časovým limitům nebo špatné škálovatelnosti. PaaS cloudu nabízí různé služby pro zasílání zpráv, které mohou být využity k oddělení různých částí systému a zlepšení celkového výkonu.
