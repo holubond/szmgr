@@ -274,7 +274,7 @@ Viditelný celému týmu, na jednotlivých lístcích tasků je vidět i zpracov
 
 ## Údržba softwarových systémů, znovupoužitelnost
 - v závěru je fajn si udělat analýzu toho, co (ne)fungovalo, co zlepšit...
-    - dosažená produktivida a kvalita
+    - dosažená produktivita a kvalita
     - použitý proces, odchylky, důvody
     - plán vs realita a důvody (čas, peníze, chyby, FP/LOC...)
     - rizika (plán vs realita, jak jsme řešili rizika a problémy)
@@ -284,6 +284,6 @@ Viditelný celému týmu, na jednotlivých lístcích tasků je vidět i zpracov
     - použité technologie a jejich hodnocení
     - popsat v dokumentu tým a jednotlivce, na které je možné se případně obrátit (třeba když se řeší problém v dalším projektu)
     - aktiva procesu - co vzniklo a může být použito i v jiných projektech (třeba knihovny, checklisty...)
-- údržba se může dělat jako samostatný projekt, mohou na to být specializované týmu
+- údržba se může dělat jako samostatný projekt, mohou na to být specializované týmy
 - řeší se oprava (i bezpečnostních) chyb, aktualizace a vylepšení (ideálně nějakým způsobem automatizované, ale může být fajn potvrzení uživatele), správu změn (co se jak a proč změnilo)
 - znovupoužitelnost se obvykle řeší v rámci jednotlivých služeb/programů/komponent, ale ne znovupoužitím struktur mezi různými projekty (pokud nejde o specializovanou knihovnu) - mohli bychom mít problém v případě změny
