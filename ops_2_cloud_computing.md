@@ -127,3 +127,20 @@ Azure Blob Storage je služba pro ukládání velkého objemu nestrukturovaných
  Azure Data Lake Storage je škálovatelné a vysoce výkonné úložiště určené pro ukládání velkých objemů dat. Je optimalizováno pro analýzu a zpracování velkých datových sad pomocí nástrojů jako Azure Data Lake Analytics nebo Apache Hadoop.
 
 #### Zajištění kvality aplikací v cloudovém prostředí, výkonnost, škálovatelnost, dostupnost, bezpečnost
+##### Výkonnost
+**Monitorování**: V cloudu je důležité monitorovat výkon aplikace a infrastruktury pomocí nástrojů pro sběr metrik a logů. Azure nabízí pro účely monitorování nástroje jako Logs, který zobrazuje záznamy získané z aplikací, dále nabízí Alerts, které zobrazují upozornění když aplikace nefunguje nebo má nějaký jiný problém a Metrics, které zobrazují statistiky a různá data sesbíraná z aplikace.
+
+**Optimalizace kódu**: Aplikace, kterou nasazujeme do cloudu by měl využívat cachování, asynchronní zpracování, paralelismus a co nejmenší množství databázových dotazů případně by neměla obsahovat velké množství požadavků mimo vlastní aplikaci
+
+**Testování zátěže**: V cloudu je nutné vědět, jakou předpokládanou zátěž bude aplikace obsluhovat. Následně je vhodné testovat jak se při této zátěži bude aplikace chovat a zda je schopná ustát větší než předpokládané zatížení. Je také důležité identifikovat problematická místa aplikace, kde nám vzniká bottleneck a odstranit je.
+##### Škálovatelnost:
+
+**Horizontální škálování**: Při návrhu je důležité mít na paměti, že aplikace bude nasazovaná do prostoru, který je velice snadné škálovat horizontálně a aplikace by měla této vlastnosti cloudu využít. Pokud se bude naše aplikace pouze škálovat vertikálně tak od určitého bodu bude navyšování ceny převyšovat nově získaný výkon. V případě horizontální škálovatelnosti můžeme dosáhnout lepších výsledků za nižší cenu. Azure nabízí v rámci služeb jako Azure App Service automatické škálování, případně můžeme využít nástrojů jako Azure Kubernetes Service na škálování našich aplikací. 
+
+**Distribuovaná architektura**: Při návrhu aplikace, je vhodné rozdělit aplikaci tak, abychom mohli jednotlivé její komponenty škálovat nezávisle. Pokud správně aplikaci rozdělíme, tak můžeme flexibilně škálovat aplikaci podle zátěže na danou komponentu a využít elasticity, kterou cloud nabízí.
+##### Dostupnost:
+**Redundantní nasazení**: Cloud často nabízí v základu vysokou dostupnost, ale v některých krajních případech i toto může být nedostatečné. Pokud požadujeme velmi vysokou dostupnost aplikace tak je vhodné aplikaci nasadit do různých regionů. V takovém případě pokud dojde k masivnímu výpadku v jednom regionu aplikace je stále dostupná v regionu druhém. Při výběru regionu je nutné zvážit náklady v každém regionu, protože ceny se často liší. 
+
+##### Bezpečnost:
+**Identita a přístup**: Poskytovatelé cloudu často nabízí služby na správu identit jako Azure Active directory. Dále je důležité mít správně nastavenou autentizaci a autorizaci jednotlivých aplikací. Dalším důležitým faktorem je udržování nejnižších oprávnění tak aby aplikace nemohla provádět činnosti mimo rozsah, který je jí stanoven. 
+
