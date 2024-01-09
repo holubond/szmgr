@@ -89,11 +89,41 @@ Cloudy nabízí velké monžnosti při monitoringu a následných napojených ak
 ## Cloudové služby v kontextu PaaS cloud, služby pro ukládání dat
 #### PaaS
 PaaS (Platform as a service) je kategorie cloudových služeb, která poskytuje platformu umožňující zákazníkům vývoj, spuštění a správu aplikací bez složitostí spojených s budováním a údržbou infrastruktury typicky spojené s vývojem a spuštěním aplikací. Pokud máme například nějakou Python aplikaci, tak dodržíme nějaké protokoly, kde máme sepsané dependence, jaký je entrypoint aplikace a více neřešíme. Cloud se postará o vyrobení prostředí i nasazení aplikace. Příklady:
+
 **Amazon Web Services (AWS)**: Služba od Amazonu, která automatizuje nasazení aplikací v cloudovém prostředí. Podporuje různé programovací jazyky a frameworky, jako jsou Java, .NET, PHP, Node.js, Python, Ruby, Go a Docker.
 
 **Microsoft Azure App Service**: Nabízí různé nástroje a služby pro vývoj, nasazování a správu webových aplikací. Podporuje širokou škálu jazyků, včetně .NET, .NET Core, Java, Ruby, Node.js, PHP nebo Python.
 
-**Google App Engine**: Platforma od Google, která umožňuje vývojářům stavět vysoce škálovatelné aplikace na platformě Google Cloud. Podporuje jazyky jako Java, PHP, Node.js, Python, C#, .Net, Ruby a Go.
-
 **Heroku**: Velmi oblíbená cloudová platforma, která podporuje několik programovacích jazyků, včetně Ruby, Java, PHP, Python, Node.js, Go a Scala. Heroku je známé pro svou snadnou integraci, jednoduché rozhraní a rozsáhlou nabídku doplňkových služeb.
+##### FaaS
+Ještě více rozbíjí aplikaci na aplikační úrovni. U PaaS většinou nasazujeme celou aplikaci, nebo její větší komponentu (celý backend, celý plugin pro aplikaci). U FaaS píšeme jen konkrétní funkci/endpoint. Nestaráme se tak ani o nasazení aplikace a její chod. Funkce se spustí, když je např. příchozí request na endpoint, nebo zpracovává zprávu z napojené fronty, časový spouštěč atd. FaaS může sloužit jako prostředek k microservices. Nemusíme pomocí FaaS psát celou aplikaci, můžeme to použít jako podpůrný element pro nejvíc vytěžovaný endpoint atd.
+#### Služby pro ukládání dat
+![](img/storage_cloud.png)
 
+U každého poskytovatele cloudu existují podobné služby, zde je konkrétní ukázka služeb od Microsoftu
+
+**Azure SQL Database**:
+
+Příklad využití: Tradiční podnikové aplikace vyžadující relační databázi s pevným schématem a pokročilou podporou SQL dotazů, jako jsou finanční systémy nebo CRM systémy. Klasická volba, pokud potřebujeme konzistentní databázi s ACID pravidly a nemusíme nutně škálovat. Čtecí operace se dají zvýšit pomocí master/slave replik.
+
+**Azure Table Storage**:
+
+Příklad využití: Aplikace vyžadující rychlý přístup k velkému množství nestructurovaných dat, jako je ukládání logů nebo dat senzorů v IoT scénářích. Když nepotřebujeme extra řešit konzistenci, chceme ukládat velké množství dat s vysoukým throughput za nízkou cenu. Je nutné správně nadesignovat partition klíče, abychom
+využili clusterovací výhody služby.
+
+**CosmosDB**:
+
+Příklad využití: Globálně distribuované aplikace, které vyžadují nízkou latenci a škálovatelnost, jako jsou mobilní aplikace, webové aplikace a herní služby s požadavky na velmi rychlé čtení a zápis dat. Nejvíc podobná Azure Table Storage, ale poskytuje konzistenci dat. Je trošku dražší a těžší na implementaci.
+
+**Redis Cache**:
+
+Příklad využití: Aplikace s vysokým výkonem, které vyžadují rychlý mezipaměťový systém pro ukládání a získávání dat, jako jsou e-commerce platformy pro snížení doby načítání stránky nebo pro zvýšení výkonu databáze. Slouží spíš jako doplněk k předchozím aplikacím
+
+##### Další příklady
+**Azure blob storage**
+Azure Blob Storage je služba pro ukládání velkého objemu nestrukturovaných dat, jako jsou soubory, obrázky, videa nebo zálohy. Poskytuje vysoce škálovatelné a odolné úložiště s možností přístupu k datům z libovolného místa pomocí protokolů REST nebo SDK.
+
+**Azure data lake storage**
+ Azure Data Lake Storage je škálovatelné a vysoce výkonné úložiště určené pro ukládání velkých objemů dat. Je optimalizováno pro analýzu a zpracování velkých datových sad pomocí nástrojů jako Azure Data Lake Analytics nebo Apache Hadoop.
+
+#### Zajištění kvality aplikací v cloudovém prostředí, výkonnost, škálovatelnost, dostupnost, bezpečnost
