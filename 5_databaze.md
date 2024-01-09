@@ -39,7 +39,7 @@ Techniky s cílem transformace informací do formátu, který je efektivní na u
     2. vyjmeme 2 uzly s nejmenšími frekvencemi a spojíme je do uzlu, který bude mít frekvenci rovnou součtu frekvencí. Takto vytváříme stromovou strukturu. Opakujeme, dokud nemáme 1.
     3. procházíme stromovou strukturu od kořene, levé větve značíme `0`, pravé `1`, cesta od kořene po uzel unikátně identifikuje symbol a kombinací `0` a `1` získáme kód pro daný symbol
     
-- [Shannon-Fano](https://www.youtube.com/watch?v=iEm1NRyEe5c) - podobný jako Huffman, nemusí být optimální, ale jdeme od kořene a sekvenci symbolů seřazených dle frekvence dělíme na poloviny (+-, sčítáme frekvence a při překročení poloviny dělíme), Při každém dělení značíme `0` a `1`. Jakmile je ve vytvořené polovině jen 1 symbol, už není co dělit.
+- [Shannon-Fano](https://www.youtube.com/watch?v=dJCck1OgsIA) - podobný jako Huffman, nemusí být optimální, ale jdeme od kořene a sekvenci symbolů seřazených dle frekvence dělíme na poloviny (+-, sčítáme frekvence a při překročení poloviny dělíme), Při každém dělení značíme `0` a `1`. Jakmile je ve vytvořené polovině jen 1 symbol, už není co dělit.
 
 
 
