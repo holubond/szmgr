@@ -85,3 +85,15 @@ Mikroslužby jsou architektonický styl vývoje softwaru, kde aplikace jsou rozd
 
 #### Monitorování a správa
 Cloudy nabízí velké monžnosti při monitoringu a následných napojených akcích. Můžeme kontrolovat využití našich systémů a pokud nestačí, tak naškálovat. To stejné můžeme udělat i opačným směrem k šetření prostředků. Cloudy potom nabízí i aplikace na logy, které dokáže analyzovat atd.
+
+## Cloudové služby v kontextu PaaS cloud, služby pro ukládání dat
+#### PaaS
+PaaS (Platform as a service) je kategorie cloudových služeb, která poskytuje platformu umožňující zákazníkům vývoj, spuštění a správu aplikací bez složitostí spojených s budováním a údržbou infrastruktury typicky spojené s vývojem a spuštěním aplikací. Pokud máme například nějakou Python aplikaci, tak dodržíme nějaké protokoly, kde máme sepsané dependence, jaký je entrypoint aplikace a více neřešíme. Cloud se postará o vyrobení prostředí i nasazení aplikace. Příklady:
+**Amazon Web Services (AWS)**: Služba od Amazonu, která automatizuje nasazení aplikací v cloudovém prostředí. Podporuje různé programovací jazyky a frameworky, jako jsou Java, .NET, PHP, Node.js, Python, Ruby, Go a Docker.
+
+**Microsoft Azure App Service**: Nabízí různé nástroje a služby pro vývoj, nasazování a správu webových aplikací. Podporuje širokou škálu jazyků, včetně .NET, .NET Core, Java, Ruby, Node.js, PHP nebo Python.
+
+**Google App Engine**: Platforma od Google, která umožňuje vývojářům stavět vysoce škálovatelné aplikace na platformě Google Cloud. Podporuje jazyky jako Java, PHP, Node.js, Python, C#, .Net, Ruby a Go.
+
+**Heroku**: Velmi oblíbená cloudová platforma, která podporuje několik programovacích jazyků, včetně Ruby, Java, PHP, Python, Node.js, Go a Scala. Heroku je známé pro svou snadnou integraci, jednoduché rozhraní a rozsáhlou nabídku doplňkových služeb.
+
