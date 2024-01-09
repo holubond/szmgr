@@ -160,7 +160,7 @@ Pokud máme informace o úrovni platů implementátorů tasků, můžeme dopoč�
         - Kvalita - plánování, řízení a kontrola kvality
         - Zdroje - odhad nepeněžních a lidských zdrojů, jejich získávání a řízení, tvorba a správa týmů
         - Komunikace - plán, správa a kontrola komunikace a informací o projektu
-        - Riziko - identifikace, kvalitativní (míra doparu) a kvantitativní (pravděpodobnost) analýza rizik, jejich monitoring, plán a procesy reagující na rizika
+        - Riziko - identifikace, kvalitativní (míra dopadu) a kvantitativní (pravděpodobnost) analýza rizik, jejich monitoring, plán a procesy reagující na rizika
         - Dodavatelé - produkty a služby pocházející mimo náš tým, kontrakty, objednávky, SLAčka, výběr dodavatelů, monitoring výkonu dodavatelů
         - Stakeholdeři - zúčastněné osoby; jejich identifikace, plánování a správa zapojení stakeholderů do projektu
 
