@@ -156,7 +156,7 @@ Protokol umožňující komunikaci host-to-host.
 
 Hlavička obsahuje
 - verzi
-- délku hlavičky
+- délku hlavičky (20B-60B)
 - type of service (pro zajištění quality of service)
 - celkovou délku datagramu
 - identifikaci, flags, offset (používá se při fragmentaci, rozdělení datagramu na vícero, pokud přenosová technologie nezvládá velikost)
@@ -188,7 +188,7 @@ kvůli nedostatku se začala používat i maska sítě (CIDR)
 - oproti IPv4
     - IPSec je povinnou součástí
     - delší adresa => možnost více zařízení v síti
-    - jednodušší hlavička (chybí checksum (úplně odstraněn), options, fragmentation) s možností extension headers
+    - jednodušší hlavička (chybí checksum (úplně odstraněn), options, fragmentation) s možností extension headers, pevná délka (40B)
     - podpora označování toků a jejich priorit
     - podpora bezpečnosti, šifrování, autentizace, integrity dat
     - podpora mobility - každé zařízení je někde doma, kde má svého *Home Agenta*. Pokud je zařízení mimo domov, posílá informace o své cizí adrese Home Agentovi, který se stará o případné přeposílání zpráv, nebo spolupracuje pro ustanovení přímého tunelu
