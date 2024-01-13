@@ -24,4 +24,11 @@ Specializace DEV
 - [Bezpečný kód](./dev_3_bezpecny_kod.md)
 - [Uživatelská rozhraní](./dev_4_uzivatelska_rozhrani.md)
 
-Za korekce a doplnění díky @xvanick1 a @thes01!
+#### Dodatečné materiály 
+
+*Osobně jsem je nepoužíval, ale mohly by pomoct objasnit některé koncepty*
+
+- [Bakalářské státnice (gdoc)](https://drive.google.com/drive/u/0/folders/0Bzy-o_Kqmve_dkY1aW15WVVrYU0?resourcekey=0-IJZwAUN1lTX_XIo6przyUQ) - doporučeno [@thes01](https://github.com/thes01)
+
+
+Za korekce a doplnění díky [@xvanick1](https://github.com/xvanick1) a [@thes01](https://github.com/thes01)!

@@ -186,6 +186,8 @@ Používané s `GROUP BY sloupec/sloupce`
 Lze použít `HAVING ...`, což je `WHERE`, ale s použitím agregačních funkcí.
 
 ## Relační algebra
+> *[@thes01](https://github.com/thes01): více taky na [tomto odkazu (bc státnice)](https://docs.google.com/document/d/1SVbwwMDDfOCqAdsfTH1RDJex9_fZZ96wb0Vp2fSoUFs/edit)*
+
 **Relace** je podmnožinou kartézského součinu domén. Toto se promítne do databáze tak, že domény jsou datové typy sloupců a tabulka (složená ze sloupců) obsahuje pouze takové kombinace hodnot (řádky), jaké jsou v relaci.
 
 Pro relační operace používáme relační algebru skládající se z 
