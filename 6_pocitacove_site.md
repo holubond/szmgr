@@ -247,7 +247,7 @@ Vrstvy:
 - Middleware
     - abstrakce nad overlay, poskytuje přístup ke službám/zdrojům peerů, kontroluje přístup ke službám/zdrojům, hledání a udržování zdrojů (skupin peerů) distribuovaných služeb
 - Base overlay
-    - vrstva nad fyzickou sítí (obvykle TCP/UDP), kde se peery berou jako hopy (vyzicky vzdálení mohou být v p2p síti sousedi a naopak)
+    - vrstva nad fyzickou sítí (obvykle TCP/UDP), kde se peery berou jako hopy (fyzicky vzdálení mohou být v p2p síti sousedi a naopak)
     - peer discovery, přeposílání zpráv, udržování (části) sítě
 
 Peer discovery
