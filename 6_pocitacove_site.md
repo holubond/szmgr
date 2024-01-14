@@ -47,13 +47,13 @@ V praxi se ujal model TCP/IP, který jednotlivé vrstvy ISO/OSI slučuje.
     - bere **data**, transformuje je na **segmenty**
     - zajištění transportu segmentů do cílové aplikace, komunikace mezi procesy
     - adresování pomocí portu (16 bitové číslo 0-65535)
-    - může poskytovat end-to-end spolehlivost, spojení (pakety jsou číslovány, záleží na pořadí, dodání je potvrzeno)
+    - může poskytovat end-to-end spolehlivost, spojení (segmenty jsou číslovány, záleží na pořadí, dodání je potvrzeno)
     - může poskytovat kontrolu spojení, quality of service
     - logický komunikační kanál, iluze přímé komunikace
 
 - **Síťová (internet layer)** 
     - IP (internet protocol)
-    - bere **segmenty**, transformuje je na **pakety**
+    - bere **segmenty**, transformuje je na **pakety** (= datagramy)
     - zajišťuje přenos paketů mezi komunikujícími uzly (i napříč různými LAN), čímž de facto vytváří WAN
     - umožňuje adresování každého zařízení na internetu pomocí IP adresy (IPv4 32 bitů, IPv6 128 bitů)
     - zajišťuje směrování paketů - závisí na vytíženosti sítě a její topologii
