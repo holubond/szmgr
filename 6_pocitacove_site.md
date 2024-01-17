@@ -247,6 +247,7 @@ E.g.
 - distribuované výpočty Folding@Home
 - filesharing BitTorrent
 - Apache Cassandra (db)
+- blockchain (veřejný - kryptoměny, privátní - e.g. Hyperledger) 
 
 Vrstvy:
 - Aplikace 
