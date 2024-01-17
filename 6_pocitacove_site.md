@@ -286,7 +286,7 @@ Rádiové sítě obecně
 - Každý účastník funguje zároveň jako host
 - Na rozdíl od P2P sítí 
     - je mnohem větší dynamicita topologie, mobilita účastníků 
-    - účastníci jsou sami zodpovědni za přístup k přenosovému médiu (často je to vzdych -> možná vysoká chybovost, interference)
+    - účastníci jsou sami zodpovědni za přístup k přenosovému médiu (často je to vzduch -> možná vysoká chybovost, interference)
     => nutnost specializovaných protokolů
 
 Příklady
