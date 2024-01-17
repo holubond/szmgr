@@ -184,7 +184,13 @@ kvůli nedostatku se začala používat i maska sítě (CIDR)
 
 ## pokročilé funkce IPv6
 - řeší problém nedostatku IPv4 adres 128 bitovou délkou
-- 0000:0000:0000:0000:0000:0000:0000:0000 - FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF (možnost zkráceného zápisu vynecháním prefixových 0, případně až jedné sevkence 0)
+- `0000:0000:0000:0000:0000:0000:0000:0000` - `FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF`
+- možnost zkráceného zápisu:
+    - vynecháním prefixových nul
+        - `1050:0000:0000:0000:0005:0600:300c:326b` lze přepsat na
+        - `1050:0:0:0:5:600:300c:326b`
+    - dále vynecháním nejvýše jedné sekvence nul:
+        - `1050::5:600:300c:326b`
 - oproti IPv4
     - IPSec je povinnou součástí
     - delší adresa => možnost více zařízení v síti
