@@ -224,7 +224,7 @@ Podpůrný ICMPv6 rozšiřuje funkcionalitu i o to co dělal IGMP a ARP.
 - ideální je dnes dělat aplikaci fungující s obojím, alternativně je potřeba použít enkapsulaci (tunelování) IPv6 do IPv4 paketů, nebo překládání (NAT) 
 
 ## Peer-to-peer (P2P) sítě
-
+![](img/p2p.png)
 Systém je tvořen vícero identickými (a na stejné úrovni) moduly, peery, které vzájemně komunikují. Každý peer funguje jako klient (posílá požadavky) i server (odpovídá na požadavky) současně. U P2P není potřeba znát topologii celé sítě.
 
 Oproti Server-Client:
