@@ -267,8 +267,8 @@ Další důležitou vlastností P2P sítí je, jakým způsobem vnitřně dělí
 - **Stromy** - každému uzlu je přiřazený prefix, která data má spravovat. Pokud má prefix 000, tak to znamená, že ve vyhledávacím stromu musíme jít třikrát doleva. Pokud se strom zvětší o další úroveň, tak by měl uzel akorát vyfiltrovat část svou dat např 0001 a neměla by tak být nutná velká reorganizace a přesun dat. Závisí však na implementaci konkrétního stromu a algoritmu.
 
 P2P sítě se také dají dělit podle toho, jestli jsou hierarchické, nebo ploché:
-**Hierarchické** - má víceúrovňové uspořádání, kde prvky nebo uzly jsou organizovány do stromové struktury s rodičovskými a dceřinými vztahy. V hierarchických P2P sítích mohou některé uzly hrát speciální role, jako jsou super-uzly, které koordinují komunikaci nebo indexaci v určitých oblastech sítě. Uzly komunikují se svými superuzly, které zajišťují zbytek.
-**Ploché** - Vvploché struktuře jsou všechny prvky nebo uzly považovány za rovnocenné, bez hierarchického uspořádání. Každý uzel má stejné schopnosti a odpovědnosti, a neexistují žádné centrální nebo koordinační uzly.
+- **Hierarchické** - má víceúrovňové uspořádání, kde prvky nebo uzly jsou organizovány do stromové struktury s rodičovskými a dceřinými vztahy. V hierarchických P2P sítích mohou některé uzly hrát speciální role, jako jsou super-uzly, které koordinují komunikaci nebo indexaci v určitých oblastech sítě. Uzly komunikují se svými superuzly, které zajišťují zbytek.
+- **Ploché** - Vvploché struktuře jsou všechny prvky nebo uzly považovány za rovnocenné, bez hierarchického uspořádání. Každý uzel má stejné schopnosti a odpovědnosti, a neexistují žádné centrální nebo koordinační uzly.
 
 ## ad-hoc/senzorové sítě
 
