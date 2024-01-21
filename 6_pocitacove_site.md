@@ -261,7 +261,11 @@ Topologie overlay (jak jsou mezi sebou peerové vzájemně provázání) určuje
 - **Vrstvy** - peeři se organizují do vrstev dle poskytovaných služeb/připojení, na nejvyšší úrovni jsou ti nejspolehlivější s kapacitou přeposílání zpráv, na každé vrstvě je peer spojen s několika peery nižších vrstev a přeposílá zprávy na vyšší/nižší vrstvy. Struktura je tree-like, ale je třeba zajistit, aby výpadek jednoho nezpůsobil rozdělení sítě. Fajn třeba pro video streaming - peer může zprávu jdoucí dolů zduplikovat a šetřit tak bandwidth na vyšších vrstvách.
 - **Mřížka/Grid** - peeři jsou propojeni do mřížky (může být vícedimenzionální, i okrajoví mohou být vzájemně propojení). Problém může být přidávání/odebírání peerů, řádky/sloupce nemusí mít konzistentní počet členů. Koordináty peerů mohou být použity k adresování poskytovaných služeb
 
-
+Další důležitou vlastností P2P sítí je, jakým způsobem vnitřně dělí mezi sebou data. Zde jsou základní způsoby:
+- **DHT (Distributed Hash Table)** - Každý uzel v P2P síti spravuje svoji část globální hašovací tabulky. Uložení/získaní položky X znamená dotazovaní sa na uzel, který spravuje čast, do které hash(X) patří
+- **Skip list** - několik propojených seznamů v různých úrovních. V nejnižší úrovni jsou propojeny všechny uzly. Vyhledávání v skip listu začíná na nejvyšší úrovni a postupně se pohybuje dolů. Pokud je hledaná hodnota větší než další prvek, vyhledávání pokračuje vpravo; pokud je menší, proces se posune o úroveň níže. Tento proces umožňuje rychlé přeskočení mnoha prvků, čímž se urychluje vyhledávání.
+- **Stromy** - každému uzlu je přiřazený prefix, která data má spravovat. Pokud má prefix 000, tak to znamená, že ve vyhledávacím stromu musíme jít třikrát doleva. Pokud se strom zvětší o další úroveň, tak by měl uzel akorát vyfiltrovat část svou dat např 0001 a neměla by tak být nutná velká reorganizace a přesun dat. Závisí však na implementaci konkrétního stromu a algoritmu.
+  
 ## ad-hoc/senzorové sítě
 
 Ideálně začít popisem [ad-hoc](./6_pocitacove_site.md#ad-hoc) a [senzorových](./6_pocitacove_site.md#senzorové-sítě) sítí.
