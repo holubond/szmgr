@@ -113,7 +113,7 @@ Na datový sklad/data marty jsou obvykle napojeny další **vizualizační aplik
 
 Přístupy tvorby datových skladů
 - top-down - analogie vodopádu, nejdříve analyzujeme datové zdroje, pak navrhneme a implementujeme sklad, nakonec naplníme daty a vytvoříme data marty
-- bottom-up - iterativně inkrementální přístu, postupně pro každý zájmový objekt analyzujeme zdroje, postavíme data mart a případně rozšíříme (pokud nějaký centrální používáme) datový sklad
+- bottom-up - iterativně-inkrementální přístup, postupně pro každý zájmový objekt analyzujeme zdroje, postavíme data mart a případně rozšíříme (pokud nějaký centrální používáme) datový sklad
 
 ## Analytika velkých dat, jazyky pro realizaci analytický úloh, analytika na úrovni databází.
 
