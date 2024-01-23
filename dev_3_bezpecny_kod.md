@@ -152,7 +152,7 @@ V unix systémech bývá obvykle nějaký superadmin/root, který má přístup 
 
 Good practices řízení přístupu
 - separace oprávnění - potvrzení důležité operace vícero aktéry
-- omezení práv jednotlivce - každý má přístup jen k tomu, co nutně potřebuje
+- omezení práv jednotlivce - každý má přístup jen k tomu, co nutně potřebuje = _princip nejnižších privilegií_
 - defaultní akce je zamítnutí - práva přidělujeme explicitním povolením, abychom nepodolili něco jen proto, že jsme zapomněli vzít v potaz určitý scénář, defaultně zamítneme vša a používáme whitelisty (e.g. firewall)
 
 **Multi-level systems (MLS)**
