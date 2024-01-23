@@ -166,7 +166,7 @@ Good practices řízení přístupu
 
 **Role-based access control (RBAC)**
 - uživatelům přiřazujeme role (i vícero)
-- na role navazujeme oprvávnění
+- na role navazujeme oprávnění
 - e.g. role v databázích
 
 ## Biometrické metody autentizace, jejich dopady a problémy.
