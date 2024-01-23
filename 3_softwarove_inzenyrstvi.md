@@ -80,16 +80,16 @@ Hlavní metodiky řízení sw projektů jsou **prediktivní metodiky (e.g. RUP)*
 - vyžaduje podstatné plánování předem
 - iterativní a inkrementální, jednotlivé aktivity (plánování, požadavky, modelování, návrh, vývoj, testování, nasazení..) se částečně překrývají
 - řízena riziky, use-case požadavky
-- argitektura je středobodem - existuje architektonický tým, se kterým ostatní týmy konzultují případné nejasnosti/problémy, slouží jako centrální komunikační uzel (lepší, než kdyby spousta dev týmů komunikovala navzájem)
+- architektura je středobodem - existuje architektonický tým, se kterým ostatní týmy konzultují případné nejasnosti/problémy, slouží jako centrální komunikační uzel (lepší, než kdyby spousta dev týmů komunikovala navzájem)
 - umožňuje pevnou kontrolu nad procesy a týmem
 - vhodná, pokud potřebujeme pořádnou dokumentaci (UML diagramy)
 - hodí se pro velké a heterogenní produkty, velké týmy...
 - Výhody:
     - zákazník není při vývoji potřeba, definice produktu je zakotvena v kontraktu (přesně ví, co dostane)
 - Nevýhody
-    - pracujeme s fixními deadliny, rozpočetem i funkcionalitou
+    - pracujeme s fixními deadliny, rozpočtem i funkcionalitou
         - v reálu se deadline a rozpočet může lehce měnit v závislosti na vývoji
-    - změnové pořadavky jsou problém
+    - změnové požadavky jsou problém
     - potřeba více času k plánování
     - složitý kontrakt, je třeba myslet na všechno (exhaustive kritéria přijetí, penále...)
 
@@ -141,7 +141,7 @@ RUP je konkrétní metodika stavějící na UP (přidává třeba jednotlivé ro
 - klíčová je dobrá komunikace a spolupráce týmu
 - automatizované testování
 - variabilita funkcionality (vývoj postupuje tak, že když dojde čas/peníze, tak se ptáme zákazníka, zda něco přihodí, nebo zda vyškrtneme nějakou část systému)
-- face-to-face komunikace, rychlé meetingy - rychlejší, získáme lepší porozumnění
+- face-to-face komunikace, rychlé meetingy - rychlejší, získáme lepší porozumění
 - jednoduchá dokumentace - dokumentace těžko udržuje tempo s realitou, proto ji držme co nejjednodušší, ideálně navázanou na kód
 - častá setkání se stakeholdery (sprint review), prezentace nové funkcionality (lepší, než jen popis)
 - e.g. 
@@ -150,16 +150,16 @@ RUP je konkrétní metodika stavějící na UP (přidává třeba jednotlivé ro
         - rychlá zpětná vazba, důraz na jednoduchost, malé inkrementy
 
 ### SCRUM
-- nejšastěji využívaná agilní metodika
+- nejčastěji využívaná agilní metodika
 - iterativní, inkrementální
-- jednoduchý, očeává se použití i dalších nástrojů/procesů
+- jednoduchý, očekává se použití i dalších nástrojů/procesů
 - vhodný pro menší týmy (<=15 lidí)
 - hodí se, když máme tým schopný samostatnější práce, potřebujeme rychle vytvořit aspoň nějaký produkt
 
 - role
     - **product owner** - reprezentuje stakeholdery, má největší přehled o požadavcích na produkt, spravuje product backlog
     - **scrum master** - zodpovědný za dodržování scrumu, řeší procesy
-    - **tým vývojářů** - 3-9 lidí, soběstačný (má lidi na všechno) a sebeorganizující se, spravují sprint backlog, zodpovědní za doručení produktu
+    - **tým vývojářů** - 3-9 lidí, soběstačný (má lidi na všechno) a sebeorganizující se, spravují sprint backlog, zodpovědný za doručení produktu
 
 - artefakty
     - **product backlog** 
