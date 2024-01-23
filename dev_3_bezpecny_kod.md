@@ -433,7 +433,7 @@ Prevencí code injection může být data execution prevention - paměť dělím
 **Security review**
 - provádí se top-down, bottom up (vhodnější při nejasné architektuře, ale náročnější na provedení) či hybridně
 - začíná u architektury a dokumentace, snaha o detekci návrhových chyb, stanovují se možná rizika a zranitelnosti
-- u kódu se sleduje, jak dobře implementuje architekturu (často existují rozdíly), hledají se možné zranitelnosti v high-level logice, pak i v samotném kódy
+- u kódu se sleduje, jak dobře implementuje architekturu (často existují rozdíly), hledají se možné zranitelnosti v high-level logice, pak i v samotném kódu
 - hodnotí se dodržování bezpečnostních standardů
 - prakticky se testuje zabezpečení (penetrační testování, DDoS útoky, statická analýza)
 - sleduje se vliv nedůvěryhodných dat (taint analýza)
