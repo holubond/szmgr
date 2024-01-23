@@ -1,6 +1,6 @@
 # Zpracování dat.
 
-> Základní pojmy a principy datových skladů, datové analytiky a business intelligence. Životní cyklus datového skladu. Analytika velkých dat, jazyky pro realizaci analytický úloh, analytika na úrovni databází. Pokročilé techniky zpracování dat, výkonnostní aspekty zpracování velkých dat. Příklady z praxe pro vše výše uvedené. ([PA220](https://is.muni.cz/auth/el/fi/podzim2021/PA220/um/), PA036)
+> Základní pojmy a principy datových skladů, datové analytiky a business intelligence. Životní cyklus datového skladu. Analytika velkých dat, jazyky pro realizaci analytických úloh, analytika na úrovni databází. Pokročilé techniky zpracování dat, výkonnostní aspekty zpracování velkých dat. Příklady z praxe pro vše výše uvedené. ([PA220](https://is.muni.cz/auth/el/fi/podzim2021/PA220/um/), PA036)
 
 ## Základní pojmy a principy datových skladů, datové analytiky a business intelligence.
 
@@ -115,7 +115,7 @@ Přístupy tvorby datových skladů
 - top-down - analogie vodopádu, nejdříve analyzujeme datové zdroje, pak navrhneme a implementujeme sklad, nakonec naplníme daty a vytvoříme data marty
 - bottom-up - iterativně-inkrementální přístup, postupně pro každý zájmový objekt analyzujeme zdroje, postavíme data mart a případně rozšíříme (pokud nějaký centrální používáme) datový sklad
 
-## Analytika velkých dat, jazyky pro realizaci analytický úloh, analytika na úrovni databází.
+## Analytika velkých dat, jazyky pro realizaci analytických úloh, analytika na úrovni databází.
 
 **Big data** - jedná se o data, které kvůli své rychlé a kontinuální tvorbě, velkému objemu, či složitosti, vylučují zpracování tradičními analytickými způsoby. 
 - Rychlý příchod dat vyžaduje kontinuální zpracování. Nepoužíváme batch processing, je potřeba stream processing (pro distribuované zpracování velkého množství zpráv/předání dat mezi systémy třeba Apache Kafka).
