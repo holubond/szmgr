@@ -6,6 +6,8 @@ Za správnost/aktuálnost neručím, jako příklady jsem používal technologie
 
 Sepsáno na základě přednášek, osobních zkušeností, praxe, a samozřejmě drobné pomoci ChatGPT :) Pro rychlé pochopení základních konceptů dané technologie doporučuju mrknout na [Fireship](https://www.youtube.com/@Fireship) a jeho `in 100 seconds` videa.
 
+Materiály mi stačily k úspěšnému absolvování státnic (otázky na sítě a UI) v létě 2023.
+
 #### Hotové otázky
 
 *Mohou nastat drobné změny, ale nic markantního*
