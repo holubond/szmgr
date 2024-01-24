@@ -26,3 +26,16 @@
 - dobrý příklad je Objednávka, která by měla uvnitř objekt položky -> v SQL bychom měli položky v jedné tabulce, objednávku v druhé a potom nějakou tabulku PoložkaObjednávky -> v NoSQL prostě v každé Objednávce vytvoříme list položek a zduplikujeme se všemi údaji (jméno, cena, atd.) -> kdybychom chtěli měnit cenu položky pro všechny objednávky, tak docela složité
 
 ## Distribuované databáze, zajištění konzistence
+- NoSQL databáze vytvořeny hlavně pro horizontální škálovatelnost -> levnější než vertikální a také nemá takové limity
+- u vertikálního škálování a rozdělení dat je těžké zajistit konzistenci
+- musí být nastavená nějaká pravidla, která zajistí konzistenci, efektivně rozdělí data a příchozí operace atd.
+- existují i NoSQL databáze, které nevyužívají víc uzlů, jedná se hlavně o grafové, nebo ty, které nepotřebujeme škálovat
+- **Sharding** - data rozdělujeme podle nějakých pravidel, můžeme mít například primární klíč, podle kterého data rozdělujeme na uzly a rozkládáme zátěž
+- **Replikace** - jednotlivá data jsou uložena na více uzlech, může to být master-slave, nebo rovnocenný peer-peer
+- většinou se používá kombinace obojího, u shardingu je třeba dobře zvolit pravidla, podle kterých jsou data rozložena -> optimalizace našich dotazů na DB
+
+#### Master-slave replikace
+Master je source of truth, zápisy se dělají do něj a dále se potom propagují do dalších uzlů. Čtení je i ze slavů. Pokud master spadne, tak ho může nahradit nějaký slave. Jednodušší architektura, protože je jasně dáno, který uzel je master. Jednotlivé uzly můžou část dat držet jako master, pro další část dat jsou zase slaves -> rozložení zátěže při operaci psaní.
+#### Peer to peer
+Všechny uzly jsou rovnoceny. Rozložení je efektivnější, ale je těžší zajistit konzistenci. Uživatel totiž může zapisovat do dvou různých uzlů. Existují různé techniky, jak dosáhnout nějakého stavu konzistence (quorum, timestamps atd.). Hlavně u column based databází. Je nějaký replikační level - kolik uzlů má data.
+
