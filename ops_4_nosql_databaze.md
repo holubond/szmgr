@@ -69,4 +69,6 @@ viz  [otázka 7](./7_distribuovane_systemy.md#rozd%C3%ADl-mezi-centralizovanou-a
 - Řešíme otázku, jestli data udržovat oddělená, nebo pomocí agregátů. Pokud chceme často přistupovat k většině dat, tak lepší agregát.
 - Sharding většinou pomocí nějaké hashovací funkce a klíče. Každý uzel je zodpovědný za nějaký rozsah údajů (circle).
 - u P2P musíme nějak řešit konflikt write-write při replikaci dat -> většinou razítka u údajů, každý uzel si udržuje svoj, nebo se propagují -> pokud dva různí uživatelé zapisují do stejného záznamu na různých uzlech: Poslední vyhrává, novější zápis vyhrává, data můžou být nekonzistentní, než uživatel vyřeší, quorum based, uživatel je vyzván k opravě
-- 
+- nedoporučuje se, když chceme přistupovat podle dat, pokud jsou vztahy mezi daty
+- vhodné pro ukládání uživatelské relace, košíku a dat, kde chceme přistupovat podle klíče a nechceme dělat složité dotazy -> také dobré u cache
+- příklad je Redis, který je používaný v cache -> zvolíme si klíč a objekt, který chceme zacachovat -> následně se DB zeptáme, jestli záznam existuje v cache a má validní časový údaj. Dalším příkladem je Riak
