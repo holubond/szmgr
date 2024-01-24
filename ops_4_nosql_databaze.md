@@ -72,3 +72,5 @@ viz  [otázka 7](./7_distribuovane_systemy.md#rozd%C3%ADl-mezi-centralizovanou-a
 - nedoporučuje se, když chceme přistupovat podle dat, pokud jsou vztahy mezi daty
 - vhodné pro ukládání uživatelské relace, košíku a dat, kde chceme přistupovat podle klíče a nechceme dělat složité dotazy -> také dobré u cache
 - příklad je Redis, který je používaný v cache -> zvolíme si klíč a objekt, který chceme zacachovat -> následně se DB zeptáme, jestli záznam existuje v cache a má validní časový údaj. Dalším příkladem je Riak
+- Riak je zajímavý v tom, že nabízí sekundární indexování, které si může navolit uživatel -> lze se tak ptát optimalizovaně i podle hodnoty
+- Riak také nabízí text search
