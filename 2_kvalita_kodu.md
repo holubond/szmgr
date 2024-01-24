@@ -207,6 +207,7 @@ Kód, který se dobře čte a udržuje nemusí být ten nejrychlejší/nejefekti
 - sledují, zda spolu jednotky interagují tak, jak bychom očekávali
 - pomalejší, větší a složitější, než unit testy
 - black/white box
+- pro testování UI použijeme *Playwright* (dřív se používalo *Selenium*)
 
 ### Systémové testy
 - ověření, že systém splňuje specifikované požadavky
