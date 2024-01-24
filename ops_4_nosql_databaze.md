@@ -33,12 +33,22 @@
 - **Sharding** - data rozdělujeme podle nějakých pravidel, můžeme mít například primární klíč, podle kterého data rozdělujeme na uzly a rozkládáme zátěž
 - **Replikace** - jednotlivá data jsou uložena na více uzlech, může to být master-slave, nebo rovnocenný peer-peer
 - většinou se používá kombinace obojího, u shardingu je třeba dobře zvolit pravidla, podle kterých jsou data rozložena -> optimalizace našich dotazů na DB
-
+### MVCC
+- MVCC je metoda pro řízení současného přístupu k datům v databázích, která umožňuje vytvářet různé verze dat pro různé transakce. Pokud jedna transakce zapisuje a jiná čte, MVCC umožňuje druhé transakci vidět snímku dat v okamžiku před zápisem, čímž se vyhne blokování.
+### 2PC
+2PC je distribuovaný algoritmus používaný pro koordinaci potvrzení nebo zrušení (rollback) transakcí ve víceuzlových systémech. Je to forma konsenzuálního protokolu, který zajistí, že všechny uzly (účastníci) distribuované transakce se shodnou na jejím potvrzení nebo zrušení.
 #### Master-slave replikace
 Master je source of truth, zápisy se dělají do něj a dále se potom propagují do dalších uzlů. Čtení je i ze slavů. Pokud master spadne, tak ho může nahradit nějaký slave. Jednodušší architektura, protože je jasně dáno, který uzel je master. Jednotlivé uzly můžou část dat držet jako master, pro další část dat jsou zase slaves -> rozložení zátěže při operaci psaní.
 #### Peer to peer
 Všechny uzly jsou rovnoceny. Rozložení je efektivnější, ale je těžší zajistit konzistenci. Uživatel totiž může zapisovat do dvou různých uzlů. Existují různé techniky, jak dosáhnout nějakého stavu konzistence (quorum, timestamps atd.). Hlavně u column based databází. Je nějaký replikační level - kolik uzlů má data.
+### Transakce
+- v NoSQL většinou nejsou implementované transakce, ale je to taky možnost, buď jsou provedeny všechny operace, nebo žádná
+- jsou různé úrovně izolace:
 
+1) **Read Uncommitted** - můžu číst aktualizované informace od ostatních transakcí, velká nekonzistence dat a může načítat hodnoty, které další transakce můžou vrátit zpátky
+2)  **Read committed** - čte jen ostatní transakce, které jsou potvrzené, ale pro jednotlivé záznamy může během transakce načítat jiné hodnoty
+3)  **Repeatable reads** - pokud se dvakrát zeptám na záznam během transakce, dostanu vždy stejnou hodnotu, akorát může načítat nové položky z ostatních transakcí
+4)  **Serializable** - plně izolovaná
 ### Konzistence
 - **Write konzistence** - při zápisu se může stát, že dva uživatelé aktualizují stejná data -> musíme buď jednoho odmítnout/udělat zámek, nebo případně přepsat data nejnovější verzí, zaznamenávat si časová razítka atd.
 - **Read konzistence** - pokud jeden uživatel zapisuje, tak druhý mu "může číst pod rukami", pokud máme centrální DB, tak můžeme udělat ACID transakce, u distribuovaných databází je to složitější -> existují různé typy protokolů, které tyto věci zajišťují s odlišnou účinností
@@ -52,3 +62,11 @@ Pomalé zápisy, protože se musí uzly shodnout na datech k zajištění konzis
 Tento model je vhodný pro systémy, kde je důležitější udržet systém funkční a dostupný i při problémech se sítí než udržovat striktní konzistenci dat. Představte si cloudové úložiště, které je distribuováno mezi více datových center. Když dojde k výpadku sítě mezi těmito centry (dělení sítě), systém stále umožňuje uživatelům ukládat a získávat data (dostupnost), ale nemusí okamžitě zaručit, že všechny kopie dat jsou v každém centru úplně stejné (konzistence). Používají se kvóra -> kolik uzlů musí potvrdit operace zápisu a čtení, abychom je mohli brát jako splněná. Většinou je to aspoň polovina uzlů. 
 #### BASE
 viz  [otázka 7](./7_distribuovane_systemy.md#rozd%C3%ADl-mezi-centralizovanou-a-distribuovanou-architekturou-syst%C3%A9mu-nev%C3%BDhody-oboj%C3%ADho-a-jejich-p%C5%99ekon%C3%A1v%C3%A1n%C3%AD)
+
+## Architektury a základní charakteristika hlavních zástupců NoSQL databází (key-value uložiště, dokumentové databáze, column-family uložiště, grafové databáze)
+### Key-value
+- Data jsou uložena jednoduše jako klíč-hodnota. Většina databází umožňuje přístup k hodnotám jen pomocí klíče, nelze hledat většinou podle hodnoty. Klíč může dodat sám uživatel, nebo je vytvořen systémem. Poskytuje základní operace, jako get pomocí klíče, změnu hodnoty, nebo její vymazání. Data můžou být rozmístěna do různých namespaces (něco jako tabulky). 
+- Řešíme otázku, jestli data udržovat oddělená, nebo pomocí agregátů. Pokud chceme často přistupovat k většině dat, tak lepší agregát.
+- Sharding většinou pomocí nějaké hashovací funkce a klíče. Každý uzel je zodpovědný za nějaký rozsah údajů (circle).
+- u P2P musíme nějak řešit konflikt write-write při replikaci dat -> většinou razítka u údajů, každý uzel si udržuje svoj, nebo se propagují -> pokud dva různí uživatelé zapisují do stejného záznamu na různých uzlech: Poslední vyhrává, novější zápis vyhrává, data můžou být nekonzistentní, než uživatel vyřeší, quorum based, uživatel je vyzván k opravě
+- 
