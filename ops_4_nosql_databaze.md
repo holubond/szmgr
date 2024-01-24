@@ -39,3 +39,16 @@ Master je source of truth, zápisy se dělají do něj a dále se potom propaguj
 #### Peer to peer
 Všechny uzly jsou rovnoceny. Rozložení je efektivnější, ale je těžší zajistit konzistenci. Uživatel totiž může zapisovat do dvou různých uzlů. Existují různé techniky, jak dosáhnout nějakého stavu konzistence (quorum, timestamps atd.). Hlavně u column based databází. Je nějaký replikační level - kolik uzlů má data.
 
+### Konzistence
+- **Write konzistence** - při zápisu se může stát, že dva uživatelé aktualizují stejná data -> musíme buď jednoho odmítnout/udělat zámek, nebo případně přepsat data nejnovější verzí, zaznamenávat si časová razítka atd.
+- **Read konzistence** - pokud jeden uživatel zapisuje, tak druhý mu "může číst pod rukami", pokud máme centrální DB, tak můžeme udělat ACID transakce, u distribuovaných databází je to složitější -> existují různé typy protokolů, které tyto věci zajišťují s odlišnou účinností
+- **Replication konzistence** - jestli jsou data ve všech uzlech stejná, u master-slave to není takový problém, protože se zapisuje do masteru -> celkově se řeší tak, že se data postupně zpropagují, jak říká definice BASE
+
+### CAP teorém
+Jsou hlavní 3 vlastnosti databází: **Consistency, Availability, Partition tolerance** Teorém říká, že je možné dosáhnout jen dvou těchto vlastností a je nutno obětovat třetí. Klasické SQL databáze nabízí konzistenci a dostupnost. Není však možné tolerovat rozdělení jednotlivých uzlů. Většina databází, které používají více uzlů mají P, jelikož musí fungovat i pokud jsou problémy na síti a nedokáži spolu komunikovat
+#### PC
+Pomalé zápisy, protože se musí uzly shodnout na datech k zajištění konzistence. Pokud spolu ztratí kontakt, tak nelze zapisovat, aby se neztratila konzistence. Není moc často používané.
+#### PA
+Tento model je vhodný pro systémy, kde je důležitější udržet systém funkční a dostupný i při problémech se sítí než udržovat striktní konzistenci dat. Představte si cloudové úložiště, které je distribuováno mezi více datových center. Když dojde k výpadku sítě mezi těmito centry (dělení sítě), systém stále umožňuje uživatelům ukládat a získávat data (dostupnost), ale nemusí okamžitě zaručit, že všechny kopie dat jsou v každém centru úplně stejné (konzistence). Používají se kvóra -> kolik uzlů musí potvrdit operace zápisu a čtení, abychom je mohli brát jako splněná. Většinou je to aspoň polovina uzlů. 
+#### BASE
+viz  [otázka 7](./7_distribuovane_systemy.md#rozd%C3%ADl-mezi-centralizovanou-a-distribuovanou-architekturou-syst%C3%A9mu-nev%C3%BDhody-oboj%C3%ADho-a-jejich-p%C5%99ekon%C3%A1v%C3%A1n%C3%AD)
