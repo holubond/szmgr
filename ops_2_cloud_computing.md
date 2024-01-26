@@ -44,6 +44,7 @@ Při výběru vhodného úložiště pro cloudové aplikace je třeba zvážit n
 
 ![](img/db_differences.png)
 
+Je nutno také zvýraznit **Cosmos DB**, ta kombinuje různé typy NoSQL databází dohromady (dokumentové, key-value, column, graph). Můžete tak používat výhody jednotlivých DB v jedné service.
 #### Materializované zobrazení vs cache-aside
 **Materializované zobrazení** je užitečný pro situace, kde je potřeba optimalizovat čtecí operace. Materializované zobrazení předvyplňuje a udržuje data ve formě, která je přímo vhodná pro čtení, což může znamenat výrazné zlepšení výkonu pro často používané dotazy. Tento přístup je obzvláště užitečný, pokud jsou zdrojová data složitá a jejich příprava pro dotazy je náročná na výpočetní výkon.
 Je třeba si uvědomit, že relační databáze jsou jedním z nejčastějších bottlenecků v aplikaci. Pokud si dotazy předpočítáváme, ušetříme složité dotazy na databázi. Materializované zobrazení nemusí mít vždy nejnovější data z relační databáze, to nám však nevadí. Můžeme aplikovat různé principy na invalidaci.
