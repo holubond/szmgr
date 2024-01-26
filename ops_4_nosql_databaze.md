@@ -33,6 +33,7 @@
 - **Sharding** - data rozdělujeme podle nějakých pravidel, můžeme mít například primární klíč, podle kterého data rozdělujeme na uzly a rozkládáme zátěž
 - u shardingu je klasické používat hash a např. kruh, kde každý uzel má na starost část kruhu
 - existují **vnodes**, které implementují to, že jsou dané segmenty ještě víc "rozsekány" a každý uzel má na starost více menších částí, rovnoměrněji dokáže distribuovat data mezi uzly a reagovat na přidání, nebo odebrání uzlu
+![](img/virtual_nodes.png)
 - **Replikace** - jednotlivá data jsou uložena na více uzlech, může to být master-slave, nebo rovnocenný peer-peer
 - většinou se používá kombinace obojího, u shardingu je třeba dobře zvolit pravidla, podle kterých jsou data rozložena -> optimalizace našich dotazů na DB
 ### MVCC
@@ -57,6 +58,7 @@ Všechny uzly jsou rovnoceny. Rozložení je efektivnější, ale je těžší z
 - **Replication konzistence** - jestli jsou data ve všech uzlech stejná, u master-slave to není takový problém, protože se zapisuje do masteru -> celkově se řeší tak, že se data postupně zpropagují, jak říká definice BASE
 
 ### CAP teorém
+![](img/cap.png)
 Jsou hlavní 3 vlastnosti databází: **Consistency, Availability, Partition tolerance** Teorém říká, že je možné dosáhnout jen dvou těchto vlastností a je nutno obětovat třetí. Klasické SQL databáze nabízí konzistenci a dostupnost. Není však možné tolerovat rozdělení jednotlivých uzlů. Většina databází, které používají více uzlů mají P, jelikož musí fungovat i pokud jsou problémy na síti a nedokáži spolu komunikovat
 #### PC
 Pomalé zápisy, protože se musí uzly shodnout na datech k zajištění konzistence. Pokud spolu ztratí kontakt, tak nelze zapisovat, aby se neztratila konzistence. Není moc často používané.
@@ -77,6 +79,7 @@ viz  [otázka 7](./7_distribuovane_systemy.md#rozd%C3%ADl-mezi-centralizovanou-a
 - Riak je zajímavý v tom, že nabízí sekundární indexování, které si může navolit uživatel -> lze se tak ptát optimalizovaně i podle hodnoty
 - Riak také nabízí text search
 ### Dokumentové DB
+![](img/mongo.png)
 - základní struktura údajů je dokument
 - ten má většinou formu JSON, nebo XML -> dnes už je častější spíše JSON
 - JSON může být buď pole, list, string, číslo, nebo bool (samozřejmě i vnořené typy u pole a listu)
@@ -92,6 +95,7 @@ viz  [otázka 7](./7_distribuovane_systemy.md#rozd%C3%ADl-mezi-centralizovanou-a
 - můžeme mít jednoklíčový index, jejich směs, konkrétní hodnoty v polích atd.
 - pokud máme špatně nastavené indexy, tak se obíráme o možnosti NoSQL databází, protože pro dotaz musíme procházet všechny nodes a zatěžujeme je tak
 ### Column-family
+![](img/cassandra.png)
 - sloupec je definován většinou jako key-value (název sloupce a jeho hodnota), řádek může libovolný počet sloupců
 - rodiny sloupců jsou skupiny souvisejících údajů (např. profilové údaje zákazníka - jméno, příjmení, adresa)
 - super sloupec je složitější sloupec - ”username”: { ”firstname”: ”Cath”, ”lastname”: ”Yoon” }
@@ -102,6 +106,7 @@ viz  [otázka 7](./7_distribuovane_systemy.md#rozd%C3%ADl-mezi-centralizovanou-a
 - Cassandra používá P2P topologii, uživatel může nastavit i různé pravidla pro zápis a čtení (jako quorum, opravy nekonzistence atd.)
 - většina Column-family má optimalizované dotazy na celé sloupce a partitioning podle sloupců, Cassandra ho má podle řádků a podobá se tak trošku víc klasickým DB
 ### Graph based
+![](img/graph.png)
 - o dost víc odlišné než předchozí typy
 - data jsou většinou uložena v uzlech a v jejich vztazích
 - uzly jsou většinou nějaké objekty/instance, hrany potom vztahy mezi uzly (můžou mít směr, nebo být oboustranné)
