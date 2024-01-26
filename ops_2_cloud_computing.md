@@ -127,7 +127,7 @@ Azure Blob Storage je služba pro ukládání velkého objemu nestrukturovaných
 **Azure data lake storage**
  Azure Data Lake Storage je škálovatelné a vysoce výkonné úložiště určené pro ukládání velkých objemů dat. Je optimalizováno pro analýzu a zpracování velkých datových sad pomocí nástrojů jako Azure Data Lake Analytics nebo Apache Hadoop.
 
-#### Zajištění kvality aplikací v cloudovém prostředí, výkonnost, škálovatelnost, dostupnost, bezpečnost
+## Zajištění kvality aplikací v cloudovém prostředí, výkonnost, škálovatelnost, dostupnost, bezpečnost
 ##### Výkonnost
 **Monitorování**: V cloudu je důležité monitorovat výkon aplikace a infrastruktury pomocí nástrojů pro sběr metrik a logů. Azure nabízí pro účely monitorování nástroje jako Logs, který zobrazuje záznamy získané z aplikací, dále nabízí Alerts, které zobrazují upozornění když aplikace nefunguje nebo má nějaký jiný problém a Metrics, které zobrazují statistiky a různá data sesbíraná z aplikace.
 
