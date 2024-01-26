@@ -114,3 +114,11 @@ viz  [otázka 7](./7_distribuovane_systemy.md#rozd%C3%ADl-mezi-centralizovanou-a
 - **Graph partitioning** - snažíme se rozdělit graf na menší skupiny, aby mezi sebou sdíleli co nejméně hran, nebo uzlů -> to nám pomůže při paralelním zpracování
 - jsou jednorelační grafy, kdy všechny hrany představují určitou vlastnost, nebo můžou potom obsahovat množinu různých atributů,
 - jsou transakční grafy, které jsou menší a je jich větší počet(biologické cesty), nebo netransakční, ty jsou velké a je jich málo (vztahy v sociální síti)
+- můžeme se ptát na podgrafy, podobné grafy atd.
+- populární je Neo4J -> dokáže aplikovat ACID jako SQL, což se dost liší od dalších DB, které jsou spíše BASE
+- uzel v Neo4J je jednotka, která má nějaké vlastnosti a může mít vztahy s ostantími uzly, vztahy mají taky vlastnosti
+- vlastnost má klíč a k němu hodnotu
+- vztahy mezi uzly můžou patřit do nějakých rodin, můžou být směrované
+- můžeme vytvořit nějaké labely se jménem a přiřadit jim uzly
+- cesta potom je nějaká konkrétní cesta z uzlu A do B pomocí hran a vztahů, hledá se nějaký podgraf, nebo cesta
+- Grafová databáze je vhodná pro situace, kde je potřeba aktualizovat mnoho entit současně a provádět komplexní analytické dotazy, ale může být méně vhodná pro manipulaci s velkými binárními objekty, zpracování obrovských datových sad a v případech, kde je distribuce grafu náročná.
