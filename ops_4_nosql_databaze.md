@@ -101,3 +101,16 @@ viz  [otázka 7](./7_distribuovane_systemy.md#rozd%C3%ADl-mezi-centralizovanou-a
 - Cassandra dokáže dávat jednotlivým sloupcům různá pravidla na opravu atd.
 - Cassandra používá P2P topologii, uživatel může nastavit i různé pravidla pro zápis a čtení (jako quorum, opravy nekonzistence atd.)
 - většina Column-family má optimalizované dotazy na celé sloupce a partitioning podle sloupců, Cassandra ho má podle řádků a podobá se tak trošku víc klasickým DB
+### Graph based
+- o dost víc odlišné než předchozí typy
+- data jsou většinou uložena v uzlech a v jejich vztazích
+- uzly jsou většinou nějaké objekty/instance, hrany potom vztahy mezi uzly (můžou mít směr, nebo být oboustranné)
+- může poskytovat zajímavé dotazy: najdi všechny uzly s vlastností "kniha", "časopis" a které "obsahují" "obrázek
+- mají několik typů zápisu:
+1) **Adjacency Matrix** - každý uzel je řádek a má 1/0 u sloupce - index sloupce značí další uzel a 0/1 pokud obsahuje hranu, když jsou hrany bez směrů, tak je matice totožná přes uhlopříčku, jinak dokážeme zaznamenat, jestli vede hrana do uzlu, nebo z uzlu - můžeme přidávat i hodnoty/váhy hran -> u vlastností to může být třeba bitmapa, má velmi optimalizované dotazy na existující hranu a případně její hodnotu, také na přidávání, nevýhody jsou v zabírání místa
+2) **Adjacency list** - množina seznamů, u každého uzlu je odkaz na uzel, na který ukazuje a případně hodnota hrany, zabírá méně místa v grafech, kde není moc hran a efektivní přidávání uzlů, při grafu, kde je více hran může být neefektivní dotaz, jestli uzel A obsahuje hranu do uzlu B -> optimalizace v tříděných grafech
+3) **Incidence matrix** - tabulka počet vrcholů x počet uzlů, je výhoda, když chceme znázornit, že jedna hrana spojuje víc uzlů -> **hypergrafy**
+- existují metody, jak upravit graf -> **BFS** - spustíme BFS od kořene a upravíme graf podle pořadí, umožňuje optimalizovaný průchod od kořene, horší, když chceme potom procházet od jiných prvků, čím níž tím horší
+- **Graph partitioning** - snažíme se rozdělit graf na menší skupiny, aby mezi sebou sdíleli co nejméně hran, nebo uzlů -> to nám pomůže při paralelním zpracování
+- jsou jednorelační grafy, kdy všechny hrany představují určitou vlastnost, nebo můžou potom obsahovat množinu různých atributů,
+- jsou transakční grafy, které jsou menší a je jich větší počet(biologické cesty), nebo netransakční, ty jsou velké a je jich málo (vztahy v sociální síti)
