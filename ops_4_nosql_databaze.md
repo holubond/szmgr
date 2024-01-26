@@ -74,3 +74,18 @@ viz  [otázka 7](./7_distribuovane_systemy.md#rozd%C3%ADl-mezi-centralizovanou-a
 - příklad je Redis, který je používaný v cache -> zvolíme si klíč a objekt, který chceme zacachovat -> následně se DB zeptáme, jestli záznam existuje v cache a má validní časový údaj. Dalším příkladem je Riak
 - Riak je zajímavý v tom, že nabízí sekundární indexování, které si může navolit uživatel -> lze se tak ptát optimalizovaně i podle hodnoty
 - Riak také nabízí text search
+### Dokumentové DB
+- základní struktura údajů je dokument
+- ten má většinou formu JSON, nebo XML -> dnes už je častější spíše JSON
+- JSON může být buď pole, list, string, číslo, nebo bool (samozřejmě i vnořené typy u pole a listu)
+- používá se například v MongoDB, dokumenty by měly být podobné, ale není to nutná věc
+- indexuje se pomocí klíče, nebo pomocí dalších klíčů
+- MongoDB si vytváří vlastní indexovací parametr v objektu, _id - musí to býty jinný typ než pole
+- jelikož podporuje vnořené dokumenty a dá se říct agregáty, tak je to **denormalizovaná schéma**
+- můžeme používat i reference, ale má to nevýhodu ve více cestách na server a zpřístupnění dokumentů jeden po druhém -> není to jak u SQL
+- používá se MongoQueryLanguage př. db.inventory.find({ type: { $in: [ 'food', 'snacks' ] } }
+- db je naše databáze, inventory je potom něco jako tabulka -> sdružuje podobné dokumenty do jedné **kolekce**
+- podle **indexů** se dělí data na jednotlivé uzly, základní index je _id, ale můžeme definovat i další -> je to důležité hlavně, když chceme mít doatzy podle indexu na přesnou hodnotu, rozmezí atd.
+- data jsou podle indexů seřazena na uzlech a tyto operace jsou efektivní
+- můžeme mít jednoklíčový index, jejich směs, konkrétní hodnoty v polích atd.
+- pokud máme špatně nastavené indexy, tak se obíráme o možnosti NoSQL databází, protože pro dotaz musíme procházet všechny nodes a zatěžujeme je tak
