@@ -89,3 +89,10 @@ viz  [otázka 7](./7_distribuovane_systemy.md#rozd%C3%ADl-mezi-centralizovanou-a
 - data jsou podle indexů seřazena na uzlech a tyto operace jsou efektivní
 - můžeme mít jednoklíčový index, jejich směs, konkrétní hodnoty v polích atd.
 - pokud máme špatně nastavené indexy, tak se obíráme o možnosti NoSQL databází, protože pro dotaz musíme procházet všechny nodes a zatěžujeme je tak
+### Column-family
+- sloupec je definován většinou jako key-value (název sloupce a jeho hodnota), řádek může libovolný počet sloupců
+- rodiny sloupců jsou skupiny souvisejících údajů (např. profilové údaje zákazníka - jméno, příjmení, adresa)
+- super sloupec je složitější sloupec - ”username”: { ”firstname”: ”Cath”, ”lastname”: ”Yoon” }
+- rodina sloupců je relační tabulka s hodně null hodnotami
+- Cassandra je známý příklad column-family DB, dokáže uchovávat metadata o sloupcích a má i dynamický mód, který podporuje odlišné názvy sloupců (u statického jsou pro všechny řádky stejné, ale můžou mít null, tedy chybět)
+- Cassandra dokáže dávat jednotlivým sloupcům různá pravidla na opravu atd.
