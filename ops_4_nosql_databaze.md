@@ -31,6 +31,8 @@
 - musí být nastavená nějaká pravidla, která zajistí konzistenci, efektivně rozdělí data a příchozí operace atd.
 - existují i NoSQL databáze, které nevyužívají víc uzlů, jedná se hlavně o grafové, nebo ty, které nepotřebujeme škálovat
 - **Sharding** - data rozdělujeme podle nějakých pravidel, můžeme mít například primární klíč, podle kterého data rozdělujeme na uzly a rozkládáme zátěž
+- u shardingu je klasické používat hash a např. kruh, kde každý uzel má na starost část kruhu
+- existují **vnodes**, které implementují to, že jsou dané segmenty ještě víc "rozsekány" a každý uzel má na starost více menších částí, rovnoměrněji dokáže distribuovat data mezi uzly a reagovat na přidání, nebo odebrání uzlu
 - **Replikace** - jednotlivá data jsou uložena na více uzlech, může to být master-slave, nebo rovnocenný peer-peer
 - většinou se používá kombinace obojího, u shardingu je třeba dobře zvolit pravidla, podle kterých jsou data rozložena -> optimalizace našich dotazů na DB
 ### MVCC
@@ -95,4 +97,7 @@ viz  [otázka 7](./7_distribuovane_systemy.md#rozd%C3%ADl-mezi-centralizovanou-a
 - super sloupec je složitější sloupec - ”username”: { ”firstname”: ”Cath”, ”lastname”: ”Yoon” }
 - rodina sloupců je relační tabulka s hodně null hodnotami
 - Cassandra je známý příklad column-family DB, dokáže uchovávat metadata o sloupcích a má i dynamický mód, který podporuje odlišné názvy sloupců (u statického jsou pro všechny řádky stejné, ale můžou mít null, tedy chybět)
+- dynamický mód se hodí, když například ukládáme časovou řadu, nemusíme předem definovat sloupce a jejich názvy
 - Cassandra dokáže dávat jednotlivým sloupcům různá pravidla na opravu atd.
+- Cassandra používá P2P topologii, uživatel může nastavit i různé pravidla pro zápis a čtení (jako quorum, opravy nekonzistence atd.)
+- většina Column-family má optimalizované dotazy na celé sloupce a partitioning podle sloupců, Cassandra ho má podle řádků a podobá se tak trošku víc klasickým DB
