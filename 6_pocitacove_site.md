@@ -230,7 +230,7 @@ Podpůrný ICMPv6 rozšiřuje funkcionalitu i o to co dělal IGMP a ARP.
 - ideální je dnes dělat aplikaci fungující s obojím, alternativně je potřeba použít enkapsulaci (tunelování) IPv6 do IPv4 paketů, nebo překládání (NAT) 
 
 ## Peer-to-peer (P2P) sítě
-
+![](img/p2p.png)
 Systém je tvořen vícero identickými (a na stejné úrovni) moduly, peery, které vzájemně komunikují. Každý peer funguje jako klient (posílá požadavky) i server (odpovídá na požadavky) současně. U P2P není potřeba znát topologii celé sítě.
 
 Oproti Server-Client:
@@ -268,6 +268,14 @@ Topologie overlay (jak jsou mezi sebou peerové vzájemně provázání) určuje
 - **Vrstvy** - peeři se organizují do vrstev dle poskytovaných služeb/připojení, na nejvyšší úrovni jsou ti nejspolehlivější s kapacitou přeposílání zpráv, na každé vrstvě je peer spojen s několika peery nižších vrstev a přeposílá zprávy na vyšší/nižší vrstvy. Struktura je tree-like, ale je třeba zajistit, aby výpadek jednoho nezpůsobil rozdělení sítě. Fajn třeba pro video streaming - peer může zprávu jdoucí dolů zduplikovat a šetřit tak bandwidth na vyšších vrstvách.
 - **Mřížka/Grid** - peeři jsou propojeni do mřížky (může být vícedimenzionální, i okrajoví mohou být vzájemně propojení). Problém může být přidávání/odebírání peerů, řádky/sloupce nemusí mít konzistentní počet členů. Koordináty peerů mohou být použity k adresování poskytovaných služeb
 
+Další důležitou vlastností P2P sítí je, jakým způsobem vnitřně dělí mezi sebou data. U nestrukturovaných sítí to není známo, pokud chceme nějaká data, tak se musíme zeptat celé sítě, jestli je někdo má. Pro strukturované sítě jsou základní způsoby:
+- **DHT (Distributed Hash Table)** - Každý uzel v P2P síti spravuje svoji část globální hašovací tabulky. Uložení/získaní položky X znamená dotazovaní sa na uzel, který spravuje čast, do které hash(X) patří
+- **Skip list** - několik propojených seznamů v různých úrovních. V nejnižší úrovni jsou propojeny všechny uzly. Vyhledávání v skip listu začíná na nejvyšší úrovni a postupně se pohybuje dolů. Pokud je hledaná hodnota větší než další prvek, vyhledávání pokračuje vpravo; pokud je menší, proces se posune o úroveň níže. Tento proces umožňuje rychlé přeskočení mnoha prvků, čímž se urychluje vyhledávání.
+- **Stromy** - každému uzlu je přiřazený prefix, která data má spravovat. Pokud má prefix 000, tak to znamená, že ve vyhledávacím stromu musíme jít třikrát doleva. Pokud se strom zvětší o další úroveň, tak by měl uzel akorát vyfiltrovat část svou dat např 0001 a neměla by tak být nutná velká reorganizace a přesun dat. Závisí však na implementaci konkrétního stromu a algoritmu.
+
+P2P sítě se také dají dělit podle toho, jestli jsou hierarchické, nebo ploché:
+- **Hierarchické** - má víceúrovňové uspořádání, kde prvky nebo uzly jsou organizovány do stromové struktury s rodičovskými a dceřinými vztahy. V hierarchických P2P sítích mohou některé uzly hrát speciální role, jako jsou super-uzly, které koordinují komunikaci nebo indexaci v určitých oblastech sítě. Uzly komunikují se svými superuzly, které zajišťují zbytek.
+- **Ploché** - Vvploché struktuře jsou všechny prvky nebo uzly považovány za rovnocenné, bez hierarchického uspořádání. Každý uzel má stejné schopnosti a odpovědnosti, a neexistují žádné centrální nebo koordinační uzly.
 
 ## ad-hoc/senzorové sítě
 
