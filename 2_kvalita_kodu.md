@@ -213,7 +213,7 @@ Kód, který se dobře čte a udržuje nemusí být ten nejrychlejší/nejefekti
 - ověření, že systém splňuje specifikované požadavky
 - testují použitelnost, kapacitu, výkon, splnění funkcionality, bezpečnost...
 - benchmarking, penetrační testování, uživatelské testy...
-- lze automatizovat pomocí programem ovládaným prohlížečem (selenium, puppeteer)
+- lze automatizovat pomocí programem ovládaným prohlížečem (Playwright, dříve Selenium, Puppeteer)
 - black box
 
 ### Akceptační testy
