@@ -1,0 +1,13 @@
+Zkusme prosím dodržovat konvence v dokumentu, následovat styl jakým je psán společný základ a sekce DEV. 
+
+Například:
+- části explicitně zmíněné v otázce (a případně sekce dodatečných poznámek) jsou uvedeny nadpisech druhé úrovně (`##`). 
+- texty by měly být co nejvíc stručné, výstižné, straight to the point. Ukecanost nechme docům, toto by měl být materiál nabitý obsahem - formátem jde spíš o dokumentaci, než o knihu.
+- obecně známé věci nevysvětlujeme, akorát to ubírá přehlednosti dokumentu. Pokud je koncept vysvětlen v jiné sekci, hodíme [odkaz]().
+- klíčové je, aby se v dokumentu dalo dobře hledat a dobře se četl
+- pokud rozebíráme body nějakého textu, použijeme odrážky. Je tak jasné, že se daný blok vztahuje k předešlému textu. Musí být jasná hierarchie bloků textu, kromě odrážek je fajn si hrát i s odsazením.
+- každá odrážka by měla být nezávislá na ostatních odrážkách stejné úrovně
+  - v případě potřeby uděláme hierarchii odrážek
+- je fajn se vyhýbat velkým jednolitým blokům textu, takové se špatně čtou a ještě hůř se v nich něco hledá. Důležité části můžeme třeba **zvýraznit**, zvlášť důležité části (třeba definice) dáme samostatně.
+- dodržujeme [markdown best practices](https://www.markdownguide.org/basic-syntax/)
+- vyvarujeme se slangu a anglikanismům, to komise nemá ráda
