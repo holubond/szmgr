@@ -61,7 +61,7 @@ Postup:
 
 Možné zdroje rizik (nejčastější tučně):
 - uživatel - **nemožnost/neochota zapojit se**, odpor ke změnám
-- požadavky - změní se, **špatně pochopené**, blbě definované, nejasné či neadekvátní, **přijdou pozdě změny**
+- požadavky - **špatně pochopené**, blbě definované, nejasné či neadekvátní, **přijdou změny** (mnohdy až v momentě, kdy mohou zásadně narušit vyvíjený systém) 
 - složitost projektu - komplexní doména, použití nové/nezavedené technologie
 - management - **neefektivní řízení**, špatně zvolená/použitá metodika/standard, **špatný odhad nákladů/zdrojů/času**, špatně určená komunikace, **nezkušený manažer**
 - tým - nezkušenost, **málo lidí**, osobní konflikty
