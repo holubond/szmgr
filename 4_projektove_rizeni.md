@@ -33,9 +33,9 @@ Dále je potřeba u plánování projektů sepsat [Project Charter](./4_projekto
 
 ### Prediktivní plánování
 
-Sepisuje se **Project Initiation Documentation** obsahující detailní Business Case, veškeré informace o projektu (proč, co, kdo, kdy, jak, za kolik), definují se klíčové strategie (komunikace, rizika, kvalita, změny), vše se dokumentuje, vytváří se příslušné registry, vše se schvaluje product boardem (zástupci exekutivy, inženýrů a zákazníků). Do PID se pak zapisují i změny a průběh, aby bylo možné porovnat plán a realtu, je dostupný všem v rámci projektu. 
+Sepisuje se **Project Initiation Documentation** obsahující detailní Business Case, veškeré informace o projektu (proč, co, kdo, kdy, jak, za kolik), definují se klíčové strategie (komunikace, rizika, kvalita, změny), vše se dokumentuje, vytváří se příslušné registry, vše se schvaluje product boardem (zástupci exekutivy, inženýrů a zákazníků). Do PID se pak zapisují i změny a průběh, aby bylo možné porovnat plán a realitu, je dostupný všem v rámci projektu. 
 
-Dělá se detailní analýza požadavků, spousta Use case diagramů, detailní rozsah sloužící jako základ pro ocenění, design mockupy. Tvoří se **specifikační dokument** produktu - obsahuje požadavky, rozbití systému na komponenty (včetně detailního popisu až po pole vstupních formulářů), očekávánou kvalitu, akceptační kritéria.
+Dělá se detailní analýza požadavků, spousta Use case diagramů, detailní rozsah sloužící jako základ pro ocenění, design mockupy. Tvoří se **specifikační dokument** produktu - obsahuje požadavky, rozbití systému na komponenty (včetně detailního popisu až po pole vstupních formulářů), očekávanou kvalitu, akceptační kritéria.
 
 Dělá se **projektový plán** (proč, co, kdo, kdy, jak, za kolik...) - **Work Breakdown Structure** tvořená ze specifikačního dokumentu, počítá se čas a cena jednotlivých **Work Package**s (součást WBS, nejnižší jednotka) třeba pomocí [PERT](./4_projektove_rizeni.md#program-evaluation-and-review-technique-pert), jejich závislosti, tvoříme rozvrh (gantt/network diagram), přiřazujeme odpovědnosti (mělo by jít snadno najít aktivity člověka i všechny spojené s aktivitou).
 *WBS*
@@ -70,7 +70,7 @@ Možné zdroje rizik (nejčastější tučně):
 
 ### Specifika prevence u agilního řízení rizik
 Prevence:
-- **Transparence a zpětná vazba**, abychom předešli nedorozumnění v týmu
+- **Transparence a zpětná vazba**, abychom předešli nedorozumění v týmu
 - **Používání user stories** - jsou snadno pochopitelné pro zákazníka, dají se dobře ověřovat
 - **Jasná definice, co znamená "hotovo"**
 - **Krátké iterace** - brzo zjistíme, co je případně blbě
@@ -126,7 +126,7 @@ Metoda pro identifikaci vzájemně závislých aktivit, které mají vliv (jsou 
 
 ## Program Evaluation and Review Technique (PERT)
 
-Technika k odhadu času k dokončení tasku. Bereme **optimistický** odhad, **pesimistický** odhad a **nejpraděpodobnější** odhad
+Technika k odhadu času k dokončení tasku. Bereme **optimistický** odhad, **pesimistický** odhad a **nejpravděpodobnější** odhad
 
 `očekávaný = (optimistický + 4 * nejpravděpodobnější + pesimistický) / 6`
 
@@ -149,7 +149,7 @@ Pokud máme informace o úrovni platů implementátorů tasků, můžeme dopoč�
     - 10 vědomostních oblastí/disciplín projektového managementu, každá má vlastní procesy
         - Integrace 
             - tvorba **Project Charter**u
-                - **Business case (proč)** - cíle projektu, hrubá cena, rozpočet, rizka 
+                - **Business case (proč)** - cíle projektu, hrubá cena, rozpočet, rizika 
                 - **Project outcome (co)** - popis, hlavní cíle a požadavky
                 - **Stakeholders (kdo)** - externí i interní, řešíme jejich role, potřeby, zapojení a odpovědnosti
                 - **Management approach (jak)** - popis použitých standardů, nástrojů, metodik, životního cyklu projektu...
@@ -233,8 +233,8 @@ Pokud máme informace o úrovni platů implementátorů tasků, můžeme dopoč�
 - 7 procesů
     ![](img/20230525115631.png)
     - **Úplný začátek projektu** - nastínění business case, přiřazení klíčových vedoucích osob, studování "lessons learned" předchozích podobných projektů, získání autorizace product boardu
-    - **Inicializace projektu** - příprava strategií řízení (rizik, kvality, komunikace, konfigurce), projektového plánu, konkretizace business case, založení dokumentace
-    - **Řízení fáze** - řeší produktový manažer, monitoring, reportování významných událostí, řídíme exceptions, revidujeme a schvalujeme práci/nové časti produktu
+    - **Inicializace projektu** - příprava strategií řízení (rizik, kvality, komunikace, konfigurace), projektového plánu, konkretizace business case, založení dokumentace
+    - **Řízení fáze** - řeší produktový manažer, monitoring, reportování významných událostí, řídíme exceptions, revidujeme a schvalujeme práci/nové části produktu
     - **Řízení dodání produktu** - to samé co řízení fáze, ale řeší to týmový manažer
     - **Směrování projektu** - vysokoúrovňová rozhodnutí, funguje po celou dobu projektu, plán nadcházející fáze, na konci projektu autorizujeme uzavření
     - **Řízení mezi fázemi (managing a stage boundary)** - plán nadcházející fáze, řeší produktový manažer, aktualizace business case a projektového plánu, report předchozí fáze
