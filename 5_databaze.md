@@ -234,6 +234,10 @@ Pro indexy se mohou používat
     ![](img/20230526220927.png)
     ![](img/20230611232516.png)
 
+Další dělění indexů
+- **dense** - každý řádek je zaindexovaný, zabírá více místa, ale hledání je rychlejší
+- **sparse** - pouze některé řádky zaindexované, zabírá méně místa, ale hledání pomalejší (je potřeba dohledat konkrétní řádek)
+
 ## Hašování
 
 **Cílem hašování je převést vstupní data libovolné délky na výstup jednotné délky (fixed-length řetězec, nebo číslo), hash.** Z heshe by nemělo být možné odvodit vstup (**jednosměrnost**), pro každý vstup bychom měli být schopni deterministicky (vstupem jsou pouze data) určit jediný hash. Zároveň může být (dle použití) cílem minimalizovat riziko kolize, tedy že dva vstupy mají stejný hash (nelze se tomu ale vyhnout, protože musíme být schopni mapovat nekonečno možných vstupů na omezený počet výstupů daný délkou). Dle použití může být také důležité, aby podobné vstupy měli zásadně rozdílné heše, aby bylo možné snadno odhalit drobnou (záměrnou či nechtěnou) modifikaci vstupu. Pro prolamování hašů se použávají rainbow tables, obsahující pro daný algoritmus známé vstupy a jejich haše.
