@@ -11,3 +11,4 @@ Například:
 - je fajn se vyhýbat velkým jednolitým blokům textu, takové se špatně čtou a ještě hůř se v nich něco hledá. Důležité části můžeme třeba **zvýraznit**, zvlášť důležité části (třeba definice) dáme samostatně.
 - dodržujeme [markdown best practices](https://www.markdownguide.org/basic-syntax/)
 - vyvarujeme se slangu a anglikanismům, to komise nemá ráda
+- dokument by měl být relativně obecný, agnostický k technologiím, bez přílišného rozebírání specifik jednotlivých technologií (každý čtenář se specializuje na jiný stack, takže pro většinu budou detaily irelevantní). Výjimkou jsou konkrétní příklady technologií, ty zkusme držet na nutném minimu.
