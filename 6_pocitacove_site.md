@@ -135,7 +135,10 @@ Hlavička obsahuje
 - checksum
 - options
 
-Tcp mění množství poslaných dat v průběhu komunikace, aby nebyl příjemce (Flow Control), nebo síť (Congestion Control) zahlcen/a, slouží k tomu **velikost okna**. Obecně to funguje tak, že při startu se exponenciálně zvyšuje velikost okna, dokud nedosáhneme učité hranice. Od této hranice lineárně zvyšujeme velikost, dokud nedojde ke ztrátě paketu. V ten moment snížíme velikost na hraniční hodnotu a pokračujeme v lineárním zvyšování rychlosti. Jednotlivé varianty si tuto metodu přizpůsobují, e.g. Tahoe po ztrátě jde na minimální velikost okna (jako na úplném začátku), Reno praktikuje popsaný postup.  
+Tcp mění množství poslaných dat v průběhu komunikace, aby nebyl příjemce (Flow Control), nebo síť (Congestion Control) zahlcen/a, slouží k tomu **velikost okna**.
+- Flow Control znamená, že příjemce v rámci ACK zprávy pošle, kolik mu zbývá místa v jeho bufferu (např. 500 bytů), takže sender ví, že víc poslat nemůže. Když má příjemce plný buffer, tak pošle, že jeho window size je 0 a odesílatel čeká, dokud nepřijde nová ACK zpráva od příjemce o tom, že už má volné místo v bufferu.
+- Congestion Control funguje tak, že při startu se exponenciálně zvyšuje velikost okna, dokud nedosáhneme učité hranice. Od této hranice lineárně zvyšujeme velikost, dokud nedojde ke ztrátě paketu. V ten moment snížíme velikost na hraniční hodnotu a pokračujeme v lineárním zvyšování rychlosti. Jednotlivé varianty si tuto metodu přizpůsobují, e.g. Tahoe po ztrátě jde na minimální velikost okna (jako na úplném začátku), Reno praktikuje popsaný postup.
+- Výsledný strop pro velikost odeslaných dat je dán minimální hodnotou těchto dvou parametrů.
 
 ## Protokoly na síťových vrstvách
 - Aplikační - HTTP, SMTP, DNS, FTP...
