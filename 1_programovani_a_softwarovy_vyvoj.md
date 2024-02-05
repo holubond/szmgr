@@ -217,7 +217,7 @@ Queue (musí se doručit aspoň jednomu) vs Topic (publisher-subscriber model).
     - **POST** - požadavek, aby cílový zdroj zpracoval data obsažená v těle. Obvykle se používá pro akce/přidání nového prvku do kolekce (login, přidání příspěvku...). V případě tvorby prvku bývá pravidlem vrátit nově vytvořené ID v odpovědi
     - **PUT** - jako post, ale součástí požadavku je ID. Prvek s tímto ID má být upraven novými daty (v těle), nebo vytvořen právě s tímto ID
     - **PATCH** - jako put, ale v těle nemusí být všechna pole upravovaného prvku - změnit se mají jen ta pole, která jsou přítomná
-    - **DELETE** - požadavek o odstranení dat
+    - **DELETE** - požadavek k odstranění dat
     - dále existují **CONNECT**, **OPTIONS** a **TRACE**
 
 *safe* metody nemění stav na serveru (get, head, options, trace)
