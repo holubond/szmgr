@@ -225,7 +225,8 @@ Pro zajištění rychlosti dotazů v OLAP se používá redundance v podobě
 **NoSQL (not only sql)**
 - key-value stores - data ukládáme/hledáme pomocí klíče, snadno se používají jako cache e.g. Redis
 - dokumentové databáze - data ukládají ve formě dokumentů (každý má klíč, podkle kterého se referencuje, jinak je to klasická struktura/třída) a kolekcí dokumentů, e.g. Mongo, Firebase
-- grafové databáze - snadno modelují entity a vztahy, e.g. Cassandra
+- sloupcové databáze (column family, wide-column) - data jsou organizována do tzv. "rodin sloupců" (column families), které mají společné vlastnosti nebo jsou často používány společně, e.g. Cassandra
+- grafové databáze - snadno modelují entity a vztahy, e.g. Neo4j
 - obvykle nebývají ACID (a nepoužívají joiny), díky čemuž mohou být rychlejší. Větším problémem je udržení konzistence dat. Některé poskytují distribuci dat na více výpočetních uzlů out of the box (co vím tak mongo, cassandra)
 
 ### Apache Hadoop
