@@ -16,7 +16,7 @@
     - Testování
     - Nasazení
     
-    Více v otázce [Softwarové inženýrství](./s3_softwarove_inzenyrstvi.md)
+    Více v otázce [Softwarové inženýrství](./3_softwarove_inzenyrstvi.md)
 
 - Klíčové je zajistit pravidelnou a dobře definovanou komunikaci mezi stakeholdery (nejen na začátku, ale i v průběhu vývoje), definovat ubiquitous language (univerzální jazyk domény) a vynucovat jeho používání, aby v rámci úzce spolupracujících skupin nedocházelo k vytváření vlastních výrazů a následnému neporozumnění mezi skupinami.
 
