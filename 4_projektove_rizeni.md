@@ -44,7 +44,7 @@ Dělá se **projektový plán** (proč, co, kdo, kdy, jak, za kolik...) - **Work
 ## Řízení rizik
 Postup:
 1. Identifikace rizik
-    - čerpáme z předchozích zkušeností, lesons learned... co a proč se stalo?
+    - čerpáme z předchozích zkušeností, lessons learned... co a proč se stalo?
 2. Ohodnocení rizik
     - každé riziko způsobí náklady, můžeme pro něj odhadnout cenu
     - každému přiřadíme pravděpodobnost a kritičnost dopadu, určíme následky
