@@ -71,7 +71,7 @@
     - separace dat a logiky
     - odstranění globálního stavu
 - **Škálovatelnost** 
-    - refaktoring na jednodušší, samostetně nasaditelné jednotky
+    - refaktoring na jednodušší, samostatně nasaditelné jednotky
     - extrakce dat pro umožnění paralelizace jednotek
     - extrakce a samostatné nasazení subsystému 
     - distribuce a/nebo replikace dat (db bývá bottleneck, ostatní věci lze snadněji paralelizovat)
