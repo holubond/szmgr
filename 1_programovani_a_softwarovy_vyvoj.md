@@ -93,7 +93,7 @@ Pro vývoj rozsáhlých systémů se používají následující typy nástrojů
 - **Nástroje pro kontinuální integraci a nasazení** automatizují spouštění testů a sestavení výsledného produktu (github workflows, gitlab CI/CD, circle ci, Travis CI, Jenkins).
 - **Monitoring a logování** slouží pro sledování výkonu systému a analýzu chyb a problémů (Grafana)
 - **Dokumentační nástroje** popisující fungování systému a jeho částí. Dokumentaci zdrojového kódu je vhodné z něj generovat, aby se minimalizoval problém neaktuálnosti (cargo doc, OpenAPI (machine-readable JSON/YAML formát, je možné ho generovat z anotací, nebo z něj generovat příklady, dokumentaci), pro jednoduchý formátovaný text Markdown). Dokumentace je důležitá zvlášť pro vystavované API
-- **Kontejnerová prostředí** slouží pro minimalizaci rozdílů mezi prostředími, usnadňují reprodukovatelnost, ve kterých aplikace běží (vyvojové, testovací, produkční) (Docker, Podman).
+- **Kontejnerová prostředí** slouží pro minimalizaci rozdílů mezi prostředími, usnadňují reprodukovatelnost, ve kterých aplikace běží (vývojové, testovací, produkční) (Docker, Podman).
 - **Nástroje pro analýzu kódu** kontrolují dodržování standardů, zajišťují určitou kvalitu kódu, hledají potenciální chyby/slabá místa (cargo clippy, ESLint, SonarQube).
 
 ## Základní koncepty softwarových architektur z pohledu implementace, Vícevrstvá architektura moderních informačních systémů, Architektura model-view-controller
