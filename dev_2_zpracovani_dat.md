@@ -261,8 +261,8 @@ Pro zajištění rychlosti dotazů v OLAP se používá redundance v podobě
 ### Stream processing
 
 - nezpracováváme balík dat, ale kontinuální stream
-- Apache Spark (real-time výpočty, skládá se ze zdrojů dat a acyklicky propojených zpracovávajících uzlů)
-- Apache Storm (analytický engine pro large-scale data processing, umí batch i stream processing)
+- Apache Spark (analytický engine pro large-scale data processing, umí batch i stream processing)
+- Apache Storm (real-time výpočty, skládá se ze zdrojů dat a acyklicky propojených zpracovávajících uzlů)
 
 ## Notes
 
