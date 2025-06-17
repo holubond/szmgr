@@ -384,8 +384,6 @@ Pro **ošetřování vstupů** je vhodný použít fail-fast přístup. Jakmile 
     - v ideálním případě se chceme nutnosti udržovat stav mezi příkazy vyhnout, bezstavová komunikace je méně náchylná na chyby a je možné systém jednoduššeji škálovat
 - důležité je samozřejmě nikdy nevěřit uživatelským vstupům
 
-**Souběžnost**
-
 ## Detekce bezpečnostních zranitelností, penetrační testování.
 
 Pro detekci (nejen) bezpečnostních zranitelností je možné použít vícero přístupů (nejsou exkluzivní)
@@ -397,7 +395,7 @@ Pro detekci (nejen) bezpečnostních zranitelností je možné použít vícero 
 
 Pro detekci buffer overflow lze pomocí překladače použít tzv. canary - data za každým polem. Pokud dojde k přetečení pole, bude canary přepsán, což je signál problému. Problém přetrvá, pokud útočník zná hodnotu canary. Alternativně (režijně náročnější) lze kontrolovat délku pole a zapisovaných dat.
 
-Prevencí změny návratové adresy funkce útočníkem (důsledek buffer overflow) je randomizace adres funkcí v kódu.
+Prevencí změny návratové hodnoty funkce útočníkem (důsledek buffer overflow) je randomizace adres funkcí v kódu.
 
 Prevencí code injection může být data execution prevention - paměť dělíme na datovou a spustitelnou, není možné spouštět kód z datové části. SQL injection (zprávy jsou obvykle interpretované) se řeší pomocí prepared statements, čímž efektivně dělíme části příkazu na datovou a příkazovou.
 
